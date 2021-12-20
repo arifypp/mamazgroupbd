@@ -118,7 +118,7 @@
 
                                                 <div class="mb-3">
                                                     <label for="username" class="form-label">Username</label>
-                                                    <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autofocus required autocomplete="username" placeholder="Enter username">
+                                                    <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autofocus required autocomplete="username" placeholder="Enter username"> 
                                             
                                                     @error('username')
                                                         <span class="invalid-feedback" role="alert">
