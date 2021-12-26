@@ -3,9 +3,28 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
+
 /*
 |--------------------------------------------------------------------------
-| Web Routes
+| Frotend Route Routes
+|--------------------------------------------------------------------------
+|
+| Here is where you can register web routes for your application. These
+| routes are loaded by the RouteServiceProvider within a group which
+| contains the "web" middleware group. Now create something great!
+|
+*/
+Route::group(['prefix' => '/'], function(){
+    // Homepage
+    Route::get('/','App\Http\Controllers\Frontend\HomepageController@index')->name('homepage');
+    Route::get('/about','App\Http\Controllers\Frontend\AboutController@index')->name('about');
+    Route::get('/contact','App\Http\Controllers\Frontend\ContactController@index')->name('contact');
+});
+
+
+/*
+|--------------------------------------------------------------------------
+| Backend Routes
 |--------------------------------------------------------------------------
 |
 | Here is where you can register web routes for your application. These
@@ -16,7 +35,7 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+// Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
