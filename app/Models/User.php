@@ -24,6 +24,7 @@ class User extends Authenticatable
         'avatar',
         'referrer_id',
         'username',
+        'auth_role'
     ];
 
     protected $appends = ['referral_link'];

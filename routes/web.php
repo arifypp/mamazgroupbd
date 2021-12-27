@@ -33,9 +33,15 @@ Route::group(['prefix' => '/'], function(){
 |
 */
 
-Auth::routes();
+// User Login
+Route::get('/login/user', 'App\Http\Controllers\Auth\LoginController@showUserloginform');
+Route::post('/login/user', 'App\Http\Controllers\Auth\LoginController@Userlogin');
 
-// Route::get('/', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
+Auth::routes();
+// User Dashboard Fuction
+Route::get('/auth/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
+
+Route::get('/dashboardd', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
