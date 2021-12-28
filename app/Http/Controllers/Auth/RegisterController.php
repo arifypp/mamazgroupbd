@@ -100,4 +100,36 @@ class RegisterController extends Controller
             'avatar' => "/images/" . $avatarName,
         ]);
     }
+
+    // User Registration Form
+    public function ShowRegiterForm(){
+        return view('auth.register', ['url'=>'user']);
+    }
+
+    // User created  
+    protected function createUser(Request $request){
+        $this->validator($request->all())->validate();
+
+        if (request()->has('avatar')) {            
+            $avatar = request()->file('avatar');
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatarPath = public_path('/images/');
+            $avatar->move($avatarPath, $avatarName);
+        }
+        $referrer = User::whereUsername(session()->pull('referrer'))->first();
+
+
+        $teacher = User::create([
+            'name' => $request['name'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'referrer_id' => $referrer ? $referrer->id : null,
+            'password' => Hash::make($request['password']),
+            'dob' => date('Y-m-d', strtotime($request['dob'])),
+            'avatar' => "/images/" . $avatarName,
+
+        ]);
+
+        return redirect()->intended('/email/verify');
+    }
 }

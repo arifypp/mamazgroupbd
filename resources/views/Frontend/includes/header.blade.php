@@ -78,7 +78,7 @@
             </ul>
           </li>
           <li ><a class="nav-link scrollto @if( Route::currentRouteNamed('contact')) active @endif" href="{{ route('contact') }}">যোগাযোগ</a></li>
-          <li><a class="getstarted scrollto" href="sign-in.html">সাইনইন করুন </a></li>
+          <li><a class="getstarted scrollto" href="{{ route('userlogin') }}">সাইনইন করুন </a></li>
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->

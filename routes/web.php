@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-
 /*
 |--------------------------------------------------------------------------
 | Frotend Route Routes
@@ -34,12 +33,24 @@ Route::group(['prefix' => '/'], function(){
 */
 
 // User Login
-Route::get('/login/user', 'App\Http\Controllers\Auth\LoginController@showUserloginform');
+Route::get('/login/user', 'App\Http\Controllers\Auth\LoginController@showUserloginform')->name('userlogin');
 Route::post('/login/user', 'App\Http\Controllers\Auth\LoginController@Userlogin');
 
-Auth::routes();
+// User Registration
+Route::get('/register/user', 'App\Http\Controllers\Auth\RegisterController@ShowRegiterForm');
+Route::post('/register/user', 'App\Http\Controllers\Auth\RegisterController@createUser');
+
+Auth::routes(['verify' => true]);
 // User Dashboard Fuction
-Route::get('/auth/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
+Route::middleware(['verified'])->group(function () {
+    Route::group(['prefix' => 'auth'], function(){
+        Route::group(['middleware' => 'auth_role'], function () {
+
+            Route::get('/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
+            
+        });
+    });
+});
 
 Route::get('/dashboardd', [App\Http\Controllers\HomeController::class, 'root'])->name('root');
 

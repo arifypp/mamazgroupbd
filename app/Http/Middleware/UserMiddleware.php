@@ -4,7 +4,7 @@ namespace App\Http\Middleware;
 
 use Closure;
 use Illuminate\Http\Request;
-
+use Auth;
 class UserMiddleware
 {
     /**
@@ -16,11 +16,22 @@ class UserMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        if (auth()->user()->auth_role == 0) {
-            return $next($request);
+        if (Auth::check()) {
+            if (auth()->user()->auth_role == 0) {
+                return $next($request);
+            }
+            else{
+                Auth::logout();
+                return redirect(url('login/user'));
+            }
         }
+        else {
+			Auth::logout();
+			return redirect(url('login/user'));
+		}
+        
         //if not user 
-        return back()->with('error', 'You\'re not authenticate user');
+        // return back()->with('error', 'You\'re not authenticate user');
         
     }
 }

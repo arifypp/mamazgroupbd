@@ -43,8 +43,12 @@
                      
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <a href=""><h6><i class="fas fa-power-off"></i>Logout</h6></a>
-                     
+                      <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
+                        <h6><i class="fas fa-power-off"></i>Logout</h6>
+                    </a>    
+                    <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        {{ csrf_field() }}
+                    </form>                     
                     </li>
                    
                    
