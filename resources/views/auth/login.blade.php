@@ -40,7 +40,7 @@
                             </div>
                         </a>
 
-                        <a href="index" class="auth-logo-dark">
+                        <a href="{{ route('homepage') }}" class="auth-logo-dark">
                             <div class="avatar-md profile-user-wid mb-4">
                                 <span class="avatar-title rounded-circle bg-light">
                                     <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt=""
@@ -57,11 +57,11 @@
                         @endisset
                             @csrf
                             <div class="mb-3">
-                                <label for="username" class="form-label">Email</label>
-                                <input name="email" type="email"
+                                <label for="username" class="form-label">Email / Phone Number</label>
+                                <input name="email" type="text"
                                     class="form-control @error('email') is-invalid @enderror"
                                     id="username"
-                                    placeholder="Enter Email" autocomplete="email" autofocus>
+                                    placeholder="Enter Email / Phone Number" autocomplete="email" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -138,7 +138,7 @@
             <div class="mt-5 text-center">
 
                 <div>
-                    <p>Don't have an account ? <a href="{{ url('register') }}" class="fw-medium text-primary">
+                    <p>Don't have an account ? <a href="{{ url('register/user') }}" class="fw-medium text-primary">
                             Signup now </a> </p>
                     <p>© <script>
                             document.write(new Date().getFullYear())

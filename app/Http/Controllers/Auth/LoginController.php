@@ -43,16 +43,28 @@ class LoginController extends Controller
     public function showUserloginform(){
         return view('auth.login', ['url'=>'user']);
     }
+
+    protected function credentials(Request $request)
+    {
+      if(is_numeric($request->get('email'))){
+        return ['phone'=>$request->get('email'),'password'=>$request->get('password')];
+      }
+      elseif (filter_var($request->get('email'), FILTER_VALIDATE_EMAIL)) {
+        return ['email' => $request->get('email'), 'password'=>$request->get('password')];
+      }
+      return ['username' => $request->get('email'), 'password'=>$request->get('password')];
+    }
+
     // this is for user login access 
     public function Userlogin(Request $request)
     {
         $this->validate($request, [
-            'email'   => 'required|email',
+            'email'   => 'required',
             'password' => 'required|min:8'
         ]);
     
 
-        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true)) {
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
             if(Auth::user()->is_super == 0)
             {
                 return redirect()->route('user.dashboard');

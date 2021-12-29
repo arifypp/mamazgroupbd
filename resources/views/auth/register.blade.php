@@ -176,7 +176,7 @@
     <div class="mt-5 text-center">
 
         <div>
-            <p>Already have an account ? <a href="{{ url('login') }}" class="fw-medium text-primary">
+            <p>Already have an account ? <a href="{{ url('login/user') }}" class="fw-medium text-primary">
                     Login</a> </p>
             <p>© <script>
                     document.write(new Date().getFullYear())
