@@ -51,21 +51,20 @@
                 @endisset
                     @csrf
                     <div class="mb-3">
-                        <label for="useremail" class="form-label">Email</label>
-                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail"
-                        value="{{ old('email') }}" name="email" placeholder="Enter email" autofocus required>
-                        @error('email')
+                        <label for="username" class="form-label">Username</label>
+                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autofocus required autocomplete="username" placeholder="Enter username"> 
+                
+                        @error('username')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
                     </div>
-
                     <div class="mb-3">
-                        <label for="username" class="form-label">Username</label>
-                        <input id="username" type="text" class="form-control @error('username') is-invalid @enderror" name="username" value="{{ old('username') }}" autofocus required autocomplete="username" placeholder="Enter username"> 
-                
-                        @error('username')
+                        <label for="useremail" class="form-label">Email</label>
+                        <input type="email" class="form-control @error('email') is-invalid @enderror" id="useremail"
+                        value="{{ old('email') }}" name="email" placeholder="Enter email" autofocus required>
+                        @error('email')
                             <span class="invalid-feedback" role="alert">
                                 <strong>{{ $message }}</strong>
                             </span>
@@ -82,6 +81,33 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="phone" class="form-label">Phone Number</label>
+                        <input type="text" class="form-control @error('phone') is-invalid @enderror"
+                        value="{{ old('phone') }}" id="phone" name="phone" autofocus required
+                            placeholder="Enter phone">
+                        @error('phone')
+                            <span class="invalid-feedback" role="alert">
+                                <strong>{{ $message }}</strong>
+                            </span>
+                        @enderror
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="userdob">Date of Birth</label>
+                        <div class="input-group" id="datepicker1">
+                            <input type="text" class="form-control @error('dob') is-invalid @enderror" placeholder="dd-mm-yyyy"
+                                data-date-format="dd-mm-yyyy" data-date-container='#datepicker1' data-date-end-date="0d" value="{{ old('dob') }}"
+                                data-provide="datepicker" name="dob" autofocus required>
+                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
+                            @error('dob')
+                                <span class="invalid-feedback" role="alert">
+                                    <strong>{{ $message }}</strong>
+                                </span>
+                            @enderror
+                        </div>
                     </div>
 
                     <div class="mb-3">
@@ -104,21 +130,6 @@
                                 <strong>{{ $message }}</strong>
                             </span>
                         @enderror
-                    </div>
-
-                    <div class="mb-3">
-                        <label for="userdob">Date of Birth</label>
-                        <div class="input-group" id="datepicker1">
-                            <input type="text" class="form-control @error('dob') is-invalid @enderror" placeholder="dd-mm-yyyy"
-                                data-date-format="dd-mm-yyyy" data-date-container='#datepicker1' data-date-end-date="0d" value="{{ old('dob') }}"
-                                data-provide="datepicker" name="dob" autofocus required>
-                            <span class="input-group-text"><i class="mdi mdi-calendar"></i></span>
-                            @error('dob')
-                                <span class="invalid-feedback" role="alert">
-                                    <strong>{{ $message }}</strong>
-                                </span>
-                            @enderror
-                        </div>
                     </div>
 
                     <div class="mb-3">

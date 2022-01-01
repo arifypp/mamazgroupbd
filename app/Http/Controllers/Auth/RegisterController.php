@@ -121,6 +121,7 @@ class RegisterController extends Controller
 
         $teacher = User::create([
             'name' => $request['name'],
+            'phone' => $request['phone'],
             'username' => $request['username'],
             'email' => $request['email'],
             'referrer_id' => $referrer ? $referrer->id : null,

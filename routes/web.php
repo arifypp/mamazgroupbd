@@ -32,6 +32,10 @@ Route::group(['prefix' => '/'], function(){
 |
 */
 
+// Admin login 
+Route::get('/login/admin', 'App\Http\Controllers\Auth\LoginController@showAdminloginform')->name('Adminlogin');
+Route::post('/login/admin', 'App\Http\Controllers\Auth\LoginController@Adminlogin');
+
 // User Login
 Route::get('/login/user', 'App\Http\Controllers\Auth\LoginController@showUserloginform')->name('userlogin');
 Route::post('/login/user', 'App\Http\Controllers\Auth\LoginController@Userlogin');
@@ -47,6 +51,13 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'auth_role'], function () {
 
             Route::get('/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
+            
+        });
+    });
+    Route::group(['prefix' => 'admin'], function(){
+        Route::group(['middleware' => 'admin'], function () {
+
+            Route::get('/dashboard','App\Http\Controllers\Backend\DashboardController@index')->name('admin.dashboard');
             
         });
     });

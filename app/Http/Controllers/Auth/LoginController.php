@@ -39,6 +39,36 @@ class LoginController extends Controller
         $this->middleware('guest')->except('logout');
     }
 
+    // this is for admin 
+    public function showAdminloginform()
+    {
+        return view('auth.login', ['url'=>'admin']);
+    }
+
+    // login credentials 
+    public function Adminlogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required|min:8'
+        ]);
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
+            if(Auth::user()->is_super == 3)
+            {
+                return redirect()->route('admin.dashboard');
+            }
+            
+        }
+        return back()->withInput($request->only('email', 'remember'))->withErrors(
+            [
+                'email' => 'Email or Password doesn\'t matched in our database!',
+                'status_error'  => 'testing',
+            ]
+        );
+
+    }
+
     // This is for user login form
     public function showUserloginform(){
         return view('auth.login', ['url'=>'user']);
