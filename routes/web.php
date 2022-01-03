@@ -71,6 +71,10 @@ Route::middleware(['verified'])->group(function () {
             Route::get('/edit/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@edit')->name('settings.edit');
     
             Route::post('/update/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@update')->name('settings.update');
+
+            Route::post('/updateemail/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@updateemail')->name('basic.updateemail');
+  
+            Route::post('/updatelogo/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@updatelogo')->name('basic.updatelogo');
     
             Route::get('/delete/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@destroy')->name('settings.destroy');
     

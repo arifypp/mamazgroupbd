@@ -3,12 +3,17 @@
 
 <head>
     <meta charset="utf-8" />
-    <title> @yield('title') | Skote - Admin & Dashboard Template</title>
+    @foreach($site_settings as $value)
+    <title> @yield('title') | {{ $value->title }}</title>
+    @endforeach
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
-    <link rel="shortcut icon" href="{{ URL::asset('assets/images/favicon.ico') }}">
+    @foreach($site_settings as $value)
+    <link rel="shortcut icon" href="{{ URL::asset ('/assets/images/settings/' .$value->websitefavicondark) }}">
+    @endforeach
+    
     @include('layouts.head-css')
 </head>
 

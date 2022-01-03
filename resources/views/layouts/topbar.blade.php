@@ -3,21 +3,29 @@
         <div class="d-flex">
             <!-- LOGO -->
             <div class="navbar-brand-box">
-                <a href="index" class="logo logo-dark">
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-dark">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt="" height="22">
+                    @foreach( $site_settings as $value )
+                        <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitelogodark) }}" alt="" height="22">
+                    @endforeach
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('/assets/images/logo-dark.png') }}" alt="" height="17">
+                    @foreach( $site_settings as $value )
+                        <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitelogodark) }}" alt="" height="17">
+                    @endforeach
                     </span>
                 </a>
 
-                <a href="index" class="logo logo-light">
+                <a href="{{ route('admin.dashboard') }}" class="logo logo-light">
                     <span class="logo-sm">
-                        <img src="{{ URL::asset('/assets/images/logo-light.svg') }}" alt="" height="22">
+                    @foreach( $site_settings as $value )
+                        <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitefaviconwhite) }}" alt="" height="40">
+                    @endforeach
                     </span>
                     <span class="logo-lg">
-                        <img src="{{ URL::asset('/assets/images/logo-light.png') }}" alt="" height="19">
+                    @foreach( $site_settings as $value )
+                        <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitelogowhite) }}" alt="" height="40">
+                      @endforeach
                     </span>
                 </a>
             </div>

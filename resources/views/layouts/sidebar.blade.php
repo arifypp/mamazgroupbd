@@ -7,20 +7,20 @@
         <div id="sidebar-menu">
             <!-- Left Menu Start -->
             <ul class="metismenu list-unstyled" id="side-menu">
-                <li class="menu-title" key="t-menu">@lang('translation.Menu')</li>
+                <li class="menu-title" key="t-menu">মেনু</li>
 
                 <li>
                     <a href="{{ route('admin.dashboard') }}" class="waves-effect">
                         <i class="bx bx-home-circle"></i>
-                        <span key="t-dashboards">@lang('translation.Dashboards')</span>
+                        <span key="t-dashboards">ড্যাশবোর্ড</span>
                     </a>
                 </li>
 
-                <li class="menu-title" key="t-apps">Platform Setting</li>
+                <li class="menu-title" key="t-apps">প্লাটফর্ম সেটিং</li>
                 <li>
                     <a href="{{ route('settings.manage') }}" class="waves-effect">
                         <i class="bx bx-aperture"></i>
-                        <span key="t-settings">Basic Setting</span>
+                        <span key="t-settings">বেসিক সেটিং</span>
                     </a>
                 </li>
 
