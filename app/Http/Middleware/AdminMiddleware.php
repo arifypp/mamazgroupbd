@@ -22,7 +22,7 @@ class AdminMiddleware
             }
             else{
                 Auth::logout();
-                return redirect(url('login/admin'));
+                return redirect(url('login/admin'))->with('AuthroleErrors', 'You can not access the admin area!');
             }
         }
         else {

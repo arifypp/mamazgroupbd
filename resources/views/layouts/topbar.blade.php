@@ -25,145 +25,6 @@
             <button type="button" class="btn btn-sm px-3 font-size-16 header-item waves-effect" id="vertical-menu-btn">
                 <i class="fa fa-fw fa-bars"></i>
             </button>
-
-           <!-- App Search-->
-           <form class="app-search d-none d-lg-block">
-            <div class="position-relative">
-                <input type="text" class="form-control" placeholder="@lang('translation.Search')">
-                <span class="bx bx-search-alt"></span>
-            </div>
-        </form>
-
-        <div class="dropdown dropdown-mega d-none d-lg-block ms-2">
-            <button type="button" class="btn header-item waves-effect" data-bs-toggle="dropdown" aria-haspopup="false" aria-expanded="false">
-                <span key="t-megamenu">@lang('translation.Mega_Menu')</span>
-                <i class="mdi mdi-chevron-down"></i> 
-            </button>
-            <div class="dropdown-menu dropdown-megamenu">
-                <div class="row">
-                    <div class="col-sm-8">
-
-                        <div class="row">
-                            <div class="col-md-4">
-                                <h5 class="font-size-14 mt-0" key="t-ui-components">@lang('translation.UI_Components')</h5>
-                                <ul class="list-unstyled megamenu-list">
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-lightbox">@lang('translation.Lightbox')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-range-slider">@lang('translation.Range_Slider')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-sweet-alert">@lang('translation.Sweet_Alert')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-rating">@lang('translation.Rating')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-forms">@lang('translation.Forms')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-tables">@lang('translation.Tables')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-charts">@lang('translation.Charts')</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="col-md-4">
-                                <h5 class="font-size-14 mt-0" key="t-applications">@lang('translation.Applications')</h5>
-                                <ul class="list-unstyled megamenu-list">
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-ecommerce">@lang('translation.Ecommerce')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-calendar">@lang('translation.Calendars')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-email">@lang('translation.Email')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-projects">@lang('translation.Projects')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-tasks">@lang('translation.Tasks')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-contacts">@lang('translation.Contacts')</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="col-md-4">
-                                <h5 class="font-size-14 mt-0" key="t-extra-pages">@lang('translation.Extra_Pages')</h5>
-                                <ul class="list-unstyled megamenu-list">
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-light-sidebar">@lang('translation.Light_Sidebar')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-compact-sidebar">@lang('translation.Compact_Sidebar')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-horizontal">@lang('translation.Horizontal_layout')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-maintenance">@lang('translation.Maintenance')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-coming-soon">@lang('translation.Coming_Soon')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-timeline">@lang('translation.Timeline')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-faqs">@lang('translation.FAQs')</a>
-                                    </li>
-                        
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="row">
-                            <div class="col-sm-6">
-                                <h5 class="font-size-14 mt-0" key="t-ui-components">@lang('translation.UI_Components')</h5>
-                                <ul class="list-unstyled megamenu-list">
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-lightbox">@lang('translation.Lightbox')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-range-slider">@lang('translation.Range_Slider')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-sweet-alert">@lang('translation.Sweet_Alert')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-rating">@lang('translation.Rating')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-forms">@lang('translation.Forms')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-tables">@lang('translation.Tables')</a>
-                                    </li>
-                                    <li>
-                                        <a href="javascript:void(0);" key="t-charts">@lang('translation.Charts')</a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="col-sm-5">
-                                <div>
-                                    <img src="{{ URL::asset ('/assets/images/megamenu-img.png') }}" alt="" class="img-fluid mx-auto d-block">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
     </div>
 
     <div class="d-flex">
@@ -402,12 +263,12 @@
                 </form>
             </div>
         </div>
-
+<!-- 
         <div class="dropdown d-inline-block">
             <button type="button" class="btn header-item noti-icon right-bar-toggle waves-effect">
                 <i class="bx bx-cog bx-spin"></i>
             </button>
-        </div>
+        </div> -->
         
     </div>
 </div>

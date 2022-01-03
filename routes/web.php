@@ -58,6 +58,23 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'admin'], function () {
 
             Route::get('/dashboard','App\Http\Controllers\Backend\DashboardController@index')->name('admin.dashboard');
+
+        // Platform Settings Route For CRUD
+        Route::group(['prefix' => 'platform'], function(){
+
+            Route::get('/manage', 'App\Http\Controllers\Backend\PlatformSettingsController@index')->name('settings.manage');
+    
+            Route::get('/create', 'App\Http\Controllers\Backend\PlatformSettingsController@create')->name('settings.create');
+    
+            Route::post('/store', 'App\Http\Controllers\Backend\PlatformSettingsController@store')->name('settings.store');
+    
+            Route::get('/edit/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@edit')->name('settings.edit');
+    
+            Route::post('/update/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@update')->name('settings.update');
+    
+            Route::get('/delete/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@destroy')->name('settings.destroy');
+    
+        });
             
         });
     });

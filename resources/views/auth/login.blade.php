@@ -86,6 +86,11 @@
                                     @enderror
                                 </div>
                             </div>
+                            @if(session('AuthroleErrors'))
+                                <span class="text-danger">
+                                    <strong>{{ session('AuthroleErrors') }}</strong>
+                                </span>
+                            @enderror
 
                             <div class="form-check">
                                 <input class="form-check-input" type="checkbox" id="remember"
