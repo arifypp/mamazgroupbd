@@ -33,6 +33,12 @@ document.getElementById("defaultOpen").click();
       jQuery('.loader').fadeOut(500);
     });
   });
+  
+  $(window).on('load', function(){
+    setTimeout(function() {
+      $('#staticBackdrop').modal('show')
+    });
+  });
 </script>
 <!-- Template Main JS File -->
 <script src="{{ asset('Frontend/assets/js/main.js') }}"></script>

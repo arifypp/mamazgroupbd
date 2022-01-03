@@ -1,3 +1,14 @@
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body p-0">
+        <img src="{{ asset('Frontend/assets/img/Raw.png') }}" alt="noticeimage" width="100%">
+      </div>
+    </div>
+  </div>
+</div>
+
 <footer id="footer">
 
     <div class="footer-newsletter">
