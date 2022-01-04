@@ -24,8 +24,10 @@
        <div class="row">
           <div class="col-md-5">
              <div class="section-title">
-                <h2> আমাদের ক্লাইন্ট </h2>
-                <p> আমাদের প্রিয় ক্লাইন্টগুলো: </p>
+               @foreach( App\Models\Backend\FavClient::orderBy('id','asc')->get() as $value )
+                <h2> {{ $value->title }} </h2>
+                <p> {{ $value->desc }} </p>
+               @endforeach
              </div>
           </div>
           <div class="col-md-7">

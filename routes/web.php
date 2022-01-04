@@ -92,6 +92,11 @@ Route::middleware(['verified'])->group(function () {
 
                 Route::get('/favclient', 'App\Http\Controllers\Backend\HomepageController@favclient')->name('homesetting.favclient');
 
+                Route::post('/favclientupdate/{id}', 'App\Http\Controllers\Backend\HomepageController@favclientupdate')->name('homesetting.favclientupdate');
+
+                Route::post('/favclientlogo', 'App\Http\Controllers\Backend\HomepageController@favclientlogo')->name('homesetting.favclientlogo');
+
+
             });
             
         });

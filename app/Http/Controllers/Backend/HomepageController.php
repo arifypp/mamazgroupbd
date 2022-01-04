@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use App\Models\Backend\HompageHero;
+use App\Models\Backend\FavClient;
+use App\Models\Backend\FavclientLogo;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
@@ -27,7 +29,81 @@ class HomepageController extends Controller
 
     public function favclient()
     {
-        return view('Backend.settings.favclientsetting');
+        $favclient = FavClient::find(1);
+        return view('Backend.settings.favclientsetting', compact('favclient'));
+    }
+
+    public function favclientupdate(Request $request, $id)
+    {
+        $request->validate([
+            'title' => ['required', 'min:5'],
+            'desc' => ['required'],
+        ],
+        $message = [
+            'title.required' => 'এই ঘরটি পূরণ করুন',
+            'desc.required' => 'এই ঘরটি পূরণ করুন',
+        ]);
+
+        $favclient = FavClient::find($id);
+
+        $favclient->title       =   $request->title;
+        $favclient->desc        =   $request->desc;
+
+        $favclient->save();
+
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
+
+    }
+
+    public function favclientlogo(Request $request)
+    {
+        $request->validate([
+            'name' => ['required', 'min:5'],
+            'url' => ['required'],
+            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
+        ],
+        $message = [
+            'name.required' => 'এই ঘরটি পূরণ করুন',
+            'url.required' => 'এই ঘরটি পূরণ করুন',
+            'image.required' => 'এই ঘরটি পূরণ করুন',
+
+         ]);
+
+         $favlogo = new FavclientLogo;
+
+         $favlogo->name     =   $request->name;
+         $favlogo->url      =   $request->url;
+
+         if(!is_null($request->image)){
+            $websitefavicondark = $request->file('image');
+            if( !is_null($websitefavicondark) ){
+                // Delete Existing Image
+                if( File::exists('assets/images/clients/' . $favlogo->image) ) {
+                    File::delete('assets/images/clients/' . $favlogo->image);
+                }
+                
+                $img = rand() . '.' . $websitefavicondark->getClientOriginalExtension();
+                $location = public_path('assets/images/clients/' . $img);
+
+                Image::make($websitefavicondark)->save($location);
+                $favlogo->image = $img;
+            }
+        }
+
+        $favlogo->save();
+
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
+
     }
 
     /**

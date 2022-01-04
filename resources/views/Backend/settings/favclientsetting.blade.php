@@ -16,17 +16,18 @@
     <div class="row">
         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-4">
             <div class="card card-body">
-                <form action="" method="post">
+                <form action="{{ route('homesetting.favclientupdate', $favclient->id) }}" method="post">
+                    @csrf
                     <div class="mb-3">
                         <label for="formrow-websiteherotitle-input" class="form-label">প্রিয় ক্লাইন্ট টাইটেল</label>
-                        <input type="text" class="form-control" id="formrow-websiteherotitle-input" placeholder="টাইটেল লিখুন!">
+                        <input type="text" name="title" class="form-control" id="formrow-websiteherotitle-input" placeholder="টাইটেল লিখুন!" value="{{ $favclient->title }}">
                     </div>
                     <div class="mb-5">
                         <label for="formrow-websiteherotitle-input" class="form-label">প্রিয় ক্লাইন্ট ছোট বিবরণ</label>
-                        <textarea name="desc" id="" cols="5" rows="3" class="form-control"></textarea>
+                        <textarea name="desc" id="" cols="5" rows="3" class="form-control">{{ $favclient->desc }}</textarea>
                     </div>
                     <div class="mb-3">
-                        <button type="button" class="btn btn-primary waves-effect waves-light">সেভ করুন</button>
+                        <button type="submit" class="btn btn-primary waves-effect waves-light">সেভ করুন</button>
                     </div>
                 </form>
             </div>
@@ -42,24 +43,26 @@
                     <table class="table table-bordered dt-responsive nowrap w-100">
                         <thead>
                             <tr>
-                                <th>Name</th>
-                                <th>Position</th>
-                                <th>Office</th>
+                                <th>ক্র.নং</th>
+                                <th>লোগো</th>
+                                <th>নাম</th>
+                                <th>স্টাটার্স</th>
                             </tr>
                         </thead>
 
 
                         <tbody>
+                        @php 
+                            $i = 0;
+                        @endphp
+                        @foreach( App\Models\Backend\FavclientLogo::orderBy('id','asc')->get() as $value )
                             <tr>
-                                <td>name Nixon</td>
-                                <td>url Architect</td>
+                                <td><img src="{{ asset('assets/images/clients/'. $value->image) }}" class="img-fluid" width="50"></td>
+                                <td>{{ $value->name }}</td>
+                                <td>{{ $value->url }}</td>
                                 <td>status</td>
                             </tr>
-                            <tr>
-                                <td>Garrett Winters</td>
-                                <td>Accountant</td>
-                                <td>Tokyo</td>
-                            </tr>
+                        @endforeach    
                         </tbody>
                     </table>
                 </div>
@@ -73,11 +76,25 @@
                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                         </div>
                         <div class="modal-body">
-                            <p>I will not close if you click outside me. Don't even try to press escape key.</p>
+                            <form action="{{ route('homesetting.favclientlogo') }}" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="formrow-websiteherotitle-input" class="form-label">ক্লাইন্টের কোম্পানির নাম</label>
+                                    <input type="text" name="name" class="form-control" id="formrow-websiteherotitle-input" placeholder="কোম্পানির নাম লিখুন!">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="formrow-websiteherotitle-input" class="form-label">ক্লাইন্টের কোম্পানির ওয়েবসাইট</label>
+                                    <input type="text" name="url" class="form-control" id="formrow-websiteherotitle-input" placeholder="কোম্পানির ওয়েবসাইট লিখুন!">
+                                </div>
+                                <div class="mb-3">
+                                    <input type="file" name="image" class="form-control" id="inputGroupFile02">
+                                </div>
+                            
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">বাদ দিন</button>
-                            <button type="button" class="btn btn-primary">সেভ করুন</button>
+                            <button type="submit" class="btn btn-primary">সেভ করুন</button>
+                            </form>
                         </div>
                     </div>
                 </div>
