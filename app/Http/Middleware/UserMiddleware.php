@@ -22,7 +22,7 @@ class UserMiddleware
             }
             else{
                 Auth::logout();
-                return redirect(url('login/user'));
+                return redirect(url('login/user'))->with('AuthroleErrors', 'You can not access the user area!');
             }
         }
         else {
