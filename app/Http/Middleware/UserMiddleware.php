@@ -27,7 +27,8 @@ class UserMiddleware
         }
         else {
 			Auth::logout();
-			return redirect(url('login/user'));
+            return redirect(url('login/user'))->with('AuthroleErrors', 'Something wrong!');
+
 		}
         
         //if not user 
