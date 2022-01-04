@@ -34,8 +34,10 @@
                         <a href="index" class="auth-logo-light">
                             <div class="avatar-md profile-user-wid mb-4">
                                 <span class="avatar-title rounded-circle bg-light">
-                                    <img src="{{ URL::asset('/assets/images/logo-light.svg') }}" alt=""
+                                @foreach( $site_settings as $value )
+                                    <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitefavicondark) }}" alt=""
                                         class="rounded-circle" height="34">
+                                @endforeach
                                 </span>
                             </div>
                         </a>
@@ -43,8 +45,10 @@
                         <a href="{{ route('homepage') }}" class="auth-logo-dark">
                             <div class="avatar-md profile-user-wid mb-4">
                                 <span class="avatar-title rounded-circle bg-light">
-                                    <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt=""
+                                @foreach( $site_settings as $value )
+                                    <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitefavicondark) }}" alt=""
                                         class="rounded-circle" height="34">
+                                @endforeach
                                 </span>
                             </div>
                         </a>
@@ -106,29 +110,6 @@
                             </div>
 
                             <div class="mt-4 text-center">
-                                <h5 class="font-size-14 mb-3">Sign in with</h5>
-
-                                <ul class="list-inline">
-                                    <li class="list-inline-item">
-                                        <a href="#"
-                                            class="social-list-item bg-primary text-white border-primary">
-                                            <i class="mdi mdi-facebook"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-list-item bg-info text-white border-info">
-                                            <i class="mdi mdi-twitter"></i>
-                                        </a>
-                                    </li>
-                                    <li class="list-inline-item">
-                                        <a href="#" class="social-list-item bg-danger text-white border-danger">
-                                            <i class="mdi mdi-google"></i>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </div>
-
-                            <div class="mt-4 text-center">
                                 @if (Route::has('password.request'))
                                     <a href="{{ route('password.request') }}" class="text-muted"><i
                                             class="mdi mdi-lock me-1"></i> Forgot your password?</a>
@@ -148,7 +129,7 @@
                     <p>© <script>
                             document.write(new Date().getFullYear())
 
-                        </script> Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand
+                        </script> Mamaz Group BD. Crafted with <i class="mdi mdi-heart text-danger"></i> by HappyArif
                     </p>
                 </div>
             </div>

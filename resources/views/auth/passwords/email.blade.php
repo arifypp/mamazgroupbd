@@ -20,11 +20,11 @@
                                     <div class="col-7">
                                         <div class="text-primary p-4">
                                             <h5 class="text-primary"> Reset Password</h5>
-                                            <p>Re-Password with Skote.</p>
+                                            <p>Re-Password with Mamaz.</p>
                                         </div>
                                     </div>
                                     <div class="col-5 align-self-end">
-                                        <img src="{{ URL::asset('/assets/images/profile-img.png') }}" alt=""
+                                    <img src="{{ URL::asset('/assets/images/profile-img.png') }}" alt=""
                                             class="img-fluid">
                                     </div>
                                 </div>
@@ -34,8 +34,10 @@
                                     <a href="index">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt=""
+                                            @foreach( $site_settings as $value )
+                                                <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitefavicondark) }}" alt=""
                                                     class="rounded-circle" height="34">
+                                            @endforeach
                                             </span>
                                         </div>
                                     </a>
@@ -77,7 +79,7 @@
                             <p>© <script>
                                     document.write(new Date().getFullYear())
 
-                                </script> Skote. Crafted with <i class="mdi mdi-heart text-danger"></i> by Themesbrand</p>
+                                </script> Mamaz Group BD. Crafted with <i class="mdi mdi-heart text-danger"></i> by HappyArif</p>
                         </div>
 
                     </div>

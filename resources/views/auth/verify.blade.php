@@ -20,7 +20,7 @@
                                     <div class="col-7">
                                         <div class="text-primary p-4">
                                             <h5 class="text-primary"> Verify Password</h5>
-                                            <p>Verify Password with Skote.</p>
+                                            <p>Verify Password with mamaz.</p>
                                         </div>
                                     </div>
                                     <div class="col-5 align-self-end">
@@ -33,7 +33,10 @@
                                     <a href="index">
                                         <div class="avatar-md profile-user-wid mb-4">
                                             <span class="avatar-title rounded-circle bg-light">
-                                                <img src="{{ URL::asset('/assets/images/logo.svg') }}" alt="" class="rounded-circle" height="34">
+                                            @foreach( $site_settings as $value )
+                                                <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitefavicondark) }}" alt=""
+                                                    class="rounded-circle" height="34">
+                                            @endforeach
                                             </span>
                                         </div>
                                     </a>

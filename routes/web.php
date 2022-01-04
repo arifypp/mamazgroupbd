@@ -31,6 +31,9 @@ Route::group(['prefix' => '/'], function(){
 | contains the "web" middleware group. Now create something great!
 |
 */
+Route::get('/login', function () {
+    return redirect(route('userlogin'));
+});
 
 // Admin login 
 Route::get('/login/admin', 'App\Http\Controllers\Auth\LoginController@showAdminloginform')->name('Adminlogin');

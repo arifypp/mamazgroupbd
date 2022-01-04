@@ -3,8 +3,11 @@
     <div class="container d-flex align-items-center justify-content-between">
        <div class="col-lg-6">
           <div class="logo">
-        
-         <a href="{{ route('homepage') }}"><img src="{{ asset('Frontend/assets/img/logo.png') }}" alt="" class="img-fluid"></a>
+         <a href="{{ route('homepage') }}">
+      @foreach( $site_settings as $value )
+           <img src="{{ URL::asset ('/assets/images/settings/' .$value->websitelogodark) }}" alt="Mamaz" class="img-fluid">
+      @endforeach
+          </a>
       </div>
     </div>
      

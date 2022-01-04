@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') Website Settings @endsection
+@section('title') ওয়েবসাইট সেটিং @endsection
 
 @section('css')
     <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
