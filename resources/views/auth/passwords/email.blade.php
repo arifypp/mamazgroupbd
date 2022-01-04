@@ -5,7 +5,6 @@
 @endsection
 
 @section('body')
-
     <body>
     @endsection
 
@@ -70,7 +69,6 @@
 
                                     </form>
                                 </div>
-
                             </div>
                         </div>
                         <div class="mt-5 text-center">
