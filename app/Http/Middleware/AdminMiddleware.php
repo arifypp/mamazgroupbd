@@ -27,7 +27,7 @@ class AdminMiddleware
         }
         else {
 			Auth::logout();
-			return redirect(url('login/admin'));
+			return redirect(url('login/admin'))->with('AuthroleErrors', 'Something wrong!');
 		}
     }
 }
