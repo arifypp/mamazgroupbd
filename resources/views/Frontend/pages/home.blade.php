@@ -6,13 +6,15 @@
    <section id="hero" class="d-flex align-items-center">
       <div class="container">
          <div class="row gy-4">
+         @foreach( App\Models\Backend\HompageHero::orderBy('id','asc')->get() as $value )
             <div class="col-lg-7 order-1 order-lg-1 d-flex flex-column justify-content-center">
-               <h1> আপনার স্বপ্নের বাড়ি <br>এখন <span> আপনার হাতে</span></h1>
-               <p>নির্দিষ্ট সম্পত্তি বিশেষ করে পারিবারিক বাড়ির জন্য আপনার আর্থিক অবস্থার পরিকল্পনা করতে আপনাকে সাহায্য করুন</p>
+               <h1> {!! $value->title !!} </h1>
+               <p>{{ $value->description }}</p>
             </div>
             <div class="col-lg-5 order-2 order-lg-2 hero-img">
-               <img src="{{ asset('Frontend/assets/img/1.png') }}" class="img-fluid animated" alt="">
+               <img src="{{ asset('/assets/images/settings/'. $value->image) }}" class="img-fluid animated" alt="">
             </div>
+         @endforeach
          </div>
       </div>
    </section>

@@ -62,26 +62,37 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/dashboard','App\Http\Controllers\Backend\DashboardController@index')->name('admin.dashboard');
 
-        // Platform Settings Route For CRUD
-        Route::group(['prefix' => 'platform'], function(){
+            // Platform Settings Route For CRUD
+            Route::group(['prefix' => 'platform'], function(){
 
-            Route::get('/manage', 'App\Http\Controllers\Backend\PlatformSettingsController@index')->name('settings.manage');
-    
-            Route::get('/create', 'App\Http\Controllers\Backend\PlatformSettingsController@create')->name('settings.create');
-    
-            Route::post('/store', 'App\Http\Controllers\Backend\PlatformSettingsController@store')->name('settings.store');
-    
-            Route::get('/edit/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@edit')->name('settings.edit');
-    
-            Route::post('/update/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@update')->name('settings.update');
+                Route::get('/manage', 'App\Http\Controllers\Backend\PlatformSettingsController@index')->name('settings.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\PlatformSettingsController@create')->name('settings.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\PlatformSettingsController@store')->name('settings.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@edit')->name('settings.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@update')->name('settings.update');
 
-            Route::post('/updateemail/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@updateemail')->name('basic.updateemail');
-  
-            Route::post('/updatelogo/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@updatelogo')->name('basic.updatelogo');
+                Route::post('/updateemail/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@updateemail')->name('basic.updateemail');
     
-            Route::get('/delete/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@destroy')->name('settings.destroy');
-    
-        });
+                Route::post('/updatelogo/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@updatelogo')->name('basic.updatelogo');
+        
+                Route::get('/delete/{id}', 'App\Http\Controllers\Backend\PlatformSettingsController@destroy')->name('settings.destroy');
+        
+            });
+
+            // হোম পেইজ সেটিং
+            Route::group(['prefix' => 'homesettings'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\HomepageController@index')->name('homesetting.manage');
+
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\HomepageController@update')->name('homesetting.update');
+
+                Route::get('/favclient', 'App\Http\Controllers\Backend\HomepageController@favclient')->name('homesetting.favclient');
+
+            });
             
         });
     });

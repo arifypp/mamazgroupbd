@@ -18,6 +18,17 @@
 
                 <li class="menu-title" key="t-apps">প্লাটফর্ম সেটিং</li>
                 <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-home"></i>
+                        <span key="t-homesettings">হোম পেইজ সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('homesetting.manage') }}" key="t-tui-homehero">হিরো সেটিং</a></li>
+                        <li><a href="{{ route('homesetting.favclient') }}" key="t-full-homeclient">প্রিয় ক্লাইন্ট সেটিং</a></li>
+                    </ul>
+                </li>
+
+                <li>
                     <a href="{{ route('settings.manage') }}" class="waves-effect">
                         <i class="bx bx-aperture"></i>
                         <span key="t-settings">বেসিক সেটিং</span>

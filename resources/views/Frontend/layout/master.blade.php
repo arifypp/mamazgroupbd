@@ -17,7 +17,7 @@
       <meta property="og:image" itemprop="image primaryImageOfPage" content="{{ URL::asset ('/assets/images/settings/' .$value->websitefavicondark) }}" />
       <meta name="twitter:card" content="summary"/>
       <meta name="twitter:domain" content="{{ $value->address }}"/>
-      <meta name="twitter:title" property="og:title" itemprop="name" content="{ $value->metadesc }}" />
+      <meta name="twitter:title" property="og:title" itemprop="name" content="{{ $value->metadesc }}" />
       <meta name="twitter:description" property="og:description" itemprop="description" content="{ $value->metadesc }}" />
       @endforeach
       <!-- Google Fonts -->
