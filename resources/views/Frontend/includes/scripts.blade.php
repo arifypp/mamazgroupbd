@@ -42,3 +42,5 @@ document.getElementById("defaultOpen").click();
 </script>
 <!-- Template Main JS File -->
 <script src="{{ asset('Frontend/assets/js/main.js') }}"></script>
+
+@yield('script')

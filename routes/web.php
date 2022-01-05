@@ -55,6 +55,27 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
             
+            // Booking online
+            Route::group(['prefix' => 'booking'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Frontend\BookingController@index')->name('booking.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Frontend\BookingController@create')->name('booking.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Frontend\BookingController@store')->name('booking.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Frontend\BookingController@edit')->name('booking.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Frontend\BookingController@update')->name('booking.update');   
+        
+                Route::get('/delete/{id}', 'App\Http\Controllers\Frontend\BookingController@destroy')->name('booking.destroy');
+
+                /* Dependent Table CRUD */
+                Route::post('/district-by-division', 'App\Http\Controllers\Frontend\BookingController@getDistrictsByDivision')->name('divisions');
+                Route::post('/thana-by-district', 'App\Http\Controllers\Frontend\BookingController@getThanaByDistrict')->name('district');
+        
+            });
+
         });
     });
     Route::group(['prefix' => 'admin'], function(){

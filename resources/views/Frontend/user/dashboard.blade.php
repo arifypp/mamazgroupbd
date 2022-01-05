@@ -30,22 +30,28 @@
             
                 <div class="card mt-3">
                   <ul class="list-group list-group-flush">
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap active">
-                      <a href="dashboard.html"><h6><i class="fas fa-tachometer-alt"></i>Dashboard</h6></a>
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('user.dashboard') || Route::currentRouteNamed('user.dashboard') || Route::currentRouteNamed('user.dashboard') ) active @endif">
+                      <a href="{{ route('user.dashboard') }}"><h6><i class="fas fa-tachometer-alt"></i>ড্যাশবোর্ড</h6></a>
                      
                     </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('booking.manage') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
+                      <a href="{{ route('booking.manage') }}"><h6><i class="fas fa-sticky-note"></i>বুকিং দিন</h6></a>
+                     
+                    </li>
+
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
-                      <a href="report.html"><h6><i class="fas fa-sticky-note"></i>Report</h6></a>
+                      <a href="report.html"><h6><i class="fas fa-sticky-note"></i>রিপোট</h6></a>
                      
                     </li>
+                    
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap ">
-                      <a href="profile.html"><h6><i class="fas fa-user-cog"></i>Profile Setting</h6></a>
+                      <a href="profile.html"><h6><i class="fas fa-user-cog"></i>প্রোফাইল সেটিং</h6></a>
                      
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">
                       <a href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">
-                        <h6><i class="fas fa-power-off"></i>Logout</h6>
-                    </a>    
+                          <h6><i class="fas fa-power-off"></i>লগ আউট</h6>
+                      </a>    
                     <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
                         {{ csrf_field() }}
                     </form>                     
