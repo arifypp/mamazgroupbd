@@ -250,22 +250,156 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <div class="form-group">
-                                      <label for="flat">গ্রাম/শহর/রাস্তা/বাড়ি/ফ্ল্যাট</label>
-                                      <textarea name="flat" id="" cols="3" rows="3" class="form-control"></textarea>
-                                  </div>
+                                    <label for="nominyaddress"> নমিনীর নাম</label>
+                                    <input type="text" name="nominyaddress" id="" class="form-control" placeholder="নমীনির নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">পোস্ট অফিস</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="মাতার মোবাইল নাম্বার লিখুন">
+                                    <label for="nominyphone"> নমিনীর মোবাইল নাম্বার</label>
+                                    <input type="text" name="nominyphone" id="nominyphone" class="form-control" placeholder="নমীনির নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">পোস্ট কোড</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="মাতার মোবাইল নাম্বার লিখুন">
+                                    <label for="nominiaddress">নমীনির ঠিকানা</label>
+                                    <textarea name="nominyaddress" id="" cols="3" rows="3" class="form-control"></textarea>                                    
+                                </div>
+                                <div class="form-group">
+                                    <label for="nominynid">ভোটার আইডি নং / জন্ম নিবন্ধন / পাসপোর্ট</label>
+                                    <input type="text" name="nominynid" id="nominynid" class="form-control" placeholder="নাম্বার লিখুন">
+                                </div>
+                                <div class="form-group">
+                                    <label for="nominyrelatoin">নমীনির সাথে সম্পর্ক</label>
+                                    <select name="nominyrelatoin" id="nominyrelatoin" class="form-control">
+                                        <option>-সম্পর্ক নির্বাচন করুন-</option>
+                                        <option value="পিতা">পিতা</option>
+                                        <option value="মাতা">মাতা</option>
+                                        <option value="ভাই">ভাই</option>
+                                        <option value="বোন">বোন</option>
+                                        <option value="স্ত্রী">স্ত্রী</option>
+                                        <option value="চাচা">চাচা</option>
+                                        <option value="খালু">খালু</option>
+                                        <option value="মামা">মামা</option>
+                                        <option value="ফুফা">ফুফা</option>
+                                        <option value="সন্তান">সন্তান</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    <!-- Referel Info -->
+                    <div class="col-md-6">
+                        <div class="card mb-6 p-2">
+                            <div class="card-header text-left">
+                               যার মাধ্যমে মামাজের সঙ্গে পরিচয়
+                            </div>
+                            <div class="card-body">
+                                @php 
+                                    $user  = auth()->user()->referrer_id;
+                                    $userid = App\Models\User::where('id', $user)->get();
+                                @endphp
+                                <div class="form-group">
+                                    <label for="referelname">রেফারেল নাম</label>
+                                    <input type="text" name="referelname" id="referelname" class="form-control" value="{{ $userid['0']->name }}" readonly>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="motherphone">রেফারেল মোবাইল নং</label>
+                                    <input type="text" name="motherphone" id="motherphone" class="form-control" value="{{ $userid['0']->phone }}" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="motherphone">রেফারেল ইমেইল</label>
+                                    <input type="text" name="motherphone" id="motherphone" class="form-control" value="{{ $userid['0']->email }}" readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Flat/Land Info -->
+                    <div class="col-md-6">
+                        <div class="card mb-6 p-2">
+                            <div class="card-header text-left">
+                               ফ্ল্যাট বা জমির পরিমান
+                            </div>
+                            <div class="card-body">
+                                <div class="form-group">
+                                    <label for="referelname">প্লট বা জমির পরিমান</label>
+                                    <select name="" id="" class="form-control">
+                                        <option>ফ্ল্যাটের ধরুন নির্বাচন করুন</option>
+                                        <option value="৫০০">৫০০ SFT</option>
+                                        <option value="১০০০">১০০০ SFT</option>
+                                        <option value="১৫০০">১৫০০ SFT</option>
+                                        <option value="২০০০">২০০০ SFT</option>
+                                    </select>
+                                </div>
+                                
+                                <div class="form-group">
+                                    <label for="motherphone">বুকিং টাকার পরিমাণ</label>
+                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="টাকার পরিমান বসান">
+                                </div>
+                                <div class="form-group">
+                                    <label for="bookingmoney">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</label>
+                                    <select name="bookingmoney" id="bookingmoney" class="form-control">
+                                        <option>টাকা পাঠানোর মাধ্যম নির্বাচন করুন</option>
+                                        <option value="bank">ব্যাংক</option>
+                                        <option value="bkash">বিকাশ</option>
+                                        <option value="Nagad">নগদ</option>
+                                        <option value="rocket">রকেট</option>
+                                        <option value="handcash">নগদ প্রদান</option>
+                                    </select>
+                                </div>
+                                <!-- Bank transictoin -->
+                                <div class="form-group" id="banktransaction" style="display:none;">
+                                    <label for="banktransaction">ব্যাংক স্লিপ নাম্বার</label>
+                                    <input type="text" name="banktransaction" class="form-control" placeholder="স্লিপ নাম্বার বসান">
+                                </div>
+                                <div class="form-group" id="bankreferenceno" style="display:none;">
+                                    <label for="bankreferenceno">ব্যাংক রেফারেন্স নাম্বার</label>
+                                    <input type="text" name="bankreferenceno" class="form-control" placeholder="রেফারেন্স নাম্বার বসান">
+                                </div>
+                                <!-- Bkash transictoin -->
+                                <div class="form-group" id="bkashtransiction" style="display:none;">
+                                    <label for="bkashtransiction">বিকাশ ট্রান্জিকশন নাম্বার</label>
+                                    <input type="text" name="bkashtransiction" class="form-control" placeholder="নাম্বার বসান">
+                                </div>
+                                <div class="form-group" id="bkashnumber" style="display:none;">
+                                    <label for="bkashnumber">বিকাশ নাম্বার</label>
+                                    <input type="text" name="bkashnumber" class="form-control" placeholder="নাম্বার বসান">
+                                </div>
+                                <!-- Nagad transictoin -->
+                                <div class="form-group" id="nagadtransiction" style="display:none;">
+                                    <label for="nagadtransiction">নগদ ট্রান্জিকশন নাম্বার</label>
+                                    <input type="text" name="nagadtransiction" class="form-control" placeholder="নাম্বার বসান">
+                                </div>
+                                <div class="form-group" id="nagadnumber" style="display:none;">
+                                    <label for="nagadnumber">নগদ নাম্বার</label>
+                                    <input type="text" name="nagadnumber" class="form-control" placeholder="নাম্বার বসান">
+                                </div>
+                                <!-- Rocket transictoin -->
+                                <div class="form-group" id="rockettransiction" style="display:none;">
+                                    <label for="rockettransiction">রকেট ট্রান্জিকশন নাম্বার</label>
+                                    <input type="text" name="rockettransiction" class="form-control" placeholder="নাম্বার বসান">
+                                </div>
+                                <div class="form-group" id="rocketnumber" style="display:none;">
+                                    <label for="rocketnumber">রকেট নাম্বার</label>
+                                    <input type="text" name="rocketnumber" class="form-control" placeholder="নাম্বার বসান">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Primary Notice Info -->
+                    <div class="col-md-6">
+                        <div class="card mb-6 p-2">
+                            <div class="card-header text-left">
+                                প্লটের / জমির ঠিকানা
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-primary">
+                                    সম্মানিত গ্রাহক ও ক্রেতাগন। আপনার জমির ঠিকানা আমাদের নির্ধারিত ক্রয় করা প্লট/জমির এলাকা থেকে দেওয়া হইবে। উল্লেখিত জায়গা বা স্থান গুলো আমাদের কোম্পানির ম্যানেজার অথবা এমডি নিজে নির্বাচন করবে। সেক্ষেত্রে প্রত্যেক গ্রাহককে তার জায়গার বা ফ্ল্যাটের টিকানা মোবাইল ফোনের মাধ্যমে জানানো হইবে। 
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group text-right float-right" style="float:right;">
+                            <button type="submit" class="btn btn-primary text-right">সাবমিট করুন</button>
+                        </div>
+                    </div>
+                    <!-- End -->
                 </div>
               </div>
             </div>
@@ -338,6 +472,60 @@
             } else {
                 $("#spousename").hide();
                 $("#spousephonenumber").hide();
+            }
+        });
+    });
+
+// Booking money
+    $(function () {
+        $("#bookingmoney").change(function () {
+            if ($(this).val() == "bank") {
+                $("#banktransaction").show();
+                $("#bankreferenceno").show();
+                $("#bkashtransiction").hide();
+                $("#bkashnumber").hide();
+                $("#bkashnumber").hide();
+                $("#nagadnumber").hide();
+                $("#nagadtransiction").hide();
+                $("#rockettransiction").hide();
+                $("#rocketnumber").hide();              
+
+            } else if ($(this).val() == "bkash") {
+                $("#bkashtransiction").show();
+                $("#bkashnumber").show();
+                $("#banktransaction").hide();
+                $("#bankreferenceno").hide();
+                $("#nagadnumber").hide();
+                $("#nagadtransiction").hide();
+                $("#rockettransiction").hide();
+                $("#rocketnumber").hide();
+            }else if($(this).val() == "Nagad") {
+                $("#nagadnumber").show();
+                $("#nagadtransiction").show();
+                $("#bkashtransiction").hide();
+                $("#bkashnumber").hide();
+                $("#banktransaction").hide();
+                $("#bankreferenceno").hide();
+                $("#rockettransiction").hide();
+                $("#rocketnumber").hide();
+            }else if ($(this).val() == "rocket") {
+                $("#rockettransiction").show();
+                $("#rocketnumber").show();
+                $("#nagadnumber").hide();
+                $("#nagadtransiction").hide();
+                $("#bkashtransiction").hide();
+                $("#bkashnumber").hide();
+                $("#banktransaction").hide();
+                $("#bankreferenceno").hide();
+            }else {
+                $("#bkashtransiction").hide();
+                $("#bkashnumber").hide();
+                $("#banktransaction").hide();
+                $("#bankreferenceno").hide();
+                $("#nagadnumber").hide();
+                $("#nagadtransiction").hide();
+                $("#rockettransiction").hide();
+                $("#rocketnumber").hide();
             }
         });
     });

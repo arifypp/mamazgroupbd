@@ -82,11 +82,7 @@
           </li>
           <li ><a class="nav-link scrollto @if( Route::currentRouteNamed('contact')) active @endif" href="{{ route('contact') }}">যোগাযোগ</a></li>
           @if( auth()->user() )
-          <li><a class="getstarted scrollto" href="{{ route('logout') }}" onclick="event.preventDefault(); document.getElementById('frm-logout').submit();">সাইনআউট করুন </a>
-          <form id="frm-logout" action="{{ route('logout') }}" method="POST" style="display: none;">
-                {{ csrf_field() }}
-            </form>
-        
+          <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড </a>
         </li>
           @else
           <li><a class="getstarted scrollto" href="{{ route('userlogin') }}">সাইনইন করুন </a></li>
