@@ -62,6 +62,8 @@
   
   
                <div class="col-md-10"style="background-color: #F8FAFD; padding-top: 0px;">
+               <form action="" method="post" enctype="multipart/form-data" id="submitform">
+                        @csrf
                 <div class="row">
                     <!-- Personal Info -->
                     <div class="col-md-6">
@@ -81,20 +83,22 @@
                                 <div class="form-group">
                                     <label for="religion">ধর্ম </label>
                                     <select name="religion" id="religion" class="form-control">
-                                        <option selected>নির্বাচন করুন</option>
+                                        <option value="0">নির্বাচন করুন</option>
                                         <option value="ইসলাম">ইসলাম</option>
                                         <option value="হিন্দু">হিন্দু</option>
                                         <option value="খ্রিস্টান">খ্রিস্টান</option>
                                         <option value="অন্যান্য">অন্যান্য</option>
                                     </select>
+                                    <span class="text-danger">@error('religion'){{ $message }} @enderror</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="nationality">জাতীয়তা</label>
                                     <select name="nationality" id="nationality" class="form-control">
-                                        <option selected>নির্বাচন করুন</option>
+                                        <option value="0">নির্বাচন করুন</option>
                                         <option value="বাংলাদেশ">বাংলাদেশ</option>
                                         <option value="অন্যান্য">অন্যান্য</option>
                                     </select>
+                                    <span class="text-danger">@error('nationality'){{ $message }} @enderror</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="nidnumber">ভোটার আইডি নং</label>
@@ -107,13 +111,14 @@
                                 <div class="form-group">
                                     <label for="maritalstatus">বৈবাহিক অবস্থা</label>
                                     <select name="maritalstatus" id="maritalstatus" class="form-control">
-                                        <option>বৈবাহিক অবস্থা নিবার্চন করুন</option>
+                                        <option value="0">বৈবাহিক অবস্থা নিবার্চন করুন</option>
                                         <option value="অবিবাহিত">অবিবাহিত</option>
                                         <option value="বিবাহিত">বিবাহিত</option>
                                         <option value="ডিভোর্সড">ডিভোর্সড</option>
                                         <option value="বিধবা">বিধবা</option>
                                         <option value="বিপত্নীক">বিপত্নীক</option>
                                     </select>
+                                    <span class="text-danger">@error('maritalstatus'){{ $message }} @enderror</span>
                                 </div>
                             </div>
                         </div>
@@ -130,7 +135,7 @@
                                     <input type="text" name="fathername" id="fathername" class="form-control" placeholder="পিতার নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="fatherphone">পিতার মোবাইল নাম্বার</label>
+                                    <label for="fatherphone">পিতার মোবাইল নাম্বার (যদি থাকে)</label>
                                     <input type="text" name="fatherphone" id="fatherphone" class="form-control" placeholder="পিতার মোবাইল নাম্বার লিখুন">
                                 </div>
                                 <div class="form-group">
@@ -138,12 +143,13 @@
                                     <input type="text" name="mothername" id="mothername" class="form-control" placeholder="মাতার নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">মাতার মোবাইল নাম্বার</label>
+                                    <label for="motherphone">মাতার মোবাইল নাম্বার (যদি থাকে)</label>
                                     <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="মাতার মোবাইল নাম্বার লিখুন">
                                 </div>
                                 <div class="form-group" id="spousename" style="display:none;">
                                     <label for="spousename">স্বামী/স্ত্রীর নাম</label>
                                     <input type="text" name="spousename" id="" class="form-control" placeholder="স্বামী/স্ত্রীর নাম লিখুন">
+                                    <span id="error"></span>
                                 </div>
                                 <div class="form-group" id="spousephonenumber" style="display:none;">
                                     <label for="spousephonenumber">স্বামী/স্ত্রীর মোবাইল নাম্বার</label>
@@ -161,18 +167,19 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="form-group">
-                                      <label for="flat">গ্রাম/শহর/রাস্তা/বাড়ি/ফ্ল্যাট</label>
-                                      <textarea name="flat" id="" cols="3" rows="3" class="form-control"></textarea>
+                                      <label for="flatorhouse">গ্রাম/শহর/রাস্তা/বাড়ি/ফ্ল্যাট</label>
+                                      <textarea name="flatorhouse" id="" cols="3" rows="3" class="form-control"></textarea>
                                   </div>
                                 </div>
                                 <div class="form-group">
                                     <label for="fatherphone">বিভাগ</label>
                                     <select class="form-control" id="division" name="division" required>
-                                        <option value="">--বিভাগ নিবার্চন করুন--</option>
+                                        <option value="0">--বিভাগ নিবার্চন করুন--</option>
                                         @foreach ($divisions as $division)
                                         <option value="{{ $division->id }}">{{ $division->bn_name }}</option>
                                         @endforeach
                                     </select>
+                                    <span class="text-danger">@error('division'){{ $message }} @enderror</span>
                                 </div>
                                 <div class="form-group">
                                     <label for="fatherphone">জেলা</label>
@@ -181,18 +188,18 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="mothername">থানা/উপজেলা</label>
+                                    <label for="thana">থানা/উপজেলা</label>
                                     <select class="form-control" id="thana" name="thana" required>
                                         <option value="">--থানা নিবার্চন করুন--</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">পোস্ট অফিস</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="মাতার মোবাইল নাম্বার লিখুন">
+                                    <label for="ppostoffice">পোস্ট অফিস</label>
+                                    <input type="text" name="ppostoffice" id="ppostoffice" class="form-control" placeholder="আপনার পোস্ট অফিসের নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">পোস্ট কোড</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="মাতার মোবাইল নাম্বার লিখুন">
+                                    <label for="ppostcode">পোস্ট কোড</label>
+                                    <input type="text" name="ppostcode" id="ppostcode" class="form-control" placeholder="আপনার পোস্ট অফিসের কোড লিখুন">
                                 </div>
                             </div>
                         </div>
@@ -206,13 +213,13 @@
                             <div class="card-body">
                                 <div class="form-group">
                                     <div class="form-group">
-                                      <label for="flat">গ্রাম/শহর/রাস্তা/বাড়ি/ফ্ল্যাট</label>
-                                      <textarea name="flat" id="" cols="3" rows="3" class="form-control"></textarea>
+                                      <label for="permanenthouse">গ্রাম/শহর/রাস্তা/বাড়ি/ফ্ল্যাট</label>
+                                      <textarea name="permanenthouse" id="permanenthouse" cols="3" rows="3" class="form-control"></textarea>
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fatherphone">বিভাগ</label>
-                                    <select class="form-control" id="division" name="division" required>
+                                    <label for="permanetdivision">বিভাগ</label>
+                                    <select class="form-control" id="permanetdivision" name="permanetdivision" required>
                                         <option value="">--বিভাগ নিবার্চন করুন--</option>
                                         @foreach ($divisions as $division)
                                         <option value="{{ $division->id }}">{{ $division->bn_name }}</option>
@@ -220,24 +227,24 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fatherphone">জেলা</label>
-                                    <select class="form-control" id="district" name="district" required>
+                                    <label for="permanentdistrict">জেলা</label>
+                                    <select class="form-control" id="permanentdistrict" name="permanentdistrict" required>
                                         <option value="">--জেলা নিবার্চন করুন--</option>
                                     </select>
                                 </div>
-                                <div class="form-group">
+                                <div class="form-permanentthana">
                                     <label for="mothername">থানা/উপজেলা</label>
-                                    <select class="form-control" id="thana" name="thana" required>
+                                    <select class="form-control" id="permanentthana" name="permanentthana" required>
                                         <option value="">--থানা নিবার্চন করুন--</option>
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">পোস্ট অফিস</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="মাতার মোবাইল নাম্বার লিখুন">
+                                    <label for="permanentpostcode">পোস্ট অফিস</label>
+                                    <input type="text" name="permanentpostcode" id="permanentpostcode" class="form-control" placeholder="আপনার পোস্ট অফিসের নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">পোস্ট কোড</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="মাতার মোবাইল নাম্বার লিখুন">
+                                    <label for="permanentaddress">পোস্ট কোড</label>
+                                    <input type="text" name="permanentaddress" id="permanentaddress" class="form-control" placeholder="আপনার পোস্ট অফিসের কোড লিখুন">
                                 </div>
                             </div>
                         </div>
@@ -250,16 +257,16 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="nominyaddress"> নমিনীর নাম</label>
-                                    <input type="text" name="nominyaddress" id="" class="form-control" placeholder="নমীনির নাম লিখুন">
+                                    <label for="nominyname"> নমিনীর নাম</label>
+                                    <input type="text" name="nominyname" id="nominyname" class="form-control" placeholder="নমীনির নাম লিখুন">
                                 </div>
                                 <div class="form-group">
                                     <label for="nominyphone"> নমিনীর মোবাইল নাম্বার</label>
                                     <input type="text" name="nominyphone" id="nominyphone" class="form-control" placeholder="নমীনির নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="nominiaddress">নমীনির ঠিকানা</label>
-                                    <textarea name="nominyaddress" id="" cols="3" rows="3" class="form-control"></textarea>                                    
+                                    <label for="nominyaddress">নমীনির ঠিকানা</label>
+                                    <textarea name="nominyaddress" id="nominyaddress" cols="3" rows="3" class="form-control"></textarea>                                    
                                 </div>
                                 <div class="form-group">
                                     <label for="nominynid">ভোটার আইডি নং / জন্ম নিবন্ধন / পাসপোর্ট</label>
@@ -268,7 +275,7 @@
                                 <div class="form-group">
                                     <label for="nominyrelatoin">নমীনির সাথে সম্পর্ক</label>
                                     <select name="nominyrelatoin" id="nominyrelatoin" class="form-control">
-                                        <option>-সম্পর্ক নির্বাচন করুন-</option>
+                                        <option value="0">-সম্পর্ক নির্বাচন করুন-</option>
                                         <option value="পিতা">পিতা</option>
                                         <option value="মাতা">মাতা</option>
                                         <option value="ভাই">ভাই</option>
@@ -280,6 +287,7 @@
                                         <option value="ফুফা">ফুফা</option>
                                         <option value="সন্তান">সন্তান</option>
                                     </select>
+                                    <span class="text-danger">@error('nominyrelatoin'){{ $message }} @enderror</span>
                                 </div>
                             </div>
                         </div>
@@ -319,30 +327,32 @@
                             </div>
                             <div class="card-body">
                                 <div class="form-group">
-                                    <label for="referelname">প্লট বা জমির পরিমান</label>
-                                    <select name="" id="" class="form-control">
-                                        <option>ফ্ল্যাটের ধরুন নির্বাচন করুন</option>
+                                    <label for="flatvalue">প্লট বা জমির পরিমান</label>
+                                    <select name="flatvalue" id="flatvalue" class="form-control">
+                                        <option value="0">ফ্ল্যাটের ধরুন নির্বাচন করুন</option>
                                         <option value="৫০০">৫০০ SFT</option>
                                         <option value="১০০০">১০০০ SFT</option>
                                         <option value="১৫০০">১৫০০ SFT</option>
                                         <option value="২০০০">২০০০ SFT</option>
                                     </select>
+                                    <span class="text-danger">@error('flatvalue'){{ $message }} @enderror</span>
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="motherphone">বুকিং টাকার পরিমাণ</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" placeholder="টাকার পরিমান বসান">
+                                    <label for="bookingmoney">বুকিং টাকার পরিমাণ</label>
+                                    <input type="text" name="bookingmoney" id="bookingmoney" class="form-control" placeholder="টাকার পরিমান বসান">
                                 </div>
                                 <div class="form-group">
-                                    <label for="bookingmoney">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</label>
-                                    <select name="bookingmoney" id="bookingmoney" class="form-control">
-                                        <option>টাকা পাঠানোর মাধ্যম নির্বাচন করুন</option>
+                                    <label for="bookingmoneymehtod">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</label>
+                                    <select name="bookingmoneymehtod" id="bookingmoneymehtod" class="form-control">
+                                        <option value="0">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</option>
                                         <option value="bank">ব্যাংক</option>
                                         <option value="bkash">বিকাশ</option>
                                         <option value="Nagad">নগদ</option>
                                         <option value="rocket">রকেট</option>
                                         <option value="handcash">নগদ প্রদান</option>
                                     </select>
+                                    <span class="text-danger">@error('bookingmoneymehtod'){{ $message }} @enderror</span>
                                 </div>
                                 <!-- Bank transictoin -->
                                 <div class="form-group" id="banktransaction" style="display:none;">
@@ -396,12 +406,13 @@
                             </div>
                         </div>
                         <div class="form-group text-right float-right" style="float:right;">
-                            <button type="submit" class="btn btn-primary text-right">সাবমিট করুন</button>
+                            <button type="submit" id="submitform" class="btn btn-primary text-right">সাবমিট করুন</button>
                         </div>
                     </div>
                     <!-- End -->
                 </div>
               </div>
+              </form>
             </div>
           </div>
       </div>
@@ -463,6 +474,61 @@
         }
       });
   });
+  
+
+//   parmanent address
+$("#permanetdivision").on('change',function(e){
+    e.preventDefault();
+    var ddlDistrict=$("#permanentdistrict");
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      type:'POST',
+      url: "{{ route('divisions') }}",
+      data:{_token:$('input[name=_token]').val(),division:$(this).val()},
+      success:function(response){
+          // var jsonData=JSON.parse(response);
+          $('option', ddlDistrict).remove();
+          $('#permanentdistrict').append('<option value="">--বিভাগ নিবার্চন করুন--</option>');
+          $.each(response, function(){
+            $('<option/>', {
+              'value': this.id,
+              'text': this.bn_name
+            }).appendTo('#permanentdistrict');
+          });
+        }
+
+    });
+  });
+
+  $("#permanentdistrict").on('change',function(e){
+    e.preventDefault();
+    var ddlthana=$("#permanentthana");
+    $.ajaxSetup({
+      headers: {
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      }
+    });
+    $.ajax({
+      type:'POST',
+      url: "{{ route('district') }}",
+      data:{_token:$('input[name=_token]').val(),districts:$(this).val()},
+      success:function(response){
+          // var jsonData=JSON.parse(response);
+          $('option', ddlthana).remove();
+          $('#permanentthana').append('<option value="">--থানা নিবার্চন করুন--</option>');
+          $.each(response, function(){
+            $('<option/>', {
+              'value': this.id,
+              'text': this.bn_name
+            }).appendTo('#permanentthana');
+          });
+        }
+      });
+  });
 
   $(function () {
         $("#maritalstatus").change(function () {
@@ -478,7 +544,7 @@
 
 // Booking money
     $(function () {
-        $("#bookingmoney").change(function () {
+        $("#bookingmoneymehtod").change(function () {
             if ($(this).val() == "bank") {
                 $("#banktransaction").show();
                 $("#bankreferenceno").show();
@@ -529,6 +595,39 @@
             }
         });
     });
+
+// Submit form
+$(function(){
+                $.ajaxSetup({
+                headers: {
+                        "X-CSRFToken": '{{csrf_token()}}'
+                    }
+                });
+                $('#submitform').submit(function(e){
+                    e.preventDefault();
+                    var mydata = $(this).serialize();
+                    $.ajax({
+                        method : 'POST',
+                        url : "{{ route('booking.store') }}",
+                        data:mydata,
+                        success: function(response) {
+                            if(response.success){
+                                toastr.success(response.message);
+                            }
+                            
+                    },
+                    error:function (response){
+                        $('.text-danger').html('');
+                        $('.text-danger').delay(5000).fadeOut();
+                        $.each(response.responseJSON.errors,function(field_name,error){
+                            $(document).find('[name='+field_name+']').after('<span class="text-strong text-danger">' +error+ '</span>')
+                        })
+                    }
+                    })
+                })
+
+            })
+
 
 </script>
  @endsection
