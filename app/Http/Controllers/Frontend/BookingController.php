@@ -59,7 +59,7 @@ class BookingController extends Controller
      */
     public function create()
     {
-        //
+        //this command for generate pdf
         $mpdf = new \Mpdf\Mpdf([
             'default_font_size' =>  14,
             'default_font' => 'notosansbengali'
@@ -69,7 +69,6 @@ class BookingController extends Controller
         $mpdf->WriteHTML($this->pdfHTML());
 
         // Output a pdf directory to the browser
-
         $mpdf->Output();
     }
 
