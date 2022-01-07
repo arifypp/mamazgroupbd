@@ -8,7 +8,11 @@
 <script src="{{ asset('Frontend/assets/vendor/isotope-layout/isotope.pkgd.min.js') }}"></script>
 <script src="{{ asset('Frontend/assets/vendor/swiper/swiper-bundle.min.js') }}"></script>
 <script src="{{ asset('Frontend/assets/vendor/php-email-form/validate.js') }}"></script>
+<!-- toastr plugin -->
+<script src="{{ asset('/assets/libs/toastr/toastr.min.js') }}"></script>
 
+<!-- toastr init -->
+<script src="{{ asset('/assets/js/pages/toastr.init.js') }}"></script>
 <script>
 function openCity(evt, cityName) {
 var i, tabcontent, tablinks;
@@ -39,6 +43,42 @@ document.getElementById("defaultOpen").click();
       $('#staticBackdrop').modal('show')
     });
   });
+  toastr.options = {
+                    "closeButton": true,
+                    "debug": false,
+                    "newestOnTop": true,
+                    "progressBar": true,
+                    "positionClass": "toast-top-right",
+                    "preventDuplicates": false,
+                    "onclick": null,
+                    "showDuration": 300,
+                    "hideDuration": 1000,
+                    "timeOut": 5000,
+                    "extendedTimeOut": 1000,
+                    "showEasing": "swing",
+                    "hideEasing": "linear",
+                    "showMethod": "fadeIn",
+                    "hideMethod": "fadeOut"
+                    }
+	
+	@if (Session::has('message') )
+            var type="{{ Session::get('alert-type', 'info') }}";
+                switch (type)
+                {
+                    case'info':
+                        toastr.info("{{ Session::get('message') }}");
+                    break;
+                    case'success':
+                        toastr.success("{{ Session::get('message') }}");
+                    break;
+                    case'warning':
+                        toastr.warning("{{ Session::get('message') }}");
+                    break;
+                    case'error':
+                        toastr.error("{{ Session::get('message') }}");
+                    break;
+                }
+    @endif
 </script>
 <!-- Template Main JS File -->
 <script src="{{ asset('Frontend/assets/js/main.js') }}"></script>

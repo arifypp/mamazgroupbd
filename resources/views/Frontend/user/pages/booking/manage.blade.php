@@ -239,12 +239,12 @@
                                     </select>
                                 </div>
                                 <div class="form-group">
-                                    <label for="permanentpostcode">পোস্ট অফিস</label>
-                                    <input type="text" name="permanentpostcode" id="permanentpostcode" class="form-control" placeholder="আপনার পোস্ট অফিসের নাম লিখুন">
+                                    <label for="permanentpostoffice">পোস্ট অফিস</label>
+                                    <input type="text" name="permanentpostoffice" id="permanentpostoffice" class="form-control" placeholder="আপনার পোস্ট অফিসের নাম লিখুন">
                                 </div>
                                 <div class="form-group">
-                                    <label for="permanentaddress">পোস্ট কোড</label>
-                                    <input type="text" name="permanentaddress" id="permanentaddress" class="form-control" placeholder="আপনার পোস্ট অফিসের কোড লিখুন">
+                                    <label for="permanentpostcode">পোস্ট কোড</label>
+                                    <input type="text" name="permanentpostcode" id="permanentpostcode" class="form-control" placeholder="আপনার পোস্ট অফিসের কোড লিখুন">
                                 </div>
                             </div>
                         </div>
@@ -309,12 +309,12 @@
                                 </div>
                                 
                                 <div class="form-group">
-                                    <label for="motherphone">রেফারেল মোবাইল নং</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" value="{{ $userid['0']->phone }}" readonly>
+                                    <label for="referelphone">রেফারেল মোবাইল নং</label>
+                                    <input type="text" name="referelphone" id="referelphone" class="form-control" value="{{ $userid['0']->phone }}" readonly>
                                 </div>
                                 <div class="form-group">
-                                    <label for="motherphone">রেফারেল ইমেইল</label>
-                                    <input type="text" name="motherphone" id="motherphone" class="form-control" value="{{ $userid['0']->email }}" readonly>
+                                    <label for="referelemail">রেফারেল ইমেইল</label>
+                                    <input type="text" name="referelemail" id="referelemail" class="form-control" value="{{ $userid['0']->email }}" readonly>
                                 </div>
                             </div>
                         </div>
@@ -614,6 +614,9 @@ $(function(){
                             if(response.success){
                                 toastr.success(response.message);
                             }
+                            setTimeout(function(){
+                                document.getElementById("submitform").reset();
+                            }, 3000);
                             
                     },
                     error:function (response){

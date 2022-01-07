@@ -8,3 +8,5 @@
 <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css" integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous"/>
 <!-- Template Main CSS File -->
 <link href="{{ asset('Frontend/assets/css/style.css') }}" rel="stylesheet">
+<!-- Tostr Notification -->
+<link rel="stylesheet" type="text/css" href="{{ asset('/assets/libs/toastr/toastr.min.css') }}">

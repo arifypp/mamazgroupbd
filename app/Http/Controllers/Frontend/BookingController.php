@@ -3,11 +3,15 @@
 namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
-use Illuminate\Http\Request;
 use lemonpatwari\bangladeshgeocode\Models\Division;
+use App\Models\Frontend\Booking;
+use App\Models\User;
+use App\Notifications\BookingNotification;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Http\Request;
 use Response;
 use DB;
-
+use Session;
 class BookingController extends Controller
 {
     /**
@@ -63,35 +67,42 @@ class BookingController extends Controller
     {
       
         $request->validate([
-            'name'          =>      ['required', 'alpha'],
+            'name'          =>      ['required'],
             'phonenumber'   =>      ['required', 'min:10', 'numeric'],
             'religion'      =>      ['required', 'not_in:0'],
             'nationality'   =>      ['required', 'not_in:0'],
             'nidnumber'     =>      ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
             'dob'           =>      ['required', 'before:today'],
             'maritalstatus' =>      ['required', 'not_in:0'],
-            'fathername'    =>      ['required', 'alpha'],
-            'mothername'    =>      ['required', 'alpha'],
+            'fathername'    =>      ['required'],
+            'mothername'    =>      ['required'],
             'spousename'    =>      ['required_if:maritalstatus,বিবাহিত'],
-            'flatorhouse'   =>      ['required', 'alpha'],
+            'flatorhouse'   =>      ['required'],
             'division'      =>      ['required', 'not_in:0'],
-            'ppostoffice'   =>      ['required', 'alpha'],   
+            'ppostoffice'   =>      ['required'],   
             'ppostcode'     =>      ['required', 'numeric'], 
-            'permanenthouse'  =>    ['required', 'alpha'],
+            'permanenthouse'  =>    ['required'],
             'permanentpostcode' =>  ['required', 'numeric'],
-            'permanentaddress' =>   ['required', 'alpha'],
-            'nominyname'    =>      ['required', 'alpha'],
+            'permanentpostoffice' =>   ['required'],
+            'nominyname'    =>      ['required'],
             'nominyphone'   =>      ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
-            'nominyaddress' =>      ['required', 'alpha'],
+            'nominyaddress' =>      ['required'],
             'nominynid'     =>      ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
             'nominyrelatoin' =>     ['required', 'not_in:0'],
             'flatvalue'     =>      ['required', 'not_in:0'],
             'bookingmoney'   =>     ['required', 'numeric'],
-            'bookingmoneymehtod'    =>  ['required', 'not_in:0'],
+            'bookingmoneymehtod' => ['required', 'not_in:0'],
+            'banktransaction'   =>  ['required_if:bookingmoneymehtod,bank'],
+            'bankreferenceno'   =>  ['required_if:bookingmoneymehtod,bank'],
+            'bkashtransiction'  =>  ['required_if:bookingmoneymehtod,bkash'],
+            'bkashnumber'       =>  ['required_if:bookingmoneymehtod,bkash'],
+            'nagadtransiction'  =>  ['required_if:bookingmoneymehtod,Nagad'],
+            'nagadnumber'   =>      ['required_if:bookingmoneymehtod,Nagad'],
+            'rockettransiction' =>  ['required_if:bookingmoneymehtod,rocket'],
+            'rocketnumber'  =>      ['required_if:bookingmoneymehtod,rocket'],
         ],
         $message = [
             'name.required' => 'আপনার নাম লিখুন',
-            'name.alpha' => 'শুধুমাত্র আপনার নাম প্রযোজ্য',
             'phonenumber.required' => 'আপনার ফোন নাম্বার লিখুন',
             'phonenumber.min' => 'আপনার মোবাইল নাম্বারের সংখ্যায় ত্রুটি রয়েছে',
             'phonenumber.numeric' => 'আপনার মোবাইল নাম্বারের সংখ্যায় ত্রুটি রয়েছে',
@@ -108,31 +119,22 @@ class BookingController extends Controller
             'maritalstatus.required' => 'আপনার বৈবাহিক অবস্থা নির্বাচন করুন',
             'maritalstatus.not_in' => 'আপনার বৈবাহিক অবস্থা নির্বাচন করুন',
             'fathername.required' => 'আপনার পিতার নাম লিখুন',
-            'fathername.alpha' => 'শুধুমাত্র আপনার পিতার নাম প্রযোজ্য',
             'mothername.required' => 'আপনার মাতার নাম লিখুন',
-            'mothername.alpha' => 'শুধুমাত্র আপনার মাতার নাম প্রযোজ্য',
             'spousename.required_if' => 'আপনার স্বামি বা স্ত্রী নাম লিখুন',
-            'spousename.alpha' => 'শুধুমাত্র আপনার স্বামি বা স্ত্রী নাম প্রযোজ্য',
             'flatorhouse.required'  =>  'আপনার বাড়ি অথবা ফ্ল্যাটের ঠিকানা লিখুন',
-            'flatorhouse.alpha' => 'শুধুমাত্র আপনার ফ্ল্যাটের ঠিকানা নাম প্রযোজ্য',
             'division.required'  =>  'আপনার বিভাগ নির্বাচন করুন',
-            'ppostoffice.alpha' => 'শুধুমাত্র আপনার পোস্ট অফিসের নাম লিখুন',
             'ppostoffice.required'  =>  'আপনার পোস্ট অফিসের নাম লিখুন',
             'ppostcode.required'         =>  'আপনার পোস্ট অফিসের কোড লিখুন',
             'ppostcode.numeric'         =>  'আপনার পোস্ট অফিসের কোড লিখুন',
-            'permanenthouse.alpha' => 'শুধুমাত্র আপনার ফ্ল্যাটের ঠিকানা নাম প্রযোজ্য',
             'permanenthouse.required'  =>  'আপনার বাড়ি অথবা ফ্ল্যাটের ঠিকানা লিখুন',
-            'permanentaddress.alpha' => 'শুধুমাত্র আপনার পোস্ট অফিসের নাম লিখুন',
-            'permanentaddress.required'  =>  'আপনার পোস্ট অফিসের নাম লিখুন',
+            'permanentpostoffice.required'  =>  'আপনার পোস্ট অফিসের নাম লিখুন',
             'permanentpostcode.required'         =>  'আপনার পোস্ট অফিসের কোড লিখুন',
             'permanentpostcode.numeric'         =>  'আপনার পোস্ট অফিসের কোড লিখুন',
             'nominyname.required'       =>  'নমীনির নাম লিখুন',
-            'nominyname.alpha'       =>  'শুধুমাত্র নমীনির নাম প্রযোজ্য',
             'nominyphone.required'     =>   'মোবাইল নাম্বার লিখুন',
             'nominyphone.min'     =>   'কমপক্ষে দশটির বেশি মোবাইল নাম্বার লিখুন',
             'nominyphone.numeric'     =>   'শুধুমাত্র মোবাইল নাম্বার প্রযোজ্য',
             'nominyaddress.required'    =>   'নমীনির ঠিকানা লিখুন',
-            'nominyaddress.alpha'    =>   'শুধুমাত্র নমীনির ঠিকানা লিখুন',
             'nominynid.required'     =>   'জাতীয় পরিচয়পত্র নাম্বার লিখুন',
             'nominynid.min'     =>   'কমপক্ষে দশটির বেশি জাতীয় পরিচয়পত্র নাম্বার লিখুন',
             'nominynid.numeric'     =>   'শুধুমাত্র জাতীয় পরিচয়পত্র নাম্বার প্রযোজ্য',
@@ -144,7 +146,76 @@ class BookingController extends Controller
             'bookingmoney.numeric'      =>  'অঙ্কে টাকার পরিমান লিখুন',
             'bookingmoneymehtod.required'        =>  'আপনার টাকা পাঠানোর মাধ্যম নির্বাচন করুন',
             'bookingmoneymehtod.not_in'        =>  'আপনার টাকা পাঠানোর মাধ্যম নির্বাচন করুন',
+            'banktransaction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            'bankreferenceno.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            'bkashtransiction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            'bkashnumber.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            'nagadtransiction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            'nagadnumber.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            'rockettransiction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            'rocketnumber.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
          ]);
+
+        $booking = new Booking;
+
+        $booking->bookingid         =   rand(0, 99999999999999);
+        $booking->bookingauthid     =   auth()->user()->id;
+        $booking->name              =   $request->name;
+        $booking->phonenumber       =   $request->phonenumber;
+        $booking->religion          =   $request->religion;
+        $booking->nationality       =   $request->nationality;
+        $booking->nidnumber         =   $request->nidnumber;
+        $booking->dob               =   $request->dob;
+        $booking->maritalstatus     =   $request->maritalstatus;
+        $booking->fathername        =   $request->fathername;
+        $booking->fatherphone       =   $request->fatherphone;
+        $booking->mothername        =   $request->mothername;
+        $booking->motherphone       =   $request->motherphone;
+        $booking->spousename        =   $request->spousename;
+        $booking->spousephonenumber =   $request->spousephonenumber;
+        $booking->flatorhouse       =   $request->flatorhouse;
+        $booking->divisionid        =   $request->divisionid;
+        $booking->districtid        =   $request->districtid;
+        $booking->thanaid           =   $request->thanaid;
+        $booking->ppostoffice       =   $request->ppostoffice;
+        $booking->ppostcode         =   $request->ppostcode;
+        $booking->permanenthouse    =   $request->permanenthouse;
+        $booking->permanetdivisionid =   $request->permanetdivisionid;
+        $booking->permanentdistrictid =   $request->permanentdistrictid;
+        $booking->permanentthanaid  =   $request->permanentthanaid;
+        $booking->permanentpostoffice =   $request->permanentpostoffice;
+        $booking->permanentpostcode =   $request->permanentpostcode;
+        $booking->nominyname        =   $request->nominyname;
+        $booking->nominyphone       =   $request->nominyphone;
+        $booking->nominyaddress     =   $request->nominyaddress;
+        $booking->nominynid         =   $request->nominynid;
+        $booking->nominyrelatoin    =   $request->nominyrelatoin;
+        $booking->referelname       =   $request->referelname;
+        $booking->referelphone      =   $request->referelphone;
+        $booking->referelemail      =   $request->referelemail;
+        $booking->flatvalue         =   $request->flatvalue;
+        $booking->bookingmoney      =   $request->bookingmoney;
+        $booking->bookingmoneymehtod =   $request->bookingmoneymehtod;
+        $booking->banktransaction   =   $request->banktransaction;
+        $booking->bankreferenceno   =   $request->bankreferenceno;
+        $booking->bkashtransiction  =   $request->bkashtransiction;
+        $booking->bkashnumber       =   $request->bkashnumber;
+        $booking->nagadtransiction  =   $request->nagadtransiction;
+        $booking->nagadnumber       =   $request->nagadnumber;
+        $booking->rockettransiction =   $request->rockettransiction;
+        $booking->rocketnumber      =   $request->rocketnumber;
+
+        // $booking->save();
+
+        $bookingdata = [
+            'name'          =>  $request->input('name'),
+            'flatvalue'       =>  $request->input('flatvalue'),
+        ];
+
+        $user = User::where('auth_role', '==', '3')->get();
+        Notification::send($user, new BookingNotification($booking));
+
+        return response()->json(['success' =>true, 'message'=> 'আপনার বুকি সম্পন্ন হয়েছে!!!']);
     }
 
     /**
