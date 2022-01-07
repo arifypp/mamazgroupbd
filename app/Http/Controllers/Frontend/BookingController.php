@@ -26,6 +26,12 @@ class BookingController extends Controller
         return view('Frontend.user.pages.booking.manage', compact('divisions'));
     }
 
+    public function list()
+    {
+        $bookings = Booking::where('bookingauthid', auth()->user()->id)->get();
+        return view('Frontend.user.pages.booking.list', compact('bookings')); 
+    }
+
     /* Dependent Table Start  */
     public function getDistrictsByDivision(Request $request){
         $data=$request->all();
@@ -54,6 +60,22 @@ class BookingController extends Controller
     public function create()
     {
         //
+        $mpdf = new \Mpdf\Mpdf([
+            'default_font_size' =>  14,
+            'default_font' => 'notosansbengali'
+        ]);
+
+        // Write some html code
+        $mpdf->WriteHTML($this->pdfHTML());
+
+        // Output a pdf directory to the browser
+
+        $mpdf->Output();
+    }
+
+    public function pdfHTML(){
+        $output = view('Frontend.user.pages.booking.pdf');
+        return $output;
     }
 
     /**
@@ -205,12 +227,7 @@ class BookingController extends Controller
         $booking->rockettransiction =   $request->rockettransiction;
         $booking->rocketnumber      =   $request->rocketnumber;
 
-        // $booking->save();
-
-        $bookingdata = [
-            'name'          =>  $request->input('name'),
-            'flatvalue'       =>  $request->input('flatvalue'),
-        ];
+        $booking->save();
 
         $user = User::where('auth_role', '==', '3')->get();
         Notification::send($user, new BookingNotification($booking));

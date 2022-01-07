@@ -59,6 +59,8 @@ Route::middleware(['verified'])->group(function () {
             Route::group(['prefix' => 'booking'], function(){
 
                 Route::get('/manage', 'App\Http\Controllers\Frontend\BookingController@index')->name('booking.manage');
+                // Booking list
+                Route::get('/list', 'App\Http\Controllers\Frontend\BookingController@list')->name('booking.list');
         
                 Route::get('/create', 'App\Http\Controllers\Frontend\BookingController@create')->name('booking.create');
         
