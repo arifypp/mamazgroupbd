@@ -17,7 +17,7 @@ class CreateBookingsTable extends Migration
             $table->increments('id');
             $table->string('bookingid')->nullable();
             $table->string('bookingauthid')->nullable();
-            $table->integer('status')->default('0')->comment('0 for pending, 1 for decliend 2 for progressing, 3 for approved');
+            $table->integer('status')->default('0')->comment('0 for pending, 1 for decliend, 2 for progressing, 3 for approved');
             $table->string('name')->nullable();
             $table->string('phonenumber')->nullable();
             $table->string('religion')->nullable();
