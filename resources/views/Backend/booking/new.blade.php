@@ -40,7 +40,7 @@
                             <td>{{ $booking->bookingmoney }}</td>
                             <td>{{ $booking->phonenumber }}</td>
                             <td>
-                                <a href="#" class="text-success"><i class="mdi mdi-18px mdi-eye"></i></a>
+                                <a href="{{ route('bbooking.show', $booking->id) }}" class="text-success"><i class="mdi mdi-18px mdi-eye"></i></a>
                                 <a href="#" class="text-info"><i class="mdi mdi-18px mdi-lead-pencil"></i></a>
                                 <a href="#" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
                                 <a href="#" class="text-primary"><i class="mdi mdi-18px mdi-file-pdf"></i></a>

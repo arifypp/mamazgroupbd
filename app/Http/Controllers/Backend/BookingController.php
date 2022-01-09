@@ -68,6 +68,8 @@ class BookingController extends Controller
     public function show($id)
     {
         //
+        $bookings = Booking::where('status', 3)->get();
+        return view('Backend.booking.show', compact('bookings'));
     }
 
     /**

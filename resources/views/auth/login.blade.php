@@ -54,6 +54,11 @@
                         </a>
                     </div>
                     <div class="p-2">
+                    @if (session()->has('notification'))
+                        <div class="notification">
+                            {!! session('notification') !!}
+                        </div>
+                    @endif
                         @isset($url)
                         <form class="form-horizontal" method="POST" action='{{ url("login/$url") }}'>
                         @else

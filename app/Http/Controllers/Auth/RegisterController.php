@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\RegistersUsers;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
-
+use App\Events\UserRegistrationEvent;
 class RegisterController extends Controller
 {
     /*
@@ -53,11 +53,24 @@ class RegisterController extends Controller
         return Validator::make($data, [
             'name' => ['required', 'string', 'max:255'],
             'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
+            'phone' => ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'dob' => ['required', 'date', 'before:today'],
             'avatar' => ['required', 'image' ,'mimes:jpg,jpeg,png','max:1024'],
         ]);
+    }
+
+    /**
+     * The user has been registered.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  mixed  $user
+     * @return mixed
+     */
+    protected function registered(Request $request, $user)
+    {
+        $request->session()->flash('notification', 'Thank you for subscribing!');
     }
 
     /**
@@ -90,7 +103,7 @@ class RegisterController extends Controller
         }
         $referrer = User::whereUsername(session()->pull('referrer'))->first();
         
-        return User::create([
+        $user = User::create([
             'name' => $data['name'],
             'username'    => $data['username'],
             'email' => $data['email'],
@@ -100,6 +113,9 @@ class RegisterController extends Controller
             'dob' => date('Y-m-d', strtotime($data['dob'])),
             'avatar' => "/images/" . $avatarName,
         ]);
+
+        event(new UserRegistrationEvent($user));
+        return $user;
     }
 
     // User Registration Form
@@ -131,6 +147,8 @@ class RegisterController extends Controller
             'avatar' => "/images/" . $avatarName,
 
         ]);
+
+        event(new UserRegistrationEvent($teacher));
 
         return redirect()->intended('/email/verify');
     }

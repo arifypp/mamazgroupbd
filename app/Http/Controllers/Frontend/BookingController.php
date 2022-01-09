@@ -244,8 +244,14 @@ class BookingController extends Controller
 
         $booking->save();
 
-        $user = User::where('auth_role', '==', '3')->get();
+        $user = User::where('id', auth()->user()->referrer_id)->get();
         Notification::send($user, new BookingNotification($booking));
+
+        $bookinguser = User::where('id', auth()->user()->id)->get();
+        Notification::send($bookinguser, new BookingNotification($booking));
+
+        $admin = User::where('auth_role', 3)->get();
+        Notification::send($admin, new BookingNotification($booking));
 
         return response()->json(['success' =>true, 'message'=> 'আপনার বুকি সম্পন্ন হয়েছে!!!']);
     }

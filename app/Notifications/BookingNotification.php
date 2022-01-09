@@ -7,7 +7,7 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BookingNotification extends Notification
+class BookingNotification extends Notification implements ShouldQueue
 {
     use Queueable;
     protected $booking;
@@ -31,11 +31,25 @@ class BookingNotification extends Notification
      */
     public function via($notifiable)
     {
-        return ['database'];
+        return ['mail', 'database'];
     }
 
     /**
      * Get the mail representation of the notification.
+     *
+     * @param  mixed  $notifiable
+     * @return \Illuminate\Notifications\Messages\MailMessage
+     */
+    public function toMail($notifiable)
+    {
+        return (new MailMessage)
+            ->line($this->booking['name']. ' ধন্যবাদ, আপনার বুকিং এর জন্য। আমাদের প্রতিনিধি শিঘ্রই যোগাযোগ করবে। আপনার বুকিং নাম্বার: '. $this->booking['bookingid'])
+            ->action('বর্তমান অবস্থা জানতে ভিজিট করুন', url('/'))
+            ->line('ভালবাসা অবিরাম মামাজের সঙ্গে থাকার জন্য!');
+    }
+
+    /**
+     * Get the database representation of the notification.
      *
      * @param  mixed  $notifiable
      * @return \Illuminate\Notifications\Messages\MailMessage

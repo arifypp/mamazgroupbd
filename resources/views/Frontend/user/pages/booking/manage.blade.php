@@ -270,6 +270,7 @@
                                     $user  = auth()->user()->referrer_id;
                                     $userid = App\Models\User::where('id', $user)->get();
                                 @endphp
+                                @if( !empty($user) )
                                 <div class="form-group">
                                     <label for="referelname">রেফারেল নাম</label>
                                     <input type="text" name="referelname" id="referelname" class="form-control" value="{{ $userid['0']->name }}" readonly>
@@ -283,6 +284,20 @@
                                     <label for="referelemail">রেফারেল ইমেইল</label>
                                     <input type="text" name="referelemail" id="referelemail" class="form-control" value="{{ $userid['0']->email }}" readonly>
                                 </div>
+                                @else
+                                <div class="form-group">
+                                    <label for="referelname">রেফারেল নাম</label>
+                                    <input type="text" name="referelname" id="referelname" class="form-control" value="Mamaz Group BD" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="referelphone">রেফারেল মোবাইল নং</label>
+                                    <input type="text" name="referelphone" id="referelphone" class="form-control" value="01677199625" readonly>
+                                </div>
+                                <div class="form-group">
+                                    <label for="referelemail">রেফারেল ইমেইল</label>
+                                    <input type="text" name="referelemail" id="referelemail" class="form-control" value="mamaz.info@gmail.com" readonly>
+                                </div>
+                                @endif
                             </div>
                         </div>
                     </div>

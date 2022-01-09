@@ -95,6 +95,8 @@ Route::middleware(['verified'])->group(function () {
 
                 Route::get('/new', 'App\Http\Controllers\Backend\BookingController@new')->name('bbooking.new');
         
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\BookingController@show')->name('bbooking.show');
+
                 Route::get('/create', 'App\Http\Controllers\Backend\BookingController@create')->name('bbooking.create');
         
                 Route::post('/store', 'App\Http\Controllers\Backend\BookingController@store')->name('bbooking.store');
