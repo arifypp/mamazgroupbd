@@ -52,30 +52,46 @@ class BookingController extends Controller
     }
     /* Dependent Table End  */
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
+    // Pdf file generating
+    public function generatepdf($id)
+    {
+        $bookings = Booking::find($id);
+
+        if (!is_null($bookings) && auth()->user()) 
+        {
+            //this command for generate pdf
+            $mpdf = new \Mpdf\Mpdf([
+                'default_font_size' =>  14,
+                'format'            => 'A4',
+                'default_font'      => 'notosansbengali',
+                'orientation'       => 'P',
+                'title'             => 'mamazpdf',
+                'showImageErrors'   => true,
+            ]);
+
+
+            $mpdf->SetTitle($bookings->bookingid. '.pdf');
+
+            $stylesheet = file_get_contents('style.css');
+
+
+            $myoutput = view('Frontend.user.pages.booking.pdf', compact('bookings'));
+
+            
+            // Write some html code
+            $mpdf->WriteHTML($stylesheet,1);
+            $mpdf->WriteHTML($myoutput,2);
+
+            // Output a pdf directory to the browser
+            $mpdf->Output();
+        }
+    }
+
     public function create()
     {
-        //this command for generate pdf
-        $mpdf = new \Mpdf\Mpdf([
-            'default_font_size' =>  14,
-            'default_font' => 'notosansbengali'
-        ]);
-
-        // Write some html code
-        $mpdf->WriteHTML($this->pdfHTML());
-
-        // Output a pdf directory to the browser
-        $mpdf->Output();
+        //
     }
 
-    public function pdfHTML(){
-        $output = view('Frontend.user.pages.booking.pdf');
-        return $output;
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -179,7 +195,7 @@ class BookingController extends Controller
 
         $booking = new Booking;
 
-        $booking->bookingid         =   rand(0, 99999999999999);
+        $booking->bookingid         =   rand(0, 9999999);
         $booking->bookingauthid     =   auth()->user()->id;
         $booking->name              =   $request->name;
         $booking->phonenumber       =   $request->phonenumber;

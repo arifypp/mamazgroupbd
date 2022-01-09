@@ -61,6 +61,9 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/manage', 'App\Http\Controllers\Frontend\BookingController@index')->name('booking.manage');
                 // Booking list
                 Route::get('/list', 'App\Http\Controllers\Frontend\BookingController@list')->name('booking.list');
+                // booking pdf file
+                Route::get('/pdfgenerate/{id}', 'App\Http\Controllers\Frontend\BookingController@generatepdf')->name('booking.generatepdf');
+
         
                 Route::get('/create', 'App\Http\Controllers\Frontend\BookingController@create')->name('booking.create');
         
@@ -84,6 +87,25 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'admin'], function () {
 
             Route::get('/dashboard','App\Http\Controllers\Backend\DashboardController@index')->name('admin.dashboard');
+
+            // Booking Management
+            Route::group(['prefix' => 'booking'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\BookingController@index')->name('bbooking.manage');
+
+                Route::get('/new', 'App\Http\Controllers\Backend\BookingController@new')->name('bbooking.new');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\BookingController@create')->name('bbooking.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\BookingController@store')->name('bbooking.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\BookingController@edit')->name('bbooking.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\BookingController@update')->name('bbooking.update');
+           
+                Route::get('/delete/{id}', 'App\Http\Controllers\Backend\BookingController@destroy')->name('bbooking.destroy');
+        
+            });
 
             // Platform Settings Route For CRUD
             Route::group(['prefix' => 'platform'], function(){

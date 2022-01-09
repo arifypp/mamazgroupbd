@@ -16,6 +16,23 @@
                     </a>
                 </li>
 
+                <li class="menu-title" key="t-apps">ফিচারড সেটিং</li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-home"></i>
+                        <span key="t-booking">বুকিং ম্যানেজমেন্ট</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('bbooking.new') }}" key="t-booking-pending"> নতুন বুকিং <span class="badge rounded-pill bg-danger float-end">
+                        @php
+                            $counts = DB::table('bookings')->where('status', 0)->count();
+                            echo $counts;
+                        @endphp
+                        </span></a></li>
+                        <li><a href="{{ route('bbooking.manage') }}" key="t-total-booking">মোট বুকিং</a></li>
+                    </ul>
+                </li>
+                
                 <li class="menu-title" key="t-apps">প্লাটফর্ম সেটিং</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
