@@ -5,6 +5,27 @@
 @section('css')
     <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    <style>
+        
+.booking_info::before {
+    background: url('/assets/images/settings/242798957.png');
+    width: 100%;
+    content: "";
+    height: 100px;
+    position: absolute;
+    left: 0;
+    right: 0;
+    top: 30%;
+    text-align: center;
+    align-self: center;
+    justify-content: center;
+    background-repeat: no-repeat;
+    background-position: center;
+    opacity: 0.1;
+    transform: scale(6);
+    background-color: white;
+}
+    </style>
     @endsection
 
 @section('content')
@@ -48,90 +69,171 @@
                       </center>
                       <hr>
                   </div>
-                  <div class="col-md-12">
+                  <div class="col-md-12 booking_info">
                       <div class="row">
-                        <div class="col-md-8 mb-2">
-                            <table class="align-middle w-100" >
-                                <tbody>
-                                    <tr>
-                                        <th>রেজিস্ট্রেশন নং</th>
-                                        <td> - &nbsp</td>
-                                        <td style="width:70%; border-bottom:1px dashed #333"> {{ $bookings->bookingid }} </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <table class="align-middle w-100" style="float:right">
-                                <tbody>
-                                    <tr>
-                                        <th>তারিখ</th>
-                                        <td> - &nbsp</td>
-                                        <td style="width:60%; border-bottom:1px dashed #333"> {{ date('d-m-Y', strtotime($bookings->created_at));}} </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
                         <div class="col-md-12 mb-2">
-                            <table class="align-middle w-100">
+                            <table class="table-responsive align-middle w-100 text-nowrap overflow-hidden">
                                 <tbody>
-                                    <tr>
-                                        <th>নাম </th>
+                                    <!-- Registration Info -->
+                                    <tr class="d-flex mb-2">
+                                        <td>রেজিস্ট্রেশন নং</td>
                                         <td> - &nbsp</td>
-                                        <td style="width:90%; border-bottom:1px dashed #333">
-                                            <strong>{{ $bookings->name }}</strong>
-                                        </td>
+                                        <td class="col-7" style="border-bottom:1px dashed #333"> {{ $bookings->bookingid }} </td>
+                                        <td>তারিখ</td>
+                                        <td>- &nbsp</td>
+                                        <td class="col-3" style="border-bottom:1px dashed #333">{{ date('d-m-Y', strtotime($bookings->created_at));}} </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-8 mb-2">
-                            <table class="align-middle w-100">
-                                <tbody>
-                                    <tr>
-                                        <th>জন্ম তারিখ </th>
+                                    <!-- Name Info -->
+                                    <tr class="d-flex mb-2">
+                                        <td >নাম</td>
+                                        <td>- &nbsp</td>
+                                        <td class="col-12" style="border-bottom:1px dashed #333"><strong>{{ $bookings->name }}</strong> </td>
+                                    </tr>
+                                    <!-- Date of birth info -->
+                                    <tr class="d-flex mb-2">
+                                        <td>জন্ম তারিখ </td>
                                         <td> - &nbsp</td>
-                                        <td style="width:70%; border-bottom:1px dashed #333">
+                                        <td class="col-7" style="border-bottom:1px dashed #333">
                                             {{ date('d-m-Y', strtotime($bookings->dob));}}
                                         </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <table class="align-middle w-100">
-                                <tbody>
-                                    <tr>
-                                        <th>ধর্ম </th>
+                                        <td>ধর্ম </td>
                                         <td> - &nbsp</td>
-                                        <td style="width:70%; border-bottom:1px dashed #333">
-                                            <strong>{{ $bookings->religion }}</strong>
+                                        <td class="col-5" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->religion }}
                                         </td>
                                     </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-8 mb-2">
-                            <table class="align-middle w-100">
-                                <tbody>
-                                    <tr>
-                                        <th>জাতীয় পরিচয় পত্র নম্বর </th>
+                                    <!-- National ID No Info -->
+                                    <tr class="d-flex mb-2">
+                                        <td>জাতীয় পরিচয় পত্র নম্বর </td>
                                         <td> - &nbsp</td>
-                                        <td style="width:50%; border-bottom:1px dashed #333">
+                                        <td class="col-5" style="border-bottom:1px dashed #333">
                                             {{ $bookings->nidnumber}}
                                         </td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                        <div class="col-md-4 mb-2">
-                            <table class="align-middle w-100">
-                                <tbody>
-                                    <tr>
-                                        <th>জাতীয়তা </th>
+                                        <td>জাতীয়তা </td>
                                         <td> - &nbsp</td>
-                                        <td style="width:50%; border-bottom:1px dashed #333">
-                                            <strong>{{ $bookings->nationality }}</strong>
+                                        <td class="col-7" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->nationality }}
+                                        </td>
+                                    </tr>
+                                    <!-- Mother Info -->
+                                    <tr class="d-flex mb-2">
+                                        <td>মাতার নাম </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-5" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->mothername}}
+                                        </td>
+                                        <td>মাতার মোবাইল নং </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-7" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->motherphone }}
+                                        </td>
+                                    </tr>
+                                    <!-- Father Info -->
+                                    <tr class="d-flex mb-2">
+                                        <td>পিতার নাম </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-5" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->fathername}}
+                                        </td>
+                                        <td>পিতার মোবাইল নং </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-7" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->fatherphone }}
+                                        </td>
+                                    </tr>
+                                    <!-- Spouse Info  -->
+                                    <tr class="d-flex mb-2">
+                                        <td>স্বামী/স্ত্রীর নাম </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-5" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->spousename}}
+                                        </td>
+                                        <td>স্বামী/স্ত্রীর মোবাইল নং </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-7" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->spousephonenumber }}
+                                        </td>
+                                    </tr>
+                                    <!-- Present Address Info  -->
+                                    <tr class="d-flex mb-2">
+                                        <td>বর্তমান ঠিকানা </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-12" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->flatorhouse }}, {{ $bookings->ppostoffice }}, {{ $bookings->ppostcode }}, {{ $bookings->thana->bn_name }}, {{ $bookings->district->bn_name }}, {{ $bookings->division->bn_name }} ।
+                                        </td>
+                                    </tr>
+                                    <!-- Permanent Address Info  -->
+                                    <tr class="d-flex mb-3">
+                                        <td>স্থায়ী ঠিকানা </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-12" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->permanenthouse }}, {{ $bookings->permanentpostoffice }}, {{ $bookings->permanentpostcode }}, {{ $bookings->pthana->bn_name }}, {{ $bookings->pdistrict->bn_name }}, {{ $bookings->pdivision->bn_name }} ।
+                                        </td>
+                                    </tr>
+                                    <!-- Nominy Details -->
+                                    <tr class="mb-0">
+                                        <td class="col-12 m-0 p-0">
+                                            <center>
+                                                <h5 class="m-0">নমিনীর তথ্য</h5>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                    <tr class="d-flex mb-2">
+                                        <td>নাম </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-12" style="border-bottom:1px dashed #333">
+                                            <strong>{{ $bookings->nominyname }}</strong> 
+                                        </td>
+                                    </tr>
+                                    <tr class="d-flex mb-2">
+                                        <td>নমীনির ঠিকানা </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-5" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->nominyaddress }}
+                                        </td>
+                                        <td>নমিনীর মোবাইল নাম্বার </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-7" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->nominyphone}}
+                                        </td>
+                                    </tr>
+                                    <tr class="d-flex mb-3">
+                                        <td>ভোটার আইডি নং </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-5" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->nominynid }}
+                                        </td>
+                                        <td>নমীনির সাথে সম্পর্ক </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-7" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->nominyrelatoin}}
+                                        </td>
+                                    </tr>
+                                    <!-- Referel User -->
+                                    <tr class="mb-0">
+                                        <td class="col-12 m-0 p-0">
+                                            <center>
+                                                <h5 class="m-0">রেফারেল ইউজার তথ্য</h5>
+                                            </center>
+                                        </td>
+                                    </tr>
+                                    <tr class="d-flex mb-2">
+                                        <td>নাম </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-12" style="border-bottom:1px dashed #333">
+                                            <strong>{{ $bookings->referelname }}</strong> 
+                                        </td>
+                                    </tr>
+                                    <tr class="d-flex mb-3">
+                                        <td>রেফারেল মোবাইল নং </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-4" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->referelphone }}
+                                        </td>
+                                        <td>রেফারেল ইমেইল </td>
+                                        <td> - &nbsp</td>
+                                        <td class="col-8" style="border-bottom:1px dashed #333">
+                                            {{ $bookings->referelemail}}
                                         </td>
                                     </tr>
                                 </tbody>

@@ -62,7 +62,7 @@
                                     <label for="nationality">জাতীয়তা</label>
                                     <select name="nationality" id="nationality" class="form-control">
                                         <option value="0">নির্বাচন করুন</option>
-                                        <option value="বাংলাদেশ">বাংলাদেশ</option>
+                                        <option value="বাংলাদেশ">বাংলাদেশী</option>
                                         <option value="অন্যান্য">অন্যান্য</option>
                                     </select>
                                     <span class="text-danger">@error('nationality'){{ $message }} @enderror</span>
@@ -139,7 +139,7 @@
                                   </div>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fatherphone">বিভাগ</label>
+                                    <label for="division">বিভাগ</label>
                                     <select class="form-control" id="division" name="division" required>
                                         <option value="0">--বিভাগ নিবার্চন করুন--</option>
                                         @foreach ($divisions as $division)
@@ -149,7 +149,7 @@
                                     <span class="text-danger">@error('division'){{ $message }} @enderror</span>
                                 </div>
                                 <div class="form-group">
-                                    <label for="fatherphone">জেলা</label>
+                                    <label for="district">জেলা</label>
                                     <select class="form-control" id="district" name="district" required>
                                         <option value="">--জেলা নিবার্চন করুন--</option>
                                     </select>
