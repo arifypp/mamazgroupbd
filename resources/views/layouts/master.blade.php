@@ -7,7 +7,7 @@
     <title> @yield('title') | {{ $value->title }}</title>
     @endforeach
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+    <meta content="মামাজ গ্রুপ ইন্ডাট্রিজ" name="description" />
     <meta content="Themesbrand" name="author" />
     <!-- App favicon -->
     @foreach($site_settings as $value)

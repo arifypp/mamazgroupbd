@@ -253,7 +253,7 @@ class BookingController extends Controller
         $admin = User::where('auth_role', 3)->get();
         Notification::send($admin, new BookingNotification($booking));
 
-        return response()->json(['success' =>true, 'message'=> 'আপনার বুকি সম্পন্ন হয়েছে!!!']);
+        return response()->json(['success' =>true, 'message'=> 'আপনার বুকিং সম্পন্ন হয়েছে!!!']);
     }
 
     /**

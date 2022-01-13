@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 use lemonpatwari\bangladeshgeocode\Models\Division;
 use lemonpatwari\bangladeshgeocode\Models\District;
 use lemonpatwari\bangladeshgeocode\Models\Thana;
-
+use App\Models\User;
 class Booking extends Model
 {
     use HasFactory;
@@ -47,5 +47,12 @@ class Booking extends Model
     public function pthana()
     {
         return $this->belongsTo(Thana::class, 'permanentthanaid');
+    }
+    /** Permanent Address Model End **/
+
+    // User Model
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'bookingauthid');
     }
 }

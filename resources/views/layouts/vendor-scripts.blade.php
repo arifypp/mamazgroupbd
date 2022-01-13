@@ -9,6 +9,11 @@
 
 <!-- toastr init -->
 <script src="{{ URL::asset('/assets/js/pages/toastr.init.js') }}"></script>
+<!-- Sweet Alerts js -->
+<script src="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.js') }}"></script>
+
+<!-- Sweet alert init js-->
+<script src="{{ URL::asset('/assets/js/pages/sweet-alerts.init.js') }}"></script>
 <script>
     $('#change-password').on('submit',function(event){
         event.preventDefault();

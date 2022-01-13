@@ -94,8 +94,12 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/manage', 'App\Http\Controllers\Backend\BookingController@index')->name('bbooking.manage');
 
                 Route::get('/new', 'App\Http\Controllers\Backend\BookingController@new')->name('bbooking.new');
+
+                Route::post('/status/{id}', 'App\Http\Controllers\Backend\BookingController@status')->name('bbooking.status');
         
                 Route::get('/show/{id}', 'App\Http\Controllers\Backend\BookingController@show')->name('bbooking.show');
+
+                Route::get('/notifyread/{id}', 'App\Http\Controllers\Backend\BookingController@notifyread')->name('bbooking.notifyread');
 
                 Route::get('/create', 'App\Http\Controllers\Backend\BookingController@create')->name('bbooking.create');
         
@@ -105,7 +109,7 @@ Route::middleware(['verified'])->group(function () {
         
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\BookingController@update')->name('bbooking.update');
            
-                Route::get('/delete/{id}', 'App\Http\Controllers\Backend\BookingController@destroy')->name('bbooking.destroy');
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\BookingController@destroy')->name('bbooking.destroy');
         
             });
 

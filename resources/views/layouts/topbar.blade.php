@@ -89,7 +89,7 @@
                 <div data-simplebar style="max-height: 230px;">
                 @forelse (auth()->user()->unreadNotifications as $notification)
                     @if(Str::snake(class_basename($notification->type)) == 'booking_notification')
-                    <a href="" class="text-reset notification-item">
+                    <a href="{{ route('bbooking.show', $notification->data['id']) }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('bbooking.notifyread', $notification->id) }}">
                         <div class="d-flex">
                             <div class="avatar-xs me-3">
                                 <span class="avatar-title bg-primary rounded-circle font-size-16">
@@ -108,6 +108,14 @@
                     </a>
                     @endif
                 @empty
+                <a href="javascript:void(0)" class="text-reset notification-item">
+                    <div class="flex-grow-1">
+                        <h6 class="mt-0 mb-1" key="t-your-order">
+                            কোনো নোটিফিকেশন পাওয়া যায়নি।
+                        </h6>
+                    </div>
+                </a>
+                
                 @endforelse                    
                 </div>
                 <div class="p-2 border-top d-grid">
@@ -197,3 +205,43 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
         </div><!-- /.modal-content -->
     </div><!-- /.modal-dialog -->
 </div><!-- /.modal -->
+
+
+@section('script')
+<script>
+      $(document).ready(function(){
+      $(document).on("click", '#MarkasRead', function(e){
+        e.preventDefault();
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+          });
+
+          var token = '{{ Session::token() }}';
+
+          let href = $(this).attr('data-attr');
+          let post_id = $(this).attr('data-id');
+
+        //   console.log(post_id); 
+          
+          $.ajax({    
+              type: 'GET',
+              url: href,
+              data : {id:post_id, _token: token},
+              success:function(res){
+                if(res.success){
+                        console.log('Success for read notification');
+                  }
+              },
+              error:function (res){
+                    console.log("error");
+                }
+          });
+
+          return false;
+      })
+    });
+</script>
+
+@endsection

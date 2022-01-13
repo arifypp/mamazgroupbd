@@ -22,7 +22,8 @@ class BookingController extends Controller
     public function index()
     {
         //
-        return view('Backend.booking.manage');
+        $bookings = Booking::orderBy('id', 'desc')->where('status', 3)->get();
+        return view('Backend.booking.manage', compact('bookings'));
     }
 
     /**
@@ -43,9 +44,27 @@ class BookingController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function status(Request $request, $id)
     {
         //
+        $bookings = Booking::find($id);
+        $bookings->status = 3;
+
+        $bookings->save();
+
+        return response()->json(['success' =>true, 'message'=> 'বুকিং অ্যপ্রেুাভ সম্পন্ন হয়েছে!!!']);
+    }
+
+    public function notifyread(Request $request, $id)
+    {
+   
+        $notification = auth()->user()->notifications()->find($id);
+
+        if($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['success' =>true, 'message'=> 'mark as read!!!']);
+
     }
 
     /**
@@ -81,6 +100,23 @@ class BookingController extends Controller
     public function edit($id)
     {
         //
+        $divisions = Division::all();
+        $booking = Booking::find($id);
+        
+        if( !is_null($booking) )
+        {
+            return view('Backend.booking.edit', compact('booking', 'divisions'));
+        }
+        else{
+            $notification = array(
+                'message'       => 'ডাটা খুজে পাচ্ছি না!!!',
+                'alert-type'    => 'warning'
+            );
+
+            return back()->with($notification);
+
+        }
+
     }
 
     /**
@@ -93,6 +129,63 @@ class BookingController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $booking = Booking::find($id);
+
+        $booking->bookingid         =   rand(0, 9999999);
+        $booking->bookingauthid     =   auth()->user()->id;
+        $booking->name              =   $request->name;
+        $booking->phonenumber       =   $request->phonenumber;
+        $booking->religion          =   $request->religion;
+        $booking->nationality       =   $request->nationality;
+        $booking->nidnumber         =   $request->nidnumber;
+        $booking->dob               =   $request->dob;
+        $booking->maritalstatus     =   $request->maritalstatus;
+        $booking->fathername        =   $request->fathername;
+        $booking->fatherphone       =   $request->fatherphone;
+        $booking->mothername        =   $request->mothername;
+        $booking->motherphone       =   $request->motherphone;
+        $booking->spousename        =   $request->spousename;
+        $booking->spousephonenumber =   $request->spousephonenumber;
+        $booking->flatorhouse       =   $request->flatorhouse;
+        $booking->divisionid        =   $request->division;
+        $booking->districtid        =   $request->district;
+        $booking->thanaid           =   $request->thana;
+        $booking->ppostoffice       =   $request->ppostoffice;
+        $booking->ppostcode         =   $request->ppostcode;
+        $booking->permanenthouse    =   $request->permanenthouse;
+        $booking->permanetdivisionid =   $request->permanetdivision;
+        $booking->permanentdistrictid =   $request->permanentdistrict;
+        $booking->permanentthanaid  =   $request->permanentthana;
+        $booking->permanentpostoffice =   $request->permanentpostoffice;
+        $booking->permanentpostcode =   $request->permanentpostcode;
+        $booking->nominyname        =   $request->nominyname;
+        $booking->nominyphone       =   $request->nominyphone;
+        $booking->nominyaddress     =   $request->nominyaddress;
+        $booking->nominynid         =   $request->nominynid;
+        $booking->nominyrelatoin    =   $request->nominyrelatoin;
+        $booking->referelname       =   $request->referelname;
+        $booking->referelphone      =   $request->referelphone;
+        $booking->referelemail      =   $request->referelemail;
+        $booking->flatvalue         =   $request->flatvalue;
+        $booking->bookingmoney      =   $request->bookingmoney;
+        $booking->bookingmoneymehtod =   $request->bookingmoneymehtod;
+        $booking->banktransaction   =   $request->banktransaction;
+        $booking->bankreferenceno   =   $request->bankreferenceno;
+        $booking->bkashtransiction  =   $request->bkashtransiction;
+        $booking->bkashnumber       =   $request->bkashnumber;
+        $booking->nagadtransiction  =   $request->nagadtransiction;
+        $booking->nagadnumber       =   $request->nagadnumber;
+        $booking->rockettransiction =   $request->rockettransiction;
+        $booking->rocketnumber      =   $request->rocketnumber;
+
+        $booking->save();
+
+        $notification = array(
+            'message'       => 'ডাটা আপডেট সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('bbooking.manage')->with($notification);
     }
 
     /**
@@ -104,5 +197,23 @@ class BookingController extends Controller
     public function destroy($id)
     {
         //
+        //
+        $delete = Booking::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";
+            
+        } else {
+            $success = true;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }

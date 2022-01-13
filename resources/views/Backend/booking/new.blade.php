@@ -41,8 +41,8 @@
                             <td>{{ $booking->phonenumber }}</td>
                             <td>
                                 <a href="{{ route('bbooking.show', $booking->id) }}" class="text-success"><i class="mdi mdi-18px mdi-eye"></i></a>
-                                <a href="#" class="text-info"><i class="mdi mdi-18px mdi-lead-pencil"></i></a>
-                                <a href="#" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
+                                <a href="{{ route('bbooking.edit', $booking->id) }}" class="text-info"><i class="mdi mdi-18px mdi-lead-pencil"></i></a>
+                                <a href="javascript:void(0)" onclick="deleteConfirmation('{{$booking->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
                                 <a href="#" class="text-primary"><i class="mdi mdi-18px mdi-file-pdf"></i></a>
                             </td>
                         </tr>
@@ -53,4 +53,51 @@
         </div>
     </div>
 
+@endsection
+
+@section('script')
+<script type="text/javascript">
+    function deleteConfirmation(id) {
+        swal.fire({
+            title: "ডিলেট?",
+            icon: 'question',
+            text: "দয়া করে কনর্ফাম করুন!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "হ্যা, ডিলেট করুন!",
+            cancelButtonText: "না, বাতিল করুন!",
+            dangerMode: true,
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajaxSetup({
+	                headers: {
+	                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+	                }
+	            });
+                
+                $.ajax({
+                    type: 'POST',
+                    url:  "{{url('/admin/booking/delete')}}/" + id,
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            swal.fire("Done!", results.message, "success");
+                            // refresh page after 2 seconds
+                            $('.table').load(document.URL + ' .table');     // Using .reload() method.
+                        } else {
+                            swal.fire("Error!", results.message, "error");
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
+</script>
 @endsection

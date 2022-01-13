@@ -81,7 +81,7 @@
             </ul>
           </li>
           <li ><a class="nav-link scrollto @if( Route::currentRouteNamed('contact')) active @endif" href="{{ route('contact') }}">যোগাযোগ</a></li>
-          @if( auth()->user() )
+          @if( auth()->user()->auth_role == 0 )
           <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড </a>
         </li>
           @else

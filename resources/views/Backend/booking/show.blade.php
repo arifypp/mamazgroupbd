@@ -7,24 +7,24 @@
     <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
     <style>
         
-.booking_info::before {
-    background: url('/assets/images/settings/242798957.png');
-    width: 100%;
-    content: "";
-    height: 100px;
-    position: absolute;
-    left: 0;
-    right: 0;
-    top: 30%;
-    text-align: center;
-    align-self: center;
-    justify-content: center;
-    background-repeat: no-repeat;
-    background-position: center;
-    opacity: 0.1;
-    transform: scale(6);
-    background-color: white;
-}
+    .booking_info::before {
+        background: url('/assets/images/settings/242798957.png');
+        width: 100%;
+        content: "";
+        height: 100px;
+        position: absolute;
+        left: 0;
+        right: 0;
+        top: 30%;
+        text-align: center;
+        align-self: center;
+        justify-content: center;
+        background-repeat: no-repeat;
+        background-position: center;
+        opacity: 0.1;
+        transform: scale(6);
+        background-color: white;
+    }
     </style>
     @endsection
 
@@ -246,9 +246,137 @@
         </div>
         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-12">
             <div class="card card-body">
-                পার্ট - ২
+                <div class="user-images text-center">
+                     <img src="{{ asset($bookings->user->avatar) }}" class="img-fluid" alt="User Image" width="100">
+                     <hr>
+                </div>
+               <table class="table table-responsive w-100 align-middle text-nowrap overflow-hidden">
+                    <tbody>
+                        <tr>
+                            <td class="col-8">প্লট বা জমির পরিমান -</td>
+                            <td class="col-4">{{ $bookings->flatvalue }} SFT</td>
+                        </tr>
+                        <tr>
+                            <td class="col-7">বুকিং টাকার পরিমাণ -</td>
+                            <td class="col-5">{{ $bookings->bookingmoney }} BDT</td>
+                        </tr>
+                        <tr>
+                            <td class="col-7">টাকা পাঠানোর মাধ্যম -</td>
+                            <td class="col-5">
+                                @if( $bookings->bookingmoneymehtod ==  'bank')
+                                    <img src="{{ asset('assets/images/payment/bank.png') }}" alt="Bank" class="img-fluid" width="100">
+                                @elseif( $bookings->bookingmoneymehtod ==  'bkash' )
+                                    <img src="{{ asset('assets/images/payment/bkash.svg') }}" alt="Bkash" class="img-fluid" width="100">                                
+                                @elseif( $bookings->bookingmoneymehtod ==  'Nagad' )
+                                    <img src="{{ asset('assets/images/payment/nagad.png') }}" alt="Bkash" class="img-fluid" width="100">
+                                @elseif( $bookings->bookingmoneymehtod ==  'rocket' )
+                                    <img src="{{ asset('assets/images/payment/rocket.png') }}" alt="Bkash" class="img-fluid" width="100">
+                                @else
+                                    <img src="{{ asset('assets/images/payment/handcash.jpg') }}" alt="Bkash" class="img-fluid" width="100">
+                                
+                                @endif
+                            </td>
+                        </tr>
+                        <tr>
+                            @if( $bookings->bookingmoneymehtod ==  'bank')
+                            <td class="col-7">ব্যাংক ট্রান্জিকশন -</td>
+                            <td class="col-5">{{ $bookings->banktransaction }}</td>
+                            @elseif( $bookings->bookingmoneymehtod ==  'bkash' )
+                            <td class="col-7">বিকাশ নাম্বার -</td>
+                            <td class="col-5">{{ $bookings->bkashnumber }}</td>   
+                            @elseif( $bookings->bookingmoneymehtod ==  'Nagad' )
+                            <td class="col-7">নগদ নাম্বার -</td>
+                            <td class="col-5">{{ $bookings->nagadnumber }}</td>
+                            @elseif( $bookings->bookingmoneymehtod ==  'rocket' )
+                            <td class="col-7">রকেট নাম্বার -</td>
+                            <td class="col-5">{{ $bookings->rocketnumber }}</td>
+                            @else
+                            <td class="col-7">হ্যান্ড ক্যাশ -</td>
+                            <td class="col-5">ক্যাশঅন ডেলিভারি</td>
+                            @endif
+                            
+                        </tr>
+                        <tr>
+                            @if( $bookings->bookingmoneymehtod ==  'bank')
+                            <td class="col-7">ব্যাংক রেফারেন্স -</td>
+                            <td class="col-5">{{ $bookings->bankreferenceno }}</td>
+                            @elseif( $bookings->bookingmoneymehtod ==  'bkash' )
+                            <td class="col-7">বিকাশ ট্রান্জিকশন -</td>
+                            <td class="col-5">{{ $bookings->bkashtransiction }}</td>
+                            @elseif( $bookings->bookingmoneymehtod ==  'Nagad' )
+                            <td class="col-7">নগদ ট্রান্জিকশন -</td>
+                            <td class="col-5">{{ $bookings->nagadtransiction }}</td>
+                            @elseif( $bookings->bookingmoneymehtod ==  'rocket' )
+                            <td class="col-7">রকেট ট্রান্জিকশন -</td>
+                            <td class="col-5">{{ $bookings->rockettransiction }}</td>
+                            @else
+                            
+                            @endif
+                            
+                        </tr>
+                    </tbody>
+               </table>
+               <div class="row">
+                   <div class="col-md-12 m-auto text-center mb-4 mt-3">
+                       <a href="{{ route('bbooking.new') }}" class="btn btn-danger waves-effect btn-label waves-light">
+                       <i class="bx bx-block label-icon"></i>
+                           ক্যানসেল
+                        </a>
+                       <a href="javascript:void(0)" id="approvecash" data-id="{{ $bookings->id }}" data-attr="{{ route('bbooking.status', $bookings->id) }}" class="btn btn-success waves-effect btn-label waves-light">
+                        <i class="bx bx-check label-icon"></i>
+                           অ্যপ্রুভ করুন
+                        </a>
+                   </div>
+               </div>
+               <hr>
+               <div class="row">
+                   <div class="col-md-12 text-center">
+                       <p>আমরা গ্রহণ করি</p>
+                       <img src="{{ asset('assets/images/payment/all.png') }}" alt="logo" class="img-fluid">
+                   </div>
+               </div>
             </div>
         </div>
     </div>
+
+@endsection
+
+@section('script')
+<script>
+      $(document).ready(function(){
+      $(document).on("click", '#approvecash', function(e){
+        e.preventDefault();
+          $.ajaxSetup({
+              headers: {
+                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+              }
+          });
+
+          var token = '{{ Session::token() }}';
+
+          let href = $(this).attr('data-attr');
+          let post_id = $(this).attr('data-id');
+
+        //   console.log(post_id); 
+          
+          $.ajax({    
+              type: 'POST',
+              url: href,
+              data : {id:post_id, _token: token},
+              success:function(res){
+                if(res.success){
+                        toastr.success(res.message);
+                        setTimeout(function(){location.reload();},5000);
+                  }
+              },
+              error:function (res){
+                    console.log("error");
+                }
+          });
+
+          return false;
+      })
+    });
+</script>
 
 @endsection

@@ -15,3 +15,6 @@
 
 <!-- Tostr Notification -->
 <link rel="stylesheet" type="text/css" href="{{ URL::asset('/assets/libs/toastr/toastr.min.css') }}">
+
+<!-- Sweet Alert-->
+<link href="{{ URL::asset('/assets/libs/sweetalert2/sweetalert2.min.css') }}" rel="stylesheet" type="text/css" />

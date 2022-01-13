@@ -43,8 +43,8 @@ class BookingNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line($this->booking['name']. ' ধন্যবাদ, আপনার বুকিং এর জন্য। আমাদের প্রতিনিধি শিঘ্রই যোগাযোগ করবে। আপনার বুকিং নাম্বার: '. $this->booking['bookingid'])
-            ->action('বর্তমান অবস্থা জানতে ভিজিট করুন', url('/'))
+            ->line($this->booking['name']. ' আপনার বুকিং এর জন্য ধন্যবাদ। আমাদের প্রতিনিধি শিঘ্রই যোগাযোগ করবে। আপনার বুকিং নাম্বার: '. $this->booking['bookingid'])
+            ->action('বর্তমান অবস্থা জানতে ভিজিট করুন', route('booking.list'))
             ->line('ভালবাসা অবিরাম মামাজের সঙ্গে থাকার জন্য!');
     }
 
@@ -58,9 +58,10 @@ class BookingNotification extends Notification implements ShouldQueue
     {
         return [
             //
-            'bookingauthid'     => $this->booking->name,
-            'flatvalue'     => $this->booking->flatvalue,
-            'created_at'    => $notifiable
+            'id'             => $this->booking->id,
+            'bookingauthid'  => $this->booking->name,
+            'flatvalue'      => $this->booking->flatvalue,
+            'created_at'     => $notifiable
         ];
     }
 
