@@ -25,19 +25,27 @@
                   <table class="table table-striped" >
                      <thead>
                         <tr>
-                           <th scope="col">বুকিং নাম্বার</th>
-                           <th scope="col">বুকিং জমির পরিমান</th>
-                           <th scope="col">বুকিং টাকা</th>
-                           <th scope="col">বুকিং স্টাটার্স</th>
+                           <th scope="col">রিপোর্ট তারিখ</th>
+                           <th scope="col">নাম</th>
+                           <th scope="col">মোবাইল নাম্বার</th>
+                           <th scope="col">রিপোর্ট স্টাটার্স</th>
                         </tr>
                      </thead>
                      <tbody>
+                        @foreach( $report as $value )
                         <tr>
-                           <th scope="row">fdgfgv</th>
-                           <td>SFT</td>
-                           <td>sfdfg</td>
-                           <td> test </td>
+                           <th scope="row">{{ $value->date }}</th>
+                           <td>{{ $value->name }}</td>
+                           <td>{{ $value->phone }}</td>
+                           <td>
+                              @if( $value->status == 1)
+                                 <span class="text-success">এপ্রুভ হয়েছে</span>
+                              @else
+                              <span class="text-danger">এপ্রুভ হয়নি</span>
+                              @endif
+                           </td>
                         </tr>
+                        @endforeach
                      </tbody>
                   </table>
                </div>

@@ -15,21 +15,24 @@ class CreateReportsTable extends Migration
     {
         Schema::create('reports', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer('userid')->nullable();
+            $table->integer('refereluserid')->nullable();
+            $table->string('status')->default('0')->comment('0 for waiting 1 for approve');
             $table->string('date');
             $table->string('name')->nullable();
-            $table->tinyInteger('phone')->nullable();
+            $table->string('phone')->nullable();
             $table->string('email', 100)->nullable();
             $table->string('invitedate');
             $table->string('officevisitdate');
             $table->string('sidevisitdate');
             $table->string('counsiling')->nullable();
             $table->string('targetfee')->nullable();
-            $table->tinyInteger('hwant')->nullable();
-            $table->tinyInteger('bthink')->nullable();
-            $table->tinyInteger('mishuk')->nullable();
-            $table->tinyInteger('planshow')->nullable();
-            $table->tinyInteger('training')->nullable();
-            $table->tinyInteger('problem')->nullable();
+            $table->string('hwant')->nullable();
+            $table->string('bthink')->nullable();
+            $table->string('mishuk')->nullable();
+            $table->string('planshow')->nullable();
+            $table->string('training')->nullable();
+            $table->string('problem')->nullable();
             $table->text('comment')->nullable();
             $table->timestamps();
         });

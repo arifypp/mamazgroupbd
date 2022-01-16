@@ -105,6 +105,23 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/dashboard','App\Http\Controllers\Backend\DashboardController@index')->name('admin.dashboard');
 
+            // Landcat Route For CRUD
+            Route::group(['prefix' => 'landcat'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\LandcatController@index')->name('landcat.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\LandcatController@create')->name('landcat.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\LandcatController@store')->name('landcat.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\LandcatController@edit')->name('landcat.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\LandcatController@update')->name('landcat.update');
+        
+                Route::get('/delete/{id}', 'App\Http\Controllers\Backend\LandcatController@destroy')->name('landcat.destroy');
+        
+            });
+
             // Booking Management
             Route::group(['prefix' => 'booking'], function(){
 

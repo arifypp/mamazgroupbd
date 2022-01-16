@@ -5,7 +5,9 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Frontend\Report;
+use App\Models\User;
 use Illuminate\Support\Facades\Notification;
+use App\Notifications\UserReportNotification;
 use Response;
 use DB;
 use Session;
@@ -19,7 +21,8 @@ class ReportController extends Controller
     public function index()
     {
         //
-        return view('Frontend.user.pages.report.manage');
+        $report = Report::where('userid', auth()->user()->id)->get();
+        return view('Frontend.user.pages.report.manage', compact('report'));
     }
 
     /**
@@ -45,8 +48,8 @@ class ReportController extends Controller
         $request->validate([
             'date'              =>  ['required'],
             'name'              =>  ['required'],
-            'phone'             =>  ['required'],
-            'email'             =>  ['required'],
+            'phone'             =>  ['required', 'min:10', 'numeric'],
+            'email'             =>  ['required', 'email:rfc,dns'],
             'invitedate'        =>  ['required'],
             'officevisitdate'   =>  ['required'],
             'sidevisitdate'     =>  ['required'],
@@ -63,7 +66,65 @@ class ReportController extends Controller
         $message = [
             'name.required' => 'নাম লিখুন',
             'date.required' => 'তারিখ নির্বাচন করুন',
+            'phone.required' => 'ফোন নাম্বার লিখুন',
+            'phone.min' => '১১ ডিজিটের ফোন নাম্বার লিখুন',
+            'phone.numeric' => 'ফোন নাম্বার লিখুন',
+            'email.required' => 'ইমেইল লিখুন',
+            'email.email' => 'সঠিক ইমেইল লিখুন',
+            'invitedate.required' => 'তারিখ লিখুন',
+            'officevisitdate.required' => 'তারিখ লিখুন',
+            'sidevisitdate.required' => 'তারিখ লিখুন',
+            'counsiling.required' => 'এই ঘরটি পুরণ করুন',
+            'targetfee.required' => 'অপশন নির্বাচন করুন',
+            'targetfee.not_in' => 'অপশন নির্বাচন করুন',
+            'hwant.required' => 'অপশন নির্বাচন করুন',
+            'bthink.required' => 'অপশন নির্বাচন করুন',
+            'mishuk.required' => 'অপশন নির্বাচন করুন',
+            'planshow.required' => 'অপশন নির্বাচন করুন',
+            'training.required' => 'অপশন নির্বাচন করুন',
+            'comment.required' => 'মন্তব্য লিখুন',
         ]);
+
+        $report = new Report;
+
+        $report->userid             =   auth()->user()->id;
+        $report->refereluserid      =   auth()->user()->referrer_id;
+        $report->date               =   $request->date;
+        $report->name               =   $request->name;
+        $report->phone              =   $request->phone;
+        $report->email              =   $request->email;
+        $report->invitedate         =   $request->invitedate;
+        $report->officevisitdate    =   $request->officevisitdate;
+        $report->sidevisitdate      =   $request->sidevisitdate;
+        $report->counsiling         =   $request->counsiling;
+        $report->targetfee          =   $request->targetfee;
+        $report->hwant              =   $request->hwant;
+        $report->bthink             =   $request->bthink;
+        $report->mishuk             =   $request->mishuk;
+        $report->planshow           =   $request->planshow;
+        $report->training           =   $request->training;
+        $report->problem            =   $request->problem;
+        $report->comment            =   $request->comment;
+
+        $report->save();
+        
+        if ( !is_null( auth()->user()->referrer_id ) ){
+        $user = User::where('id', auth()->user()->referrer_id)->get();
+        Notification::send($user, new UserReportNotification($report));
+        }
+        else
+        {
+        $admin = User::where('auth_role', 3)->get();
+        Notification::send($admin, new UserReportNotification($report));
+        }
+
+        $notification = array(
+            'message'       => 'রিপোর্ট পাঠানো সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('report.manage')->with($notification);
+
     }
 
     /**

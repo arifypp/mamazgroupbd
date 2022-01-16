@@ -19,7 +19,17 @@
                 <li class="menu-title" key="t-apps">ফিচারড সেটিং</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-home"></i>
+                        <i class="bx bx-duplicate"></i>
+                        <span key="t-booking">জমি যুক্ত করুন</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('landcat.manage') }}" key="t-landcat-pending"> জমির লিস্ট দেখুন </a></li>
+                        <li><a href="{{ route('landcat.create') }}" key="t-total-landcat"> নতুন জমি যুক্ত করুন</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-file"></i>
                         <span key="t-booking">বুকিং ম্যানেজমেন্ট</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
