@@ -10,3 +10,4 @@
 <link href="{{ asset('Frontend/assets/css/style.css') }}" rel="stylesheet">
 <!-- Tostr Notification -->
 <link rel="stylesheet" type="text/css" href="{{ asset('/assets/libs/toastr/toastr.min.css') }}">
+@yield('css')

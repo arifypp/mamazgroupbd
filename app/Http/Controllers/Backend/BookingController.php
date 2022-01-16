@@ -8,6 +8,7 @@ use lemonpatwari\bangladeshgeocode\Models\Division;
 use App\Models\Frontend\Booking;
 use App\Models\User;
 use App\Notifications\BookingNotification;
+use App\Notifications\BookingApproveNotification;
 use Illuminate\Support\Facades\Notification;
 use Response;
 use DB;
@@ -40,7 +41,7 @@ class BookingController extends Controller
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Booking Approve Function.
      *
      * @return \Illuminate\Http\Response
      */
@@ -52,9 +53,19 @@ class BookingController extends Controller
 
         $bookings->save();
 
+        $user = User::where('id', auth()->user()->referrer_id)->get();
+        Notification::send($user, new BookingApproveNotification($bookings));
+
+        $bookinguser = User::where('id', $bookings->id)->get();
+        Notification::send($bookinguser, new BookingApproveNotification($bookings));
+
         return response()->json(['success' =>true, 'message'=> 'বুকিং অ্যপ্রেুাভ সম্পন্ন হয়েছে!!!']);
     }
-
+    /**
+     * Notification Function.
+     *
+     * @return \Illuminate\Http\Response
+     */
     public function notifyread(Request $request, $id)
     {
    

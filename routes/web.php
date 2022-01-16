@@ -81,6 +81,23 @@ Route::middleware(['verified'])->group(function () {
         
             });
 
+            // Platform Report Route For CRUD
+            Route::group(['prefix' => 'report'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Frontend\ReportController@index')->name('report.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Frontend\ReportController@create')->name('report.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Frontend\ReportController@store')->name('report.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Frontend\ReportController@edit')->name('report.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Frontend\ReportController@update')->name('report.update');
+        
+                Route::get('/delete/{id}', 'App\Http\Controllers\Frontend\ReportController@destroy')->name('report.destroy');
+        
+            });
+
         });
     });
     Route::group(['prefix' => 'admin'], function(){
