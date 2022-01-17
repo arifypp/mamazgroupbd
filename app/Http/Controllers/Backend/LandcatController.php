@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\Landcat;
-use DB;
+use App\Models\Backend\LandValue;
 use Session;
 
 class LandcatController extends Controller
@@ -64,6 +64,14 @@ class LandcatController extends Controller
         $landcat->comment       =   $request->comment;
 
         $landcat->save();
+
+        $Rlandvalue = LandValue::find('1');
+        $newlandvalue = $Rlandvalue->totalland + $landcat->landvalue;
+        $remaindland = $Rlandvalue->remainland + $landcat->landvalue;
+        $Rlandvalue->totalland = $newlandvalue;
+        $Rlandvalue->remainland = $remaindland;
+        $Rlandvalue->save();
+        
 
         $notification = array(
             'message'       => 'জমি তৈরি করা সম্পন্ন হয়েছে!!!',
@@ -127,6 +135,13 @@ class LandcatController extends Controller
 
         $landcat->save();
 
+        $Rlandvalue = LandValue::find('1');
+        $newlandvalue = $Rlandvalue->totalland + $landcat->landvalue;
+        $remaindland = $Rlandvalue->remainland + $landcat->landvalue;
+        $Rlandvalue->totalland = $newlandvalue;
+        $Rlandvalue->remainland = $remaindland;
+        $Rlandvalue->save();
+
         $notification = array(
             'message'       => 'জমি আপডেট করা সম্পন্ন হয়েছে!!!',
             'alert-type'    => 'success'
@@ -144,6 +159,12 @@ class LandcatController extends Controller
     public function destroy($id)
     {
         //
+        $landcat = Landcat::find($id);
+        $Rlandvalue = LandValue::find('1');
+        $remaindland = $Rlandvalue->remainland - $landcat->landvalue;
+        $Rlandvalue->remainland = $remaindland;
+        $Rlandvalue->save();
+
         $delete = Landcat::where('id', $id)->delete();
 
         // check data deleted or not

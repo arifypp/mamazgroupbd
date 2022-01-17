@@ -84,7 +84,19 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">মোট জমি</p>
-                                <h4 class="mb-0">1,235 SFT</h4>
+                                <h4 class="mb-0">
+                                @php 
+                                $TotalCash = App\Models\Backend\LandValue::find(1);
+                                $MyCash = $TotalCash->totalland;
+                                $num = $MyCash;
+                                $units = ['', 'K', 'M', 'B', 'T'];
+                                    for ($i = 0; $num >= 1000; $i++) {
+                                        $num /= 1000;
+                                    }
+                                    echo round($num, 1) . $units[$i];
+                                @endphp
+                                SFT
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
