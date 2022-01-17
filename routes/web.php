@@ -118,7 +118,7 @@ Route::middleware(['verified'])->group(function () {
         
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\LandcatController@update')->name('landcat.update');
         
-                Route::get('/delete/{id}', 'App\Http\Controllers\Backend\LandcatController@destroy')->name('landcat.destroy');
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\LandcatController@destroy')->name('landcat.destroy');
         
             });
 

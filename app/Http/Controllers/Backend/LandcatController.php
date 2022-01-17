@@ -18,7 +18,8 @@ class LandcatController extends Controller
     public function index()
     {
         //
-        return view('Backend.landcat.manage');
+        $landcat  = Landcat::orderBy('id', 'desc')->get();
+        return view('Backend.landcat.manage', compact('landcat'));
     }
 
     /**
@@ -93,6 +94,18 @@ class LandcatController extends Controller
     public function edit($id)
     {
         //
+        $landcat  =  Landcat::find($id);
+        if( !is_null($landcat) ){
+            return view('Backend.landcat.edit', compact('landcat'));
+        }
+        else{
+            $notification = array(
+                'message'       => 'জমি আইডি খুজে পাওয়া যায়নি!!!',
+                'alert-type'    => 'warning'
+            );
+    
+            return back()->with($notification);
+        }
     }
 
     /**
@@ -105,6 +118,21 @@ class LandcatController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $landcat  =  Landcat::find($id);
+
+        $landcat->landvalue     =   $request->landvalue;
+        $landcat->landprice     =   $request->landprice;
+        $landcat->status        =   $request->status;
+        $landcat->comment       =   $request->comment;
+
+        $landcat->save();
+
+        $notification = array(
+            'message'       => 'জমি আপডেট করা সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return redirect()->route('landcat.manage')->with($notification);
     }
 
     /**
@@ -116,5 +144,22 @@ class LandcatController extends Controller
     public function destroy($id)
     {
         //
+        $delete = Landcat::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";
+            
+        } else {
+            $success = true;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }
