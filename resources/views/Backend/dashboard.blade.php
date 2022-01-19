@@ -136,7 +136,17 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">মোট বুকিং</p>
-                                <h4 class="mb-0">200</h4>
+                                <h4 class="mb-0">
+                                @php 
+                                $TotalBooking = App\Models\Frontend\Booking::orderBy('id', 'desc')->count();
+                                $num = $TotalBooking;
+                                $units = ['', 'K', 'M', 'B', 'T'];
+                                    for ($i = 0; $num >= 1000; $i++) {
+                                        $num /= 1000;
+                                    }
+                                    echo round($num, 1) . $units[$i];
+                                @endphp
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -156,7 +166,17 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">মোট ইউজারকারী</p>
-                                <h4 class="mb-0">501</h4>
+                                <h4 class="mb-0">
+                                @php 
+                                $TotalUsers = App\Models\User::orderBy('id', 'desc')->count();
+                                $num = $TotalUsers;
+                                $units = ['', 'K', 'M', 'B', 'T'];
+                                    for ($i = 0; $num >= 1000; $i++) {
+                                        $num /= 1000;
+                                    }
+                                    echo round($num, 1) . $units[$i];
+                                @endphp
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -176,7 +196,17 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">মোট ওয়ার্কার</p>
-                                <h4 class="mb-0">201</h4>
+                                <h4 class="mb-0">
+                                @php 
+                                $TotalUsers = App\Models\User::where('auth_role', 2)->count();
+                                $num = $TotalUsers;
+                                $units = ['', 'K', 'M', 'B', 'T'];
+                                    for ($i = 0; $num >= 1000; $i++) {
+                                        $num /= 1000;
+                                    }
+                                    echo round($num, 1) . $units[$i];
+                                @endphp
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -196,7 +226,17 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">মোট কাস্টোমার</p>
-                                <h4 class="mb-0">180</h4>
+                                <h4 class="mb-0">
+                                @php 
+                                $TotalUsers = App\Models\User::where('auth_role', 0)->count();
+                                $num = $TotalUsers;
+                                $units = ['', 'K', 'M', 'B', 'T'];
+                                    for ($i = 0; $num >= 1000; $i++) {
+                                        $num /= 1000;
+                                    }
+                                    echo round($num, 1) . $units[$i];
+                                @endphp
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
@@ -216,7 +256,18 @@
                         <div class="d-flex">
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">আজকের জমি</p>
-                                <h4 class="mb-0">425.2</h4>
+                                <h4 class="mb-0">
+                                @php 
+                                $TotalLand = App\Models\Backend\LandValue::whereDay('created_at', '>=', now()->day)->sum('totalland');
+                                $num = $TotalLand;
+                                $units = ['', 'K', 'M', 'B', 'T'];
+                                    for ($i = 0; $num >= 1000; $i++) {
+                                        $num /= 1000;
+                                    }
+                                    echo round($num, 1) . $units[$i];
+                                @endphp
+                                SFT
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
