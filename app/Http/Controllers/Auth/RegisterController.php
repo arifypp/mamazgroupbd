@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Events\UserRegistrationEvent;
+use View;
 class RegisterController extends Controller
 {
     /*
@@ -51,13 +52,23 @@ class RegisterController extends Controller
     protected function validator(array $data)
     {
         return Validator::make($data, [
-            'name' => ['required', 'string', 'max:255'],
+            'firstname' => ['required', 'string', 'max:255'],
+            'lastname' => ['required', 'string', 'max:255'],
+            'lang'      =>  ['required', 'not_in:0'],
+            'address'   =>  ['required'],
+            'address2'  =>  ['required'],
+            'city'      =>  ['required'],
+            'postcode'  =>  ['required'],
+            'country'   =>  ['required', 'not_in:0'],
             'username' => ['required', 'string', 'unique:users', 'alpha_dash', 'min:3', 'max:30'],
             'phone' => ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
             'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
             'password' => ['required', 'string', 'min:6', 'confirmed'],
             'dob' => ['required', 'date', 'before:today'],
-            'avatar' => ['required', 'image' ,'mimes:jpg,jpeg,png','max:1024'],
+            'agreementone' =>   ['required'],
+            'agreementtwo' =>   ['required'],
+
+            // 'avatar' => ['required', 'image' ,'mimes:jpg,jpeg,png','max:1024'],
         ]);
     }
 
@@ -71,6 +82,8 @@ class RegisterController extends Controller
     protected function registered(Request $request, $user)
     {
         $request->session()->flash('notification', 'Thank you for subscribing!');
+        return redirect()->intended('/overview');
+
     }
 
     /**
@@ -95,6 +108,7 @@ class RegisterController extends Controller
      */
     protected function create(array $data)
     {
+
         if (request()->has('avatar')) {            
             $avatar = request()->file('avatar');
             $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
@@ -104,18 +118,24 @@ class RegisterController extends Controller
         $referrer = User::whereUsername(session()->pull('referrer'))->first();
         
         $user = User::create([
-            'name' => $data['name'],
+            'name' => $request['firstname']." ".$request['lastname'],
+            'phone' => $request['phone'],
+            'address' => $request['address']." ".$request['address2']." ".$request['city']." ".$request['postcode']." ".$request['country'],
             'username'    => $data['username'],
             'email' => $data['email'],
-            'phone' => $request['phone'],
             'referrer_id' => $referrer ? $referrer->id : null,
             'password' => Hash::make($data['password']),
             'dob' => date('Y-m-d', strtotime($data['dob'])),
-            'avatar' => "/images/" . $avatarName,
+            // 'avatar' => "/images/" . $avatarName,
         ]);
 
-        event(new UserRegistrationEvent($user));
-        return $user;
+        // event(new UserRegistrationEvent($user));
+        // return $user;
+        return view('auth.thankyou', compact('user'));
+
+        // ektu run koren to => ok
+
+
     }
 
     // User Registration Form
@@ -125,7 +145,8 @@ class RegisterController extends Controller
 
     // User created  
     protected function createUser(Request $request){
-        $this->validator($request->all())->validate();
+
+       $this->validator($request->all())->validate();
 
         if (request()->has('avatar')) {            
             $avatar = request()->file('avatar');
@@ -137,19 +158,20 @@ class RegisterController extends Controller
 
 
         $teacher = User::create([
-            'name' => $request['name'],
+            'name' => $request['firstname']." ".$request['lastname'],
             'phone' => $request['phone'],
+            'address' => $request['address']." ".$request['address2']." ".$request['city']." ".$request['postcode']." ".$request['country'],
             'username' => $request['username'],
             'email' => $request['email'],
             'referrer_id' => $referrer ? $referrer->id : null,
             'password' => Hash::make($request['password']),
             'dob' => date('Y-m-d', strtotime($request['dob'])),
-            'avatar' => "/images/" . $avatarName,
+            // 'avatar' => "/images/" . $avatarName,
 
         ]);
 
-        event(new UserRegistrationEvent($teacher));
-
-        return redirect()->intended('/email/verify');
+       // return View::make('auth.thankyou')->with(compact('teacher'));
+       return view('auth.thankyou', ['user' => $teacher]);
     }
+
 }

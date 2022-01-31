@@ -7,6 +7,12 @@
                       <a href="{{ route('user.dashboard') }}"><h6><i class="fas fa-tachometer-alt"></i>ড্যাশবোর্ড</h6></a>
                      
                     </li>
+                    
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('apply.create') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
+                      <a href="{{ route('apply.create') }}"><h6><i class="fas fa-pen"></i>আবেদন করুন</h6></a>
+                     
+                    </li>
+
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('booking.manage') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
                       <a href="{{ route('booking.manage') }}"><h6><i class="fas fa-swatchbook"></i>বুকিং দিন</h6></a>
                      
@@ -16,7 +22,10 @@
                       <a href="{{ route('booking.list') }}"><h6><i class="fas fa-sticky-note"></i>বুকিং লিস্ট</h6></a>
                      
                     </li>
-
+                    @php
+                   $application =  App\Models\Frontend\Booking::where('bookingauthid', 3 )->get();
+                    @endphp
+                  @if( !empty( auth()->user()->id == $application[0]->bookingauthid) )
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('report.manage')) active @endif">
                       <a href="{{ route('report.manage') }}"><h6><i class="fas fa-book"></i>রিপোর্ট লিস্ট</h6></a>
                      
@@ -26,7 +35,7 @@
                       <a href="{{ route('report.create') }}"><h6><i class="fas fa-book"></i>রিপোর্ট পাঠান</h6></a>
                      
                     </li>
-                    
+                  @endif  
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap ">
                       <a href="profile.html"><h6><i class="fas fa-user-cog"></i>প্রোফাইল সেটিং</h6></a>
                      

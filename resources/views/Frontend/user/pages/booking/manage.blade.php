@@ -22,10 +22,7 @@
         </div>
         </div>
       </div>
-      
-          
-      
-            @include('Frontend/user/bookingleft')
+       @include('Frontend/user/bookingleft')
   
   
                <div class="col-md-10"style="background-color: #F8FAFD; padding-top: 0px;">

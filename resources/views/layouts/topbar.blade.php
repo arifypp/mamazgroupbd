@@ -124,6 +124,25 @@
                             </div>
                         </div>
                     </a>
+                    
+                    @elseif(Str::snake(class_basename($notification->type)) == 'application_notification')
+                    <a href="{{ route('bbooking.show', $notification->data['id']) }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('bbooking.notifyread', $notification->id) }}">
+                        <div class="d-flex">
+                            <div class="avatar-xs me-3">
+                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                    <i class="mdi mdi-bell-outline"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    {{ $notification->data['name'] }} একটি আবেদন পাঠিয়েছেন।
+                                </h6>
+                                <div class="font-size-12 text-muted">
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                     @endif
                 @empty
                 <a href="javascript:void(0)" class="text-reset notification-item">

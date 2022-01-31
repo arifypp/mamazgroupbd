@@ -18,7 +18,14 @@ Route::group(['prefix' => '/'], function(){
     Route::get('/','App\Http\Controllers\Frontend\HomepageController@index')->name('homepage');
     Route::get('/about','App\Http\Controllers\Frontend\AboutController@index')->name('about');
     Route::get('/contact','App\Http\Controllers\Frontend\ContactController@index')->name('contact');
+    Route::get('/thankyou', [App\Http\Controllers\HomeController::class, 'thankyou'])->name('thankyou');
+
 });
+// Sign up payment
+Route::group(['prefix' => 'paysignupcash'], function(){
+    Route::post('/store', 'App\Http\Controllers\Frontend\TotalAmmountController@store')->name('paysignupcash.store');                
+});
+
 
 
 /*
@@ -31,6 +38,7 @@ Route::group(['prefix' => '/'], function(){
 | contains the "web" middleware group. Now create something great!
 |
 */
+
 Route::get('/login', function () {
     return redirect(route('userlogin'));
 });
@@ -98,6 +106,22 @@ Route::middleware(['verified'])->group(function () {
         
             });
 
+            // Application Route For CRUD
+            Route::group(['prefix' => 'apply'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Frontend\ApplicationController@index')->name('apply.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Frontend\ApplicationController@create')->name('apply.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Frontend\ApplicationController@store')->name('apply.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Frontend\ApplicationController@edit')->name('apply.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Frontend\ApplicationController@update')->name('apply.update');
+        
+                Route::get('/delete/{id}', 'App\Http\Controllers\Frontend\ApplicationController@destroy')->name('apply.destroy');
+        
+            });
         });
     });
     Route::group(['prefix' => 'admin'], function(){
@@ -168,6 +192,63 @@ Route::middleware(['verified'])->group(function () {
         
             });
 
+            // Customer Route For CRUD
+            Route::group(['prefix' => 'customer'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\AdminCustomerController@index')->name('customer.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\AdminCustomerController@create')->name('customer.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\AdminCustomerController@store')->name('customer.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\AdminCustomerController@edit')->name('customer.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\AdminCustomerController@update')->name('customer.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\AdminCustomerController@destroy')->name('customer.destroy');
+        
+            });
+
+            // Employee Route For CRUD
+            Route::group(['prefix' => 'employe'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\EmployeController@index')->name('employe.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\EmployeController@create')->name('employe.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\EmployeController@store')->name('employe.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\EmployeController@edit')->name('employe.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\EmployeController@update')->name('employe.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\EmployeController@destroy')->name('employe.destroy');
+        
+            });
+
+            // Application Route For CRUD
+            Route::group(['prefix' => 'application'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\ApplicationController@index')->name('application.manage');
+
+                Route::get('/pending', 'App\Http\Controllers\Backend\ApplicationController@pending')->name('application.pending');
+
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\ApplicationController@show')->name('application.show');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\ApplicationController@create')->name('application.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\ApplicationController@store')->name('application.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\ApplicationController@edit')->name('application.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\ApplicationController@update')->name('application.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\ApplicationController@destroy')->name('application.destroy');
+        
+            });
+
+
+
             // হোম পেইজ সেটিং
             Route::group(['prefix' => 'homesettings'], function(){
 
@@ -192,7 +273,10 @@ Route::get('/dashboardd', [App\Http\Controllers\HomeController::class, 'root'])-
 
 //Update User Details
 Route::post('/update-profile/{id}', [App\Http\Controllers\HomeController::class, 'updateProfile'])->name('updateProfile');
+
 Route::post('/update-password/{id}', [App\Http\Controllers\HomeController::class, 'updatePassword'])->name('updatePassword');
+Route::get('/update-status/{id}', [App\Http\Controllers\HomeController::class, 'updateStatus'])->name('updateStatus');
+
 
 Route::get('{any}', [App\Http\Controllers\HomeController::class, 'index'])->name('index');
 

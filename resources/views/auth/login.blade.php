@@ -66,11 +66,11 @@
                         @endisset
                             @csrf
                             <div class="mb-3">
-                                <label for="username" class="form-label">Email / Phone Number</label>
+                                <label for="username" class="form-label">Email / User ID</label>
                                 <input name="email" type="text"
                                     class="form-control @error('email') is-invalid @enderror"
                                     id="username"
-                                    placeholder="Enter Email / Phone Number" autocomplete="email" autofocus>
+                                    placeholder="Enter Email / User ID" autocomplete="email" autofocus>
                                 @error('email')
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $message }}</strong>

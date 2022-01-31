@@ -7,20 +7,20 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BookingApproveNotification extends Notification implements ShouldQueue
+class ApplicationApproved extends Notification implements ShouldQueue
 {
     use Queueable;
-    protected $bookings;
+    protected $application;
+
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($bookings)
+    public function __construct($application)
     {
         //
-        $this->bookings  = $bookings;
-
+        $this->application  =   $application;
     }
 
     /**
@@ -31,7 +31,7 @@ class BookingApproveNotification extends Notification implements ShouldQueue
      */
     public function via($notifiable)
     {
-        return ['mail', 'database'];
+        return ['mail'];
     }
 
     /**
@@ -43,9 +43,11 @@ class BookingApproveNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line($this->bookings['name']. ' এর বুকিং এপ্রুভ করা হয়েছে । আপনার বুকিং নাম্বার: '. $this->bookings['bookingid'])
-            ->action('বর্তমান অবস্থা জানতে ভিজিট করুন', route('booking.list'))
-            ->line('ভালবাসা অবিরাম মামাজের সঙ্গে থাকার জন্য!');
+        ->greeting('হ্যালো! ' .$notifiable->name)
+        ->subject('আবেদন এপ্রুভ নোটিফিকেশন')
+        ->line($this->application['name']. ' আপনার আবেদনটি এপ্রুভ করা হয়েছে। আপনি আগামিকাল থেকে মামাজের সাঙ্গে আপনার নতুন যাত্রা শুরু করতে পারেন।')
+        ->action('বিস্তারিত জানতে দেখুন', route('homepage'))
+        ->line('ভালবাসা অবিরাম মামাজের সঙ্গে থাকার জন্য!');
     }
 
     /**
@@ -54,14 +56,10 @@ class BookingApproveNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
+    public function toArray($notifiable)
     {
         return [
             //
-            'id'             => $this->bookings->id,
-            'bookingauthid'  => $this->bookings->name,
-            'flatvalue'      => $this->bookings->flatvalue,
-            'created_at'     => $notifiable
         ];
     }
 }

@@ -125,4 +125,18 @@ class HomeController extends Controller
             }
         }
     }
+     // Update Status
+     public function updateStatus(Request $request)
+     {
+         $user = User::find($request->user_id);
+         $user->status = $request->status;
+         $user->save();
+ 
+         return response()->json(['message' => 'স্টাটার্স আপডেট করা হয়েছে।']);
+     }
+
+     public function thankyou()
+     {
+         return view('auth.thankyou');
+     }
 }

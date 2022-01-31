@@ -17,6 +17,12 @@ class UserMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
+            // Status checking 
+            if(Auth::user()->status == 1){
+                Auth::logout();
+				return redirect(url('login/user'))->with('AuthroleErrors', 'আপনার একাউন্ট ডিসেবল করা হয়েছে!');
+            }
+
             if (auth()->user()->auth_role == 0) {
                 return $next($request);
             }

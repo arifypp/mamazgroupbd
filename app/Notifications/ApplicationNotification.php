@@ -7,20 +7,19 @@ use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class BookingApproveNotification extends Notification implements ShouldQueue
+class ApplicationNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-    protected $bookings;
+    protected $application;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($bookings)
+    public function __construct($application)
     {
         //
-        $this->bookings  = $bookings;
-
+        $this->application  = $application;
     }
 
     /**
@@ -43,9 +42,11 @@ class BookingApproveNotification extends Notification implements ShouldQueue
     public function toMail($notifiable)
     {
         return (new MailMessage)
-            ->line($this->bookings['name']. ' এর বুকিং এপ্রুভ করা হয়েছে । আপনার বুকিং নাম্বার: '. $this->bookings['bookingid'])
-            ->action('বর্তমান অবস্থা জানতে ভিজিট করুন', route('booking.list'))
-            ->line('ভালবাসা অবিরাম মামাজের সঙ্গে থাকার জন্য!');
+        ->greeting('হ্যালো! ' .$notifiable->name)
+        ->subject('আবেদন নোটিফিকেশন')
+        ->line($this->application['name']. ' কাজ করার জন্য আবেদন করেছেন । মামাজ কর্তৃপক্ষকে আবেদনটি যাচাই/বাচাই করে দেখার অনুরোধ করা হচ্ছে।')
+        ->action('আবেদন সম্পর্কে জানতে ক্লিক করুন', route('apply.manage'))
+        ->line('ভালবাসা অবিরাম মামাজের সঙ্গে থাকার জন্য!');
     }
 
     /**
@@ -58,9 +59,8 @@ class BookingApproveNotification extends Notification implements ShouldQueue
     {
         return [
             //
-            'id'             => $this->bookings->id,
-            'bookingauthid'  => $this->bookings->name,
-            'flatvalue'      => $this->bookings->flatvalue,
+            'id'             => $this->application->id,
+            'name'          => $this->application->name,
             'created_at'     => $notifiable
         ];
     }
