@@ -72,19 +72,6 @@ class RegisterController extends Controller
         ]);
     }
 
-    /**
-     * The user has been registered.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  mixed  $user
-     * @return mixed
-     */
-    protected function registered(Request $request, $user)
-    {
-        $request->session()->flash('notification', 'Thank you for subscribing!');
-        return redirect()->intended('/overview');
-
-    }
 
     /**
      * Show the application registration form.

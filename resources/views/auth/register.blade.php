@@ -238,12 +238,25 @@
                                 <input type="checkbox" class="form-check-input" id="affiliatecheck">
                                 <label class="form-check-label" for="affiliatecheck">I don't know an Affiliate</label>
                             </div>
+                            @php 
+                                $referrer = App\Models\User::whereUsername(session()->pull('referrer'))->first();
+                            @endphp
+                            @if( !is_null($referrer) )
+                            <div class="form-group mt-3" id="sponserfield">
+                                <label for="Sponsor ID Number">Sponsor ID Number</label>
+                                <input type="text" name="referelID" id="userID" value="{{ $referrer->username }}"  class="form-control" readonly>
+                                <label for="username"> <span class="text-info">{{ $referrer->name }}</span> </label><br>
+                                <input type="checkbox" class="form-check-input" id="check" checked>
+                                <label class="form-check-label" for="check">My sponsor is the same as my enroller</label>
+                            </div>
+                            @else
                             <div class="form-group mt-3" id="sponserfield">
                                 <label for="Sponsor ID Number">Sponsor ID Number</label>
                                 <input type="text" name="referelID" id="userID"  class="form-control" readonly>
                                 <input type="checkbox" class="form-check-input" id="check" checked>
                                 <label class="form-check-label" for="check">My sponsor is the same as my enroller</label>
                             </div>
+                            @endif
                         </div>
                        
                         <h4>Agreement</h4><hr>
