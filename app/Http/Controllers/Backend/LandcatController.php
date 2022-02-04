@@ -43,31 +43,76 @@ class LandcatController extends Controller
     {
         //
         $request->validate([
-            'landvalue'         =>  ['required'],
-            'landprice'         =>  ['required'],
+            'mainland'          =>  ['required'],
+            'utility'           =>  ['required'],
+            'usedland'          =>  ['required'],
+            'plotnumber'        =>  ['required'],
+            'floornumber'       =>  ['required'],
+            'unitnumber'        =>  ['required'],
+            'totalsquarefit'    =>  ['required'],
             'status'            =>  ['required', 'not_in:0'],
-            'comment'           =>  ['required'],
+            'csnumber'          =>  ['required'],
+            'sanumber'          =>  ['required'],
+            'rsnumber'          =>  ['required'],
+            'bsnumber'          =>  ['required'],
+            'jlnumber'          =>  ['required'],
+            'dcrnumber'         =>  ['required'],
+            'kharicaseno'       =>  ['required'],
+            'khajnayear'        =>  ['required'],
+            'maindolilnumber'   =>  ['required'],
+            'vayanumber'        =>  ['required'],
+            'lanbdescription'   =>  ['required'],
         ],
         $message = [
-            'landvalue.required' => 'জমির পরিমাণ লিখুন',
-            'landprice.required' => 'জমির মুল্য লিখুন',
-            'status.required' => 'জমির স্টাটার্স নির্বাচন করুন',
-            'status.not_in' => 'জমির সাস্টার্স নির্বাচন করুন',
-            'comment.required' => 'জমির পরিমাণ লিখুন',           
+            'mainland.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'utility.required'          =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'usedland.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'plotnumber.required'       =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'floornumber.required'      =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'unitnumber.required'       =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'totalsquarefit.required'   =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'csnumber.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'status.required'           =>  'স্টাটার্স নির্বাচন করুন।',
+            'status.not_in'             =>  'স্টাটার্স নির্বাচন করুন।',
+            'csnumber.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'sanumber.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'rsnumber.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'bsnumber.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'jlnumber.required'         =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'dcrnumber.required'        =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'kharicaseno.required'      =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'khajnayear.required'       =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'maindolilnumber.required'  =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'vayanumber.required'       =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',
+            'lanbdescription.required'  =>  'এই ঘরটি অবশ্যই পূরণ করতে হবে।',        
         ]);
 
         $landcat  = new Landcat;
-
-        $landcat->landvalue     =   $request->landvalue;
-        $landcat->landprice     =   $request->landprice;
-        $landcat->status        =   $request->status;
-        $landcat->comment       =   $request->comment;
-
+        $landcat->mainland          =   $request->mainland;
+        $landcat->utility           =   $request->utility;
+        $landcat->usedland          =   $request->usedland;
+        $landcat->plotnumber        =   $request->plotnumber;
+        $landcat->floornumber       =   $request->floornumber;
+        $landcat->unitnumber        =   $request->unitnumber;
+        $landcat->totalsquarefit    =   $request->totalsquarefit;
+        $landcat->status            =   $request->status;
+        $landcat->csnumber          =   $request->csnumber;
+        $landcat->sanumber          =   $request->sanumber;
+        $landcat->rsnumber          =   $request->rsnumber;
+        $landcat->bsnumber          =   $request->bsnumber;
+        $landcat->jlnumber          =   $request->jlnumber;
+        $landcat->dcrnumber         =   $request->dcrnumber;
+        $landcat->kharicaseno       =   $request->kharicaseno;
+        $landcat->khajnayear        =   $request->khajnayear;
+        $landcat->maindolilnumber   =   $request->maindolilnumber;
+        $landcat->vayanumber        =   $request->vayanumber;
+        $landcat->lanbdescription   =   $request->lanbdescription;
+        
         $landcat->save();
 
         $Rlandvalue = LandValue::find('1');
-        $newlandvalue = $Rlandvalue->totalland + $landcat->landvalue;
-        $remaindland = $Rlandvalue->remainland + $landcat->landvalue;
+        $newlandvalue = $Rlandvalue->totalland + $landcat->totalsquarefit;
+        $remaindland = $Rlandvalue->remainland + $landcat->totalsquarefit;
         $Rlandvalue->totalland = $newlandvalue;
         $Rlandvalue->remainland = $remaindland;
         $Rlandvalue->save();
@@ -128,19 +173,27 @@ class LandcatController extends Controller
         //
         $landcat  =  Landcat::find($id);
 
-        $landcat->landvalue     =   $request->landvalue;
-        $landcat->landprice     =   $request->landprice;
-        $landcat->status        =   $request->status;
-        $landcat->comment       =   $request->comment;
-
+        $landcat->mainland          =   $request->mainland;
+        $landcat->utility           =   $request->utility;
+        $landcat->usedland          =   $request->usedland;
+        $landcat->plotnumber        =   $request->plotnumber;
+        $landcat->floornumber       =   $request->floornumber;
+        $landcat->unitnumber        =   $request->unitnumber;
+        $landcat->totalsquarefit    =   $request->totalsquarefit;
+        $landcat->status            =   $request->status;
+        $landcat->csnumber          =   $request->csnumber;
+        $landcat->sanumber          =   $request->sanumber;
+        $landcat->rsnumber          =   $request->rsnumber;
+        $landcat->bsnumber          =   $request->bsnumber;
+        $landcat->jlnumber          =   $request->jlnumber;
+        $landcat->dcrnumber         =   $request->dcrnumber;
+        $landcat->kharicaseno       =   $request->kharicaseno;
+        $landcat->khajnayear        =   $request->khajnayear;
+        $landcat->maindolilnumber   =   $request->maindolilnumber;
+        $landcat->vayanumber        =   $request->vayanumber;
+        $landcat->lanbdescription   =   $request->lanbdescription;
+        
         $landcat->save();
-
-        $Rlandvalue = LandValue::find('1');
-        $newlandvalue = $Rlandvalue->totalland + $landcat->landvalue;
-        $remaindland = $Rlandvalue->remainland + $landcat->landvalue;
-        $Rlandvalue->totalland = $newlandvalue;
-        $Rlandvalue->remainland = $remaindland;
-        $Rlandvalue->save();
 
         $notification = array(
             'message'       => 'জমি আপডেট করা সম্পন্ন হয়েছে!!!',

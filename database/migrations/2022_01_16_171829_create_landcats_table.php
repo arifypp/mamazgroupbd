@@ -15,10 +15,26 @@ class CreateLandcatsTable extends Migration
     {
         Schema::create('landcats', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('landvalue')->nullable();
-            $table->string('landprice')->nullable();
-            $table->string('status')->nullable();
-            $table->string('comment')->nullable();
+            $table->string('mainland')->nullable();
+            $table->string('utility')->nullable();
+            $table->string('usedland')->nullable();
+            $table->string('plotnumber')->nullable();
+            $table->string('floornumber')->nullable();
+            $table->string('unitnumber')->nullable();
+            $table->string('totalsquarefit')->nullable();
+            $table->string('floatratio')->nullable();
+            $table->integer('status')->default('0')->comment('0 for active 1 for inactive');
+            $table->string('csnumber')->nullable();
+            $table->string('sanumber')->nullable();
+            $table->string('rsnumber')->nullable();
+            $table->string('bsnumber')->nullable();
+            $table->string('jlnumber')->nullable();
+            $table->string('dcrnumber')->nullable();
+            $table->string('kharicaseno')->nullable();
+            $table->string('khajnayear')->nullable();
+            $table->string('maindolilnumber')->nullable();
+            $table->string('vayanumber')->nullable();
+            $table->string('lanbdescription')->nullable();
             $table->timestamps();
         });
     }

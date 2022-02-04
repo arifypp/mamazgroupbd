@@ -146,6 +146,23 @@ Route::middleware(['verified'])->group(function () {
         
             });
 
+            // LandCost Route For CRUD
+            Route::group(['prefix' => 'landcost'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\LandCostController@index')->name('landcost.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\LandCostController@create')->name('landcost.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\LandCostController@store')->name('landcost.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\LandCostController@edit')->name('landcost.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\LandCostController@update')->name('landcost.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\LandCostController@destroy')->name('landcost.destroy');
+        
+            });
+
             // Booking Management
             Route::group(['prefix' => 'booking'], function(){
 
