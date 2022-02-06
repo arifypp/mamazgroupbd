@@ -90,14 +90,19 @@
                                 <th>Action</th>
                             </tr>
                             <tr>
+                                <input type="hidden" name="addMoreInputFields[0][landid]" value="{{ $value->id }}">
                                 <td><input type="text" name="addMoreInputFields[0][itemname]" placeholder="Enter Description" class="form-control" />
-                                <span class="text-danger">@error('itemname[0]'){{ $message }} @enderror</span>
-                                @error('addMoreInputFields.'.$key.'.itemname')
+                                <span class="text-danger">@error('addMoreInputFields.0.itemname'){{ $message }} @enderror</span>
                                 </td>
-                                <td><input type="text" name="addMoreInputFields[0][cost]" placeholder="Enter cost" class="form-control" />
+                                <td><input type="text" name="addMoreInputFields[0][cost]" placeholder="Enter cost" class="form-control" id="pricecount" />
                                 </td>
                                 <td><button type="button" name="add" id="dynamic-ar" class="btn btn-outline-primary">Add More</button></td>
                             </tr>
+                            <tfoot>
+                            <tr>
+                                <td>Total Price : <input type="text" value="" class="total"></td>
+                            </tr>
+                            </tfoot>
                         </table>
                 </div>
                 <div class="modal-footer">
@@ -117,8 +122,9 @@
     $("#dynamic-ar").click(function () {
         ++i;
         $("#dynamicAddRemove").append('<tr><td><input type="text" name="addMoreInputFields[' + i +
-            '][itemname]" placeholder="Enter item name" class="form-control" /></td><td><input type="text" name="addMoreInputFields[' + i +
-            '][cost]" placeholder="Enter item name" class="form-control" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
+            '][itemname]" placeholder="Enter item name" class="form-control"/></td><td><input type="text" name="addMoreInputFields[' + i +
+            '][cost]" placeholder="Enter item cost" class="form-control" id="pricecount" /><input type="hidden" name="addMoreInputFields[' + i +
+            '][landid]" value="{{ $value->id }}" /></td><td><button type="button" class="btn btn-outline-danger remove-input-field">Delete</button></td></tr>'
             );
     });
     $(document).on('click', '.remove-input-field', function () {
@@ -175,7 +181,7 @@
         })
     }
 
-    // Submit form
+// Submit form
 $(function(){
     $.ajaxSetup({
     headers: {
@@ -209,5 +215,14 @@ $(function(){
     })
 
 })
+// Total Price
+$(document).on("change", "#pricecount", function() {
+    var sum = 0;
+    $("#pricecount").each(function(){
+        sum += +$(this).val();
+    });
+    $(".total").val(sum);
+});
+
 </script>
 @endsection

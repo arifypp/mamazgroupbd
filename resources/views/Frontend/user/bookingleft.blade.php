@@ -8,6 +8,16 @@
                      
                     </li>
                     
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('addmoney.create')) active @endif">
+                      <a href="{{ route('addmoney.create') }}"><h6><i class="fas fa-hand-holding-usd"></i>টাকা যুক্ত করুন</h6></a>
+                     
+                    </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('apply.create') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
+                      <a href="{{ route('apply.create') }}"><h6><i class="fab fa-amazon-pay"></i> কিস্তি দিন</h6></a>
+                     
+                    </li>
+
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('apply.create') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
                       <a href="{{ route('apply.create') }}"><h6><i class="fas fa-pen"></i>আবেদন করুন</h6></a>
                      

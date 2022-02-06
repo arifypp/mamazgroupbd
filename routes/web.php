@@ -106,6 +106,25 @@ Route::middleware(['verified'])->group(function () {
         
             });
 
+            // Add mamaz money
+            Route::group(['prefix' => 'addmoney'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Frontend\AddmoneyController@index')->name('addmoney.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Frontend\AddmoneyController@create')->name('addmoney.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Frontend\AddmoneyController@store')->name('addmoney.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Frontend\AddmoneyController@edit')->name('addmoney.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Frontend\AddmoneyController@update')->name('addmoney.update');
+        
+                Route::get('/delete/{id}', 'App\Http\Controllers\Frontend\AddmoneyController@destroy')->name('addmoney.destroy');
+        
+            });
+
+
+            
             // Application Route For CRUD
             Route::group(['prefix' => 'apply'], function(){
 

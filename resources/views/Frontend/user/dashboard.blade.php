@@ -36,7 +36,7 @@
                  <div class="d-flex justify-content-center mt-7 px-7">
                   
                   <div class="stat">
-                      <h3 class="mb-0"><i class="fas fa-american-sign-language-interpreting"></i><br>142</h3> <b>Land Purchase</b>
+                      <h3 class="mb-0"><i class="fas fa-hand-holding-usd"></i><br>142৳</h3> <b>Mamaz Money</b>
                   </div>
                   
               </div>

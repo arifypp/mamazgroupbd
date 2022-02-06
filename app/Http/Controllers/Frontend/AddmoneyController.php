@@ -1,15 +1,17 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
+use App\Models\Frontend\Booking;
+use App\Models\User;
+use App\Notifications\BookingNotification;
+use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
-use App\Models\Backend\Landcat;
-use App\Models\Backend\LandValue;
-use App\Models\Backend\Landpurchase;
+use Response;
+use DB;
 use Session;
-
-class LandCostController extends Controller
+class AddmoneyController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -29,6 +31,7 @@ class LandCostController extends Controller
     public function create()
     {
         //
+        return view('Frontend.user.pages.addmoney.create');
     }
 
     /**
@@ -40,22 +43,7 @@ class LandCostController extends Controller
     public function store(Request $request)
     {
         //
-        $request->validate([
-            'addMoreInputFields.*.itemname' => 'required',
-            'addMoreInputFields.*.cost' => 'required',
-        ],
-        $message = [
-            'addMoreInputFields.required'   =>  'এই ঘরটি পূরণ করুন',
-            'addMoreInputFields.itemname.required'   =>  'এই ঘরটি পূরণ করুন',
-            'addMoreInputFields.*.itemname.required'   =>  'এই ঘরটি পূরণ করুন',
-        ]);
-
-        foreach ($request->addMoreInputFields as $key => $value) {
-            Landpurchase::create($value);
-        }
-
-        return response()->json(['success' =>true, 'message'=> 'Land Cost Added Successfully!!!']);
-
+        dd($request);
     }
 
     /**
