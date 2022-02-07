@@ -22,6 +22,7 @@
       <div class="col-md-10"style="background-color: #F8FAFD; padding-top: 0px;">
          <form action="{{ route('addmoney.store') }}" method="post" enctype="multipart/form-data" id="submitform">
          @csrf
+         <input type="hidden" name="auth_id" value="{{ auth()->user()->id }}">
          <div class="row">             
             <!-- Personal Info -->
             <div class="col-md-12">
@@ -34,12 +35,12 @@
                     <div class="form-group">
                         <label for="amount">এমাউন্ট</label>
                         <input type="text" name="amount" class="form-control" placeholder="এমাউন্ট বসান">
+                        <span class="text-danger">@error('amount'){{ $message }} @enderror</span>
                     </div>
                      <div class="form-group">
                         <label for="bookingmoneymehtod">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</label>
                         <select name="bookingmoneymehtod" id="bookingmoneymehtod" class="form-control">
                             <option value="0">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</option>
-                            <option value="bank">ব্যাংক</option>
                             <option value="bkash">বিকাশ</option>
                             <option value="Nagad">নগদ</option>
                             <option value="rocket">রকেট</option>
@@ -47,41 +48,38 @@
                         </select>
                         <span class="text-danger">@error('bookingmoneymehtod'){{ $message }} @enderror</span>
                     </div>
-                    <!-- Bank transictoin -->
-                    <div class="form-group" id="banktransaction" style="display:none;">
-                        <label for="banktransaction">ব্যাংক স্লিপ নাম্বার</label>
-                        <input type="text" name="banktransaction" class="form-control" placeholder="স্লিপ নাম্বার বসান">
-                    </div>
-                    <div class="form-group" id="bankreferenceno" style="display:none;">
-                        <label for="bankreferenceno">ব্যাংক রেফারেন্স নাম্বার</label>
-                        <input type="text" name="bankreferenceno" class="form-control" placeholder="রেফারেন্স নাম্বার বসান">
-                    </div>
                     <!-- Bkash transictoin -->
                     <div class="form-group" id="bkashtransiction" style="display:none;">
                         <label for="bkashtransiction">বিকাশ ট্রান্জিকশন নাম্বার</label>
                         <input type="text" name="bkashtransiction" class="form-control" placeholder="নাম্বার বসান">
+                        <span class="text-danger">@error('bkashtransiction'){{ $message }} @enderror</span>
                     </div>
                     <div class="form-group" id="bkashnumber" style="display:none;">
                         <label for="bkashnumber">বিকাশ নাম্বার</label>
                         <input type="text" name="bkashnumber" class="form-control" placeholder="নাম্বার বসান">
+                        <span class="text-danger">@error('bkashnumber'){{ $message }} @enderror</span>
                     </div>
                     <!-- Nagad transictoin -->
                     <div class="form-group" id="nagadtransiction" style="display:none;">
                         <label for="nagadtransiction">নগদ ট্রান্জিকশন নাম্বার</label>
                         <input type="text" name="nagadtransiction" class="form-control" placeholder="নাম্বার বসান">
+                        <span class="text-danger">@error('nagadtransiction'){{ $message }} @enderror</span>
                     </div>
                     <div class="form-group" id="nagadnumber" style="display:none;">
                         <label for="nagadnumber">নগদ নাম্বার</label>
                         <input type="text" name="nagadnumber" class="form-control" placeholder="নাম্বার বসান">
+                        <span class="text-danger">@error('nagadnumber'){{ $message }} @enderror</span>
                     </div>
                     <!-- Rocket transictoin -->
                     <div class="form-group" id="rockettransiction" style="display:none;">
                         <label for="rockettransiction">রকেট ট্রান্জিকশন নাম্বার</label>
                         <input type="text" name="rockettransiction" class="form-control" placeholder="নাম্বার বসান">
+                        <span class="text-danger">@error('rockettransiction'){{ $message }} @enderror</span>
                     </div>
                     <div class="form-group" id="rocketnumber" style="display:none;">
                         <label for="rocketnumber">রকেট নাম্বার</label>
                         <input type="text" name="rocketnumber" class="form-control" placeholder="নাম্বার বসান">
+                        <span class="text-danger">@error('rocketnumber'){{ $message }} @enderror</span>
                     </div>
                      <div class="form-group text-right col-md-12">
                          <button type="submit" class="btn btn-primary">সাবমিট করুন</button>

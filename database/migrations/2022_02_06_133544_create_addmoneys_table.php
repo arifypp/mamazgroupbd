@@ -14,12 +14,22 @@ class CreateAddmoneysTable extends Migration
     public function up()
     {
         Schema::create('addmoneys', function (Blueprint $table) {
-            $table->increments('id');
+            $table->bigIncrements('id');
             $table->unsignedBigInteger('status')->default('0');
             $table->string('amount');
             $table->unsignedBigInteger('auth_id');
-            $table->foreign('auth_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('bookingmoneymehtod')->nullable();
+            $table->string('banktransaction')->nullable();
+            $table->string('bankreferenceno')->nullable();
+            $table->string('bkashtransiction')->nullable();
+            $table->string('bkashnumber')->nullable();
+            $table->string('nagadtransiction')->nullable();
+            $table->string('nagadnumber')->nullable();
+            $table->string('rockettransiction')->nullable();
+            $table->string('rocketnumber')->nullable();
             $table->timestamps();
+            
+            $table->foreign('auth_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

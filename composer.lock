@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "5c22d6072768b207c42a8f6b3560b3b4",
+    "content-hash": "4e23f862386bf6842ea2d9fefd9dc91f",
     "packages": [
         {
             "name": "asm89/stack-cors",
@@ -177,6 +177,64 @@
                 }
             ],
             "time": "2021-11-25T20:13:02+00:00"
+        },
+        {
+            "name": "coreproc/laravel-wallet-plus",
+            "version": "1.4.0",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/CoreProc/laravel-wallet-plus.git",
+                "reference": "01f04dc96af4ab3e2925e5387ae91c86ae457282"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/CoreProc/laravel-wallet-plus/zipball/01f04dc96af4ab3e2925e5387ae91c86ae457282",
+                "reference": "01f04dc96af4ab3e2925e5387ae91c86ae457282",
+                "shasum": ""
+            },
+            "require": {
+                "php": "^7.3"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "^8.2 || ^9.3",
+                "symfony/var-dumper": "^4.3 || ^5.1"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "providers": [
+                        "CoreProc\\WalletPlus\\WalletPlusServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "CoreProc\\WalletPlus\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "Chris Bautista",
+                    "email": "chris.bautista@coreproc.ph",
+                    "homepage": "https://coreproc.com",
+                    "role": "Developer"
+                }
+            ],
+            "description": "Easily add a virtual wallet to your Laravel models. Features multiple wallets and a ledger system to help keep track of all transactions in the wallets.",
+            "homepage": "https://github.com/coreproc/laravel-wallet-plus",
+            "keywords": [
+                "coreproc",
+                "laravel-wallet-plus"
+            ],
+            "support": {
+                "issues": "https://github.com/CoreProc/laravel-wallet-plus/issues",
+                "source": "https://github.com/CoreProc/laravel-wallet-plus/tree/1.4.0"
+            },
+            "time": "2020-10-06T16:22:06+00:00"
         },
         {
             "name": "dflydev/dot-access-data",

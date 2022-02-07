@@ -82,7 +82,11 @@
           </li>
           <li ><a class="nav-link scrollto @if( Route::currentRouteNamed('contact')) active @endif" href="{{ route('contact') }}">যোগাযোগ</a></li>
           @auth
-          <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড <span> &nbsp;| 850৳</span></a>
+          @php 
+              $user = auth()->user()->id; 
+              $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
+          @endphp
+          <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড <span> &nbsp;| @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif</span></a>
         </li>
         @endauth
         @guest

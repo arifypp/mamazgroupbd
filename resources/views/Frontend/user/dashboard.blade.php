@@ -36,7 +36,12 @@
                  <div class="d-flex justify-content-center mt-7 px-7">
                   
                   <div class="stat">
-                      <h3 class="mb-0"><i class="fas fa-hand-holding-usd"></i><br>142৳</h3> <b>Mamaz Money</b>
+                  @php 
+                      $user = auth()->user()->id; 
+                      $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
+                  @endphp
+                      <h3 class="mb-0"><i class="fas fa-hand-holding-usd"></i><br>
+                      @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif</h3> <b>Mamaz Money</b>
                   </div>
                   
               </div>
