@@ -110,6 +110,8 @@ Route::middleware(['verified'])->group(function () {
             Route::group(['prefix' => 'addmoney'], function(){
 
                 Route::get('/manage', 'App\Http\Controllers\Frontend\AddmoneyController@index')->name('addmoney.manage');
+
+                Route::post('/transfer', 'App\Http\Controllers\Frontend\AddmoneyController@transfer')->name('addmoney.transfer');
         
                 Route::get('/create', 'App\Http\Controllers\Frontend\AddmoneyController@create')->name('addmoney.create');
         
@@ -179,6 +181,26 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\LandCostController@update')->name('landcost.update');
         
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\LandCostController@destroy')->name('landcost.destroy');
+        
+            });
+
+            // Wallet Route for Crud
+            
+            Route::group(['prefix' => 'wallettype'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\WallettypeController@index')->name('wallettype.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\WallettypeController@create')->name('wallettype.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\WallettypeController@store')->name('wallettype.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\WallettypeController@edit')->name('wallettype.edit');
+
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\WallettypeController@show')->name('wallettype.show');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\WallettypeController@update')->name('wallettype.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\WallettypeController@destroy')->name('wallettype.destroy');
         
             });
 

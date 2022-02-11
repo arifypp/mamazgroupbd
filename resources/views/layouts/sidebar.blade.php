@@ -100,6 +100,18 @@
                     </a>
                 </li>
 
+                <li class="menu-title" key="t-apps">অন্যান্য সেটিং</li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-home"></i>
+                        <span key="t-wallettype">ওয়ালেট টাইপবক্স</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('wallettype.manage') }}" key="t-tui-wallettypehome">ওয়ালেট ম্যানেজমেন্ট</a></li>
+                    </ul>
+                </li>
+
+
                 <li class="menu-title" key="t-apps">@lang('translation.Apps')</li>
 
                 <li>

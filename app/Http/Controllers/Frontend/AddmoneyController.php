@@ -78,30 +78,56 @@ class AddmoneyController extends Controller
         $moneyadd->rockettransiction        =   $request->rockettransiction;
         $moneyadd->rocketnumber             =   $request->rocketnumber;
         
-        $moneyadd->save();
+        // $moneyadd->save();
         
-       
         $user = User::find( $request->auth_id );
 
         // $wallet = $user->wallets()->create();
 
         // $wallet->incrementBalance($request->amount);
 
-        $pesoWallet = $user->wallet('Peso Wallet'); 
-        $pesoWallet->incrementBalance($request->amount);
+        $user->wallets()->create(['wallet_type_id' => 9]);
 
-        $pesoWallet->balance; 
+        $admoneydeposit = $user->wallet('Cash Money');
+        $admoneydeposit->incrementBalance($request->amount);
+        $admoneydeposit->balance; 
 
         // $walletType = WalletType::create([
-        //     'name' => 'Peso Wallet',
+        //     'name' => 'Cash Money',
         //     'decimals' => 0, // Set how many decimal points your wallet accepts here. Defaults to 0.
         // ]);
-        
-        // $user->wallets()->create(['wallet_type_id' => $walletType->id]);
 
 
         $notification = array(
             'message'       => 'পেমেন্ট পাঠানো সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+        return back()->with($notification);
+
+    }
+
+    /**
+     * Transfer Money
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function transfer(Request $request)
+    {
+        // Increase money 
+        $user = User::find( $request->auth_id );
+
+        $pesoWallet = $user->wallet($request->sendto);
+        $pesoWallet->incrementBalance($request->amount);
+        $pesoWallet->balance;
+
+        // Decrease money 
+        $CashMoney = $user->wallet('Cash Money');
+        $CashMoney->decrementBalance($request->amount);
+        $CashMoney->balance;
+
+        $notification = array(
+            'message'       => 'আপনার টাকা ' .$request->sendto. ' তে ট্রান্সফার সম্পন্ন হয়েছে।',
             'alert-type'    => 'success'
         );
         return back()->with($notification);
