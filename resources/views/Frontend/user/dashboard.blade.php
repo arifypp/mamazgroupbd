@@ -77,8 +77,12 @@
                                        <option value="{{ $wallettypename->name }}">{{ $wallettypename->name }}</option>
                                        @endforeach
                                     </select>
-                                    <span class="text-danger">@error('sendto'){{ $message }} @enderror</span>
-
+                                    <span class="text-danger">@error('sendto'){{ $message }} @enderror</span><br>
+                                    <div class="alert alert-danger" id="mamazPoisha" style="display:none">
+                                       <span>
+                                          মামাজ পয়সাতে ১০০ টাকা সমান ১ পয়সা, এভাবে হিসাব করে আপনার মামাজ পয়সাতে যোগ হয়।
+                                       </span>
+                                    </div>
                                  </div>
                            </div>
                            <div class="modal-footer">
@@ -118,23 +122,28 @@
                               <center>
                                  <h1>@if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif <sup class="text-success" style="font-size:10px;">Available Balance</sup></h1>
                               </center>
-                              <form action="{{ route('addmoney.transfer') }}" method="post">
+                              <form action="{{ route('addmoney.transferagentmoney') }}" method="post">
                                  @csrf
                                  <input type="hidden" name="amount" value="@if(!empty($wallet['0']) ){{$wallet['0']->raw_balance}}@else{{'0'}}@endif">
                                  <input type="hidden" name="auth_id" value="{{ auth()->user()->id }}">
                                  <div class="form-group">
                                     <label for="Send To">Send To</label>
-                                    <select name="sendto" id="sendto" class="form-control">
+                                    <select name="sendtoag" id="sendtoag" class="form-control">
                                        <option value="0">Please Select Box </option>
-                                       @php $wtype = CoreProc\WalletPlus\Models\WalletType::find([7, 11, 14]); @endphp
+                                       @php $wtype = CoreProc\WalletPlus\Models\WalletType::find([7, 9, 14]); @endphp
                                        
                                        @foreach( $wtype  as $key => $wallettypename )
                                        <option value="{{ $wallettypename->name }}">{{ $wallettypename->name }}</option>
                                        @endforeach
                                     </select>
-                                    <span class="text-danger">@error('sendto'){{ $message }} @enderror</span>
-
+                                    <span class="text-danger">@error('sendto'){{ $message }} @enderror</span><br>
+                                    <div class="alert alert-danger" id="mamazPoishaAg" style="display:none;">
+                                       <span>
+                                          মামাজ পয়সাতে ১০০ টাকা সমান ১ পয়সা, এভাবে হিসাব করে আপনার মামাজ পয়সাতে যোগ হয়।
+                                       </span>
+                                    </div>
                                  </div>
+                                 
                            </div>
                            <div class="modal-footer">
                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -273,6 +282,31 @@
       $("button[data-dismiss=modal]").click(function(){
         $(".modal").modal('hide');
       });
+
+      // Show mamaz poisha
+      $(function () {
+        $("#sendto").change(function () {
+            if ($(this).val() == "Mamaz Money") {
+                $("#mamazPoisha").show();
+            } else {
+                $("#mamazPoisha").hide();
+            }
+        });
+
+        $("#sendtoag").change(function () {
+            if ($(this).val() == "Mamaz Money") {
+                $("#mamazPoishaAg").show();
+            } else {
+                $("#mamazPoishaAg").hide();
+            }
+        });        
+    });
    });
+
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
 </script>
 @endsection

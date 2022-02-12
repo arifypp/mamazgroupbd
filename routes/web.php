@@ -112,6 +112,8 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/manage', 'App\Http\Controllers\Frontend\AddmoneyController@index')->name('addmoney.manage');
 
                 Route::post('/transfer', 'App\Http\Controllers\Frontend\AddmoneyController@transfer')->name('addmoney.transfer');
+
+                Route::post('/transferagentmoney', 'App\Http\Controllers\Frontend\AddmoneyController@transferagentmoney')->name('addmoney.transferagentmoney');
         
                 Route::get('/create', 'App\Http\Controllers\Frontend\AddmoneyController@create')->name('addmoney.create');
         

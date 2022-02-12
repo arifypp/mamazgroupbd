@@ -114,8 +114,49 @@ class AddmoneyController extends Controller
      */
     public function transfer(Request $request)
     {
-        // Increase money 
+        // $request->validate([
+        //     'sendto'        =>  ['required'],
+        // ],
+    
+        // $message = [
+        //     'sendto.required'    =>  'Checkking',
+        // ]);
+
+        
         $user = User::find( $request->auth_id );
+
+        $findwallelt = WalletType::where("name", "=", $request->sendto)->get();
+        $walletidrequest = $findwallelt['0']->id;
+
+        if( empty( $user->wallets()->wallet_type_id )  )
+        {
+            $user->wallets()->create(['wallet_type_id' => $walletidrequest]);
+        }
+
+        // Increase money 
+        if( $request->sendto == "Mamaz Money") 
+        {
+            $requesttaka = $request->amount;
+
+            $mamaztaka = $requesttaka/100;
+
+            $pesoWallet = $user->wallet($request->sendto);
+            $pesoWallet->incrementBalance($mamaztaka);
+            $pesoWallet->balance;
+
+            // Decrease money 
+            $CashMoney = $user->wallet('Cash Money');
+            $CashMoney->decrementBalance($request->amount);
+            $CashMoney->balance;
+
+            $notification = array(
+                'message'       => 'আপনার টাকা ' .$request->sendto. ' তে ট্রান্সফার সম্পন্ন হয়েছে।',
+                'alert-type'    => 'success'
+            );
+
+            return back()->with($notification);
+
+        }
 
         $pesoWallet = $user->wallet($request->sendto);
         $pesoWallet->incrementBalance($request->amount);
@@ -132,6 +173,65 @@ class AddmoneyController extends Controller
         );
         return back()->with($notification);
 
+    }
+
+    /**
+     * Transfer Agent Money
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function transferagentmoney(Request $request)
+    {
+        $user = User::find( $request->auth_id );
+
+        $findwallelt = WalletType::where("name", "=", $request->sendtoag)->get();
+        $walletidrequest = $findwallelt['0']->id;
+
+        if( empty( $user->wallets()->wallet_type_id )  )
+        {
+            $user->wallets()->create(['wallet_type_id' => $walletidrequest]);
+        }
+
+        // Increase money 
+        if( $request->sendtoag == "Mamaz Money") 
+        {
+            $requesttaka = $request->amount;
+
+            $mamaztaka = $requesttaka/100;
+
+            $pesoWallet = $user->wallet($request->sendtoag);
+            $pesoWallet->incrementBalance($mamaztaka);
+            $pesoWallet->balance;
+
+            // Decrease money 
+            $CashMoney = $user->wallet('Cash Money');
+            $CashMoney->decrementBalance($request->amount);
+            $CashMoney->balance;
+
+            $notification = array(
+                'message'       => 'আপনার টাকা ' .$request->sendtoag. ' তে ট্রান্সফার সম্পন্ন হয়েছে।',
+                'alert-type'    => 'success'
+            );
+
+            return back()->with($notification);
+
+        }
+
+        $pesoWallet = $user->wallet($request->sendtoag);
+        $pesoWallet->incrementBalance($request->amount);
+        $pesoWallet->balance;
+
+        // Decrease money 
+        $CashMoney = $user->wallet('Agent Money');
+        $CashMoney->decrementBalance($request->amount);
+        $CashMoney->balance;
+
+        $notification = array(
+            'message'       => 'আপনার টাকা ' .$request->sendtoag. ' তে ট্রান্সফার সম্পন্ন হয়েছে।',
+            'alert-type'    => 'success'
+        );
+        return back()->with($notification);
     }
 
     /**

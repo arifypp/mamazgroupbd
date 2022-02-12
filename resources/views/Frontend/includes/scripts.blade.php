@@ -49,7 +49,7 @@ document.getElementById("defaultOpen").click();
                     "newestOnTop": true,
                     "progressBar": true,
                     "positionClass": "toast-top-right",
-                    "preventDuplicates": false,
+                    "preventDuplicates": true,
                     "onclick": null,
                     "showDuration": 300,
                     "hideDuration": 1000,
@@ -62,23 +62,23 @@ document.getElementById("defaultOpen").click();
                     }
 	
 	@if (Session::has('message') )
-            var type="{{ Session::get('alert-type', 'info') }}";
-                switch (type)
-                {
-                    case'info':
-                        toastr.info("{{ Session::get('message') }}");
-                    break;
-                    case'success':
-                        toastr.success("{{ Session::get('message') }}");
-                    break;
-                    case'warning':
-                        toastr.warning("{{ Session::get('message') }}");
-                    break;
-                    case'error':
-                        toastr.error("{{ Session::get('message') }}");
-                    break;
-                }
-    @endif
+      var type="{{ Session::get('alert-type', 'info') }}";
+          switch (type)
+          {
+              case'info':
+                  toastr.info("{{ Session::get('message') }}");
+              break;
+              case'success':
+                  toastr.success("{{ Session::get('message') }}");
+              break;
+              case'warning':
+                  toastr.warning("{{ Session::get('message') }}");
+              break;
+              case'error':
+                  toastr.error("{{ Session::get('message') }}");
+              break;
+          }
+  @endif
 </script>
 <!-- Template Main JS File -->
 <script src="{{ asset('Frontend/assets/js/main.js') }}"></script>
