@@ -1894,3 +1894,7 @@ Contact Us
        transform: rotate(0deg);
   }
 }
+
+.light-gray-text {
+  font-size: 10px;
+}

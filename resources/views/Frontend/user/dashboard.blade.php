@@ -8,9 +8,9 @@
       <div class="main-body">
          <div class="mobiledevice">
             <div class="row">
-               <div class="col-md-2">
+               <div class="col-md-3">
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <div class="topbar1">
                      <h5>ড্যাশবোর্ড</h5>
                   </div>
@@ -18,7 +18,7 @@
             </div>
          </div>
          @include('Frontend/user/bookingleft')
-         <div class="col-md-10 "style="background-color: #F8FAFD; padding-top: 0px;">
+         <div class="col-md-9 "style="background-color: #F8FAFD; padding-top: 0px;">
             <div class="uppderdesign">
                <div class="row">
                   <div class="col-md-3 offset-md-1">
@@ -217,39 +217,50 @@
                   </div>
                </div>
             </div>
-            <div class="card mb-6">
-               <div class="card" >
-                  <h5 style="padding:10px 20px;">Report History</h5>
-                  <table class="table table-striped" >
-                     <thead>
-                        <tr>
-                           <th scope="col">Sl</th>
-                           <th scope="col">Report Name</th>
-                           <th scope="col">Report Date</th>
-                           <th scope="col">Report Status</th>
-                        </tr>
-                     </thead>
-                     <tbody>
-                        <tr>
-                           <th scope="row">1</th>
-                           <td>Mark</td>
-                           <td>Otto</td>
-                           <td>@mdo</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">2</th>
-                           <td>Jacob</td>
-                           <td>Thornton</td>
-                           <td>@fat</td>
-                        </tr>
-                        <tr>
-                           <th scope="row">3</th>
-                           <td>Larry</td>
-                           <td>the Bird</td>
-                           <td>@twitter</td>
-                        </tr>
-                     </tbody>
-                  </table>
+            <div class="row">
+               <div class="col-md-6">
+                  <div class="card">
+                     <img src="https://media2.4life.com/images/announcements/DBB_020122_FEB_DB2022_ENG_20220201082652.jpg" alt="">
+                  </div>
+               </div>
+               <div class="col-md-6">
+                  <div class="card p-3">
+                     <div class="builder-bonus-dashboard text-center">
+                        <div class="builder-third-holder row">
+                           <div class="col-md-3">
+                              <div class="builder-third">
+                                 <small class="light-gray-text"><span class="doublebb">7 Shares</span></small>
+                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl1-not-qualified.svg">
+                                 <small class="light-gray-text">Not qualified</small>
+                              </div>
+                           </div>
+                           <div class="col-md-3">
+                              <div class="builder-third">
+                                 <small class="light-gray-text"><span class="doublebb">14 Shares</span></small>
+                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl3-not-qualified.svg">
+                                 <small class="light-gray-text">Not qualified</small>
+                              </div>
+                           </div>
+                           <div class="col-md-3">
+                              <div class="builder-third">
+                                 <samll class="light-gray-text"><span class="doublebb">21 Shares</span></samll>
+                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl3-not-qualified.svg">
+                                 <small class="light-gray-text">Not qualified</small>
+                              </div>
+                           </div>
+                           <div class="col-md-3">
+                              <div class="builder-third">
+                                 <small class="light-gray-text"><span class="doublebb">28 Shares</span></small>
+                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl3-not-qualified.svg">
+                                 <small class="light-gray-text">Not qualified</small>
+                              </div>
+                           </div>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="card p-3">
+                     target ranking coming soon
+                  </div>
                </div>
             </div>
          </div>

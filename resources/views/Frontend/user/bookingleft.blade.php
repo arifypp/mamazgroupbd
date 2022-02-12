@@ -1,8 +1,33 @@
 <div class="row gutters-sm">
-              <div class="col-md-2 mb-3">
+              <div class="col-md-3 mb-3">
             
                 <div class="card mt-3">
                   <ul class="list-group list-group-flush">
+                    <li class="list-group-item justify-content-center align-items-center flex-wrap">
+                        <div class="author-bio align-self-center align-item-center" style="text-align:center; color:black; ">
+                          <div class="author-img text-center">
+                          @if(Auth::user()->avatar)
+                            <img class="image rounded-circle img-fluid" src="{{asset(Auth::user()->avatar)}}" alt="profile_image" width="80">
+                          @else
+                            <img class="image rounded-circle img-fluid" src="{{asset ('assets/images/favicon.ico')}}" alt="profile_image" width="80">
+                          @endif
+                          </div><hr>
+                          <div class="author-name">
+                            <span>{{ Auth::user()->name }}</span><br>
+                            @php 
+                              $countReferenceid = App\Models\User::where('referrer_id', Auth::user()->id)->count();
+                            @endphp
+                            @if( $countReferenceid <= 7 )
+                            <small>Customer</small><br>
+                            @elseif( $countReferenceid <= 14 )
+                            <small>Marketing Cordinator</small><br>
+                            @elseif( $countReferenceid <= 21 )
+                            <small>Marketing Contractor Cordinator</small><br>
+                            @endif
+                            <span>{{ Auth::user()->username }}</span>
+                          </div>
+                        </div>
+                    </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('user.dashboard') || Route::currentRouteNamed('user.dashboard') || Route::currentRouteNamed('user.dashboard') ) active @endif">
                       <a href="{{ route('user.dashboard') }}"><h6><i class="fas fa-tachometer-alt"></i>ড্যাশবোর্ড</h6></a>
                      
