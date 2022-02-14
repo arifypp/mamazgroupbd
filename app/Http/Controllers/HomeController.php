@@ -139,4 +139,10 @@ class HomeController extends Controller
      {
          return view('auth.thankyou');
      }
+
+     public function referelink($id)
+     {
+        $refereluser = User::find($id);
+        return view('Frontend.user.referel', compact('refereluser'));
+     }
 }

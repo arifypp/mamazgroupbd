@@ -220,46 +220,155 @@
             <div class="row">
                <div class="col-md-6">
                   <div class="card">
-                     <img src="https://media2.4life.com/images/announcements/DBB_020122_FEB_DB2022_ENG_20220201082652.jpg" alt="">
+                     <div id="carouselExampleFade" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                        <div class="carousel-inner">
+                           <div class="carousel-item active">
+                              <img src="https://media2.4life.com/images/announcements/DBB_020122_FEB_DB2022_ENG_20220201082652.jpg" class="d-block w-100" alt="...">
+                           </div>
+                           <div class="carousel-item">
+                              <img src="https://media2.4life.com/images/announcements/February_Product_Special_eng_20220131174124.jpg" class="d-block w-100" alt="...">
+                           </div>
+                           <div class="carousel-item">
+                              <img src="https://media2.4life.com/images/announcements/PreZoom-Launch-202201_Dashboard-Ad-Launch_ENG_20220121083020.jpg" class="d-block w-100" alt="...">
+                           </div>
+                        </div>
+                        
+                     </div>
+                     
+                     <div class="col-md-12 my-3 text-center">
+                        <a href="javascript:void(0)" class="btn btn-info btn-block "> <i class="fab fa-facebook-f"></i> Join Affiliate Group</a>
+                     </div>
+                     <div class="col-md-12 my-3 text-center">
+                        <a href="javascript:void(0)" class="btn btn-primary btn-block "> <i class="fab fa-facebook-f"></i> Join Our Facebook</a>
+                     </div>
                   </div>
                </div>
                <div class="col-md-6">
                   <div class="card p-3">
                      <div class="builder-bonus-dashboard text-center">
                         <div class="builder-third-holder row">
-                           <div class="col-md-3">
+                           <div class="col">
                               <div class="builder-third">
                                  <small class="light-gray-text"><span class="doublebb">7 Shares</span></small>
-                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl1-not-qualified.svg">
+                                 <img src="{{ asset('assets/images/badge/1 star.svg') }}">
                                  <small class="light-gray-text">Not qualified</small>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col">
                               <div class="builder-third">
                                  <small class="light-gray-text"><span class="doublebb">14 Shares</span></small>
-                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl3-not-qualified.svg">
+                                 <img src="{{ asset('assets/images/badge/2 star.svg') }}">
                                  <small class="light-gray-text">Not qualified</small>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col">
                               <div class="builder-third">
                                  <samll class="light-gray-text"><span class="doublebb">21 Shares</span></samll>
-                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl3-not-qualified.svg">
+                                 <img src="{{ asset('assets/images/badge/3 star.svg') }}">
                                  <small class="light-gray-text">Not qualified</small>
                               </div>
                            </div>
-                           <div class="col-md-3">
+                           <div class="col">
                               <div class="builder-third">
                                  <small class="light-gray-text"><span class="doublebb">28 Shares</span></small>
-                                 <img src="https://media2.4life.com/images/bb-report/dashboard/bbx2-lvl3-not-qualified.svg">
+                                 <img src="{{ asset('assets/images/badge/4 star.svg') }}">
+                                 <small class="light-gray-text">Not qualified</small>
+                              </div>
+                           </div>
+                           <div class="col">
+                              <div class="builder-third">
+                                 <small class="light-gray-text"><span class="doublebb">35 Shares</span></small>
+                                 <img src="{{ asset('assets/images/badge/5 star.svg') }}">
                                  <small class="light-gray-text">Not qualified</small>
                               </div>
                            </div>
                         </div>
                      </div>
                   </div>
-                  <div class="card p-3">
-                     target ranking coming soon
+                  <div class="card p-3 text-dark">
+                     <div class="card-title">
+                        <a href="#">Target Rank &nbsp; <i class="fas fa-link"></i> </a>
+                     </div>
+                  <ul class="nav nav-pills" id="pills-tab" role="tablist">
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link active" id="pills-lastmonth-tab" data-bs-toggle="pill" data-bs-target="#pills-lastmonth" type="button" role="tab" aria-controls="pills-lastmonth" aria-selected="true">
+                           @php                            
+                              $lastMonth = \Carbon\Carbon::now();
+                             $lastmonthname =  $lastMonth->subMonth()->format('F Y');
+                              echo $lastmonthname;
+                           @endphp
+                        </button>
+                     </li>
+                     <li class="nav-item" role="presentation">
+                        <button class="nav-link" id="pills-currentMonth-tab" data-bs-toggle="pill" data-bs-target="#pills-currentMonth" type="button" role="tab" aria-controls="pills-currentMonth" aria-selected="false">{{ date('F Y') }}</button>
+                     </li>
+                     
+                     </ul>
+                     <div class="tab-content" id="pills-tabContent">
+                        <div class="tab-pane fade show active" id="pills-lastmonth" role="tabpanel" aria-labelledby="pills-home-tab">
+                           <ul>
+                              <li>
+                              <small>রেফারেন্স ইউজার ৭জন তৈরি করা সম্পূর্ণ হয়নি এখনো।</small>
+                              <div class="progress" style="height: 2px;">
+                                 <div class="progress-bar" role="progressbar" style="width: 25%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              </li>
+                              <li>
+                              <small>রেফারেন্স ইউজার বুকিং সম্পূর্ণ হয়নি এখনো, তাদের সাথে যোগাযোগ করুন।</small>
+                              <div class="progress" style="height: 2px;">
+                                 <div class="progress-bar" role="progressbar" style="width: 45%;" aria-valuenow="45" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              </li>
+                           </ul>
+                        </div>
+                        <div class="tab-pane fade" id="pills-currentMonth" role="tabpanel" aria-labelledby="pills-currentMonth-tab">
+                           <ul>
+                              <li>
+                              <small>রেফারেন্স ইউজার ৭জন তৈরি করা সম্পূর্ণ হয়নি এখনো।</small>
+                              <div class="progress" style="height: 2px;">
+                                 <div class="progress-bar" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              </li>
+                              <li>
+                              <small>রেফারেন্স ইউজার বুকিং সম্পূর্ণ হয়নি এখনো, তাদের সাথে যোগাযোগ করুন।</small>
+                              <div class="progress" style="height: 2px;">
+                                 <div class="progress-bar" role="progressbar" style="width: 5%;" aria-valuenow="5" aria-valuemin="0" aria-valuemax="100"></div>
+                              </div>
+                              </li>
+                           </ul>
+                        </div>
+                        </div>
+                     </div> 
+                  </div>
+                  <div class="col-md-6">
+                     <div class="card">
+                        <div class="card-header">
+                           <i class="fas fa-cog"></i>  Tools
+                        </div>
+                        <div class="card-body">
+                           <ul class="list-group list-group-flush">
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">বুকিং দিন</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">বুকিং লিস্ট</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">রিপোট লিস্ট</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">রিপোট দিন</a> </li>                              
+                           </ul>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-6">
+                  <div class="card">
+                        <div class="card-header">
+                           <i class="fas fa-swatchbook"></i>  Resource
+                        </div>
+                        <div class="card-body">
+                           <ul class="list-group list-group-flush text-dark">
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('user.referel', Auth::user()->id ) }}">আপনার গ্রাহককে ইনভাইট করুন</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">রেফারেল ইউজার লিস্ট</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">যোগাযোগ করুন</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">সার্ভিস সমূহ</a> </li>                              
+                           </ul>
+                        </div>
+                     </div>
                   </div>
                </div>
             </div>

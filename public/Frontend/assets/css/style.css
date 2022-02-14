@@ -1898,3 +1898,40 @@ Contact Us
 .light-gray-text {
   font-size: 10px;
 }
+.builder-third small {
+  font-size: 9px;
+}
+#pills-tab {
+  border: 1px solid #eee;
+  border-radius: 50px;
+  padding: 5px;
+  margin-bottom: 5px;
+}
+#pills-tab li button {
+  padding: 3px 50px;
+  border-radius: 50px;
+  font-size: 12px;
+}
+#pills-lastmonth ul {
+  padding: 0;
+  list-style: none;
+}
+#pills-lastmonth ul li {
+  margin-bottom: 5px;
+}
+#pills-lastmonth ul li small {
+  font-size: 11px;
+  color: #777;
+}
+
+#pills-currentMonth ul {
+  padding: 0;
+  list-style: none;
+}
+#pills-currentMonth ul li {
+  margin-bottom: 5px;
+}
+#pills-currentMonth ul li small {
+  font-size: 11px;
+  color: #777;
+}

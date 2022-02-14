@@ -63,6 +63,8 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
             
+            Route::get('/user/{id}', 'App\Http\Controllers\HomeController@referelink')->name('user.referel');
+            
             // Booking online
             Route::group(['prefix' => 'booking'], function(){
 

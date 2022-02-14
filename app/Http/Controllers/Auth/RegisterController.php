@@ -120,7 +120,6 @@ class RegisterController extends Controller
         // return $user;
         return view('auth.thankyou', compact('user'));
 
-        // ektu run koren to => ok
 
 
     }
