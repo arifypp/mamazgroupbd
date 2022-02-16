@@ -145,4 +145,10 @@ class HomeController extends Controller
         $refereluser = User::find($id);
         return view('Frontend.user.referel', compact('refereluser'));
      }
+     public function reflist($username)
+     {
+         $userlist = User::find($username);
+        return view('Frontend.user.referellist', compact('userlist'));
+         
+     }
 }

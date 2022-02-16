@@ -249,6 +249,7 @@
                                 <input type="checkbox" class="form-check-input" id="check" checked>
                                 <label class="form-check-label" for="check">My sponsor is the same as my enroller</label>
                             </div>
+                            <input type="hidden" name="referrer_id" value="{{ $referrer->id }}">
                             @else
                             <div class="form-group mt-3" id="sponserfield">
                                 <label for="Sponsor ID Number">Sponsor ID Number</label>

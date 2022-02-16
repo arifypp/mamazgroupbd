@@ -1,12 +1,16 @@
 <?php
 
-namespace App\Http\Controllers\Frontend;
+namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Frontend\ContactPage;
+use App\Models\User;
+use App\Models\Backend\PromoteLevel;
+use Response;
+use DB;
+use Session;
 
-class ContactController extends Controller
+class PromoteLevelController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,7 +20,8 @@ class ContactController extends Controller
     public function index()
     {
         //
-        return view('Frontend.pages.contact');
+        $promote = PromoteLevel::orderby('id', 'desc')->get();
+        return view('Backend.promote.manage', compact('promote'));
     }
 
     /**
@@ -38,40 +43,22 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         //
-    }
-
-    /**
-     * Submit contact form via frontpage
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function ctsend(Request $request)
-    {
         $request->validate([
-            'name'          =>  ['required'],
-            'email'         =>  ['required', 'email'],
-            'subject'       =>  ['required'],
-            'message'       =>  ['required'],
+            'promotename' => 'required',
         ],
         $message = [
-            'name.required'         =>  'This field is required',
-            'email.required'        =>  'This field is required',
-            'subject.required'      =>  'This field is required',
-            'message.required'      =>  'This field is required',
-        ]
-    );
+            'promotename.required'   =>  'এই ঘরটি পূরণ করুন',
+        ]);
 
-    $contact = new ContactPage;
-        
-    $contact->name          =   $request->name;
-    $contact->email         =   $request->email;
-    $contact->subject       =   $request->subject;
-    $contact->message       =   $request->message;
+        $walletType = PromoteLevel::create([
+            'name' => $request->promotename,
+        ]);
 
-    $contact->save();
-    return response()->json(['success' =>true, 'message'=> 'আপনার ডাটা পাঠানো হয়েছে!!!']);
-
+        $notification = array(
+            'message'       => 'নতুন লেভেল তৈরি হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+        return back()->with($notification);
     }
 
     /**

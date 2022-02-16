@@ -291,7 +291,7 @@
                      </div>
                   <ul class="nav nav-pills" id="pills-tab" role="tablist">
                      <li class="nav-item" role="presentation">
-                        <button class="nav-link active" id="pills-lastmonth-tab" data-bs-toggle="pill" data-bs-target="#pills-lastmonth" type="button" role="tab" aria-controls="pills-lastmonth" aria-selected="true">
+                        <button class="nav-link" id="pills-lastmonth-tab" data-bs-toggle="pill" data-bs-target="#pills-lastmonth" type="button" role="tab" aria-controls="pills-lastmonth" aria-selected="true">
                            @php                            
                               $lastMonth = \Carbon\Carbon::now();
                              $lastmonthname =  $lastMonth->subMonth()->format('F Y');
@@ -300,7 +300,7 @@
                         </button>
                      </li>
                      <li class="nav-item" role="presentation">
-                        <button class="nav-link" id="pills-currentMonth-tab" data-bs-toggle="pill" data-bs-target="#pills-currentMonth" type="button" role="tab" aria-controls="pills-currentMonth" aria-selected="false">{{ date('F Y') }}</button>
+                        <button class="nav-link active" id="pills-currentMonth-tab" data-bs-toggle="pill" data-bs-target="#pills-currentMonth" type="button" role="tab" aria-controls="pills-currentMonth" aria-selected="false">{{ date('F Y') }}</button>
                      </li>
                      
                      </ul>
@@ -363,7 +363,7 @@
                         <div class="card-body">
                            <ul class="list-group list-group-flush text-dark">
                               <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('user.referel', Auth::user()->id ) }}">আপনার গ্রাহককে ইনভাইট করুন</a> </li>
-                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">রেফারেল ইউজার লিস্ট</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('user.reflist', Auth::user()->username ) }}">রেফারেল ইউজার লিস্ট</a> </li>
                               <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">যোগাযোগ করুন</a> </li>
                               <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">সার্ভিস সমূহ</a> </li>                              
                            </ul>
@@ -423,10 +423,14 @@
     });
    });
 
-    @if(count($errors) > 0)
-        @foreach($errors->all() as $error)
-            toastr.error("{{ $error }}");
-        @endforeach
-    @endif
+   $(document).ready(function(){
+      $('a[data-toggle="tab"]').on('show.bs.tab', function(e) {
+         localStorage.setItem('activeTab', $(e.target).attr('href'));
+      });
+      var activeTab = localStorage.getItem('activeTab');
+      if(activeTab){
+         $('#myTab a[href="' + activeTab + '"]').tab('show');
+      }
+   });
 </script>
 @endsection

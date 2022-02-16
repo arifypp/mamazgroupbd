@@ -83,8 +83,37 @@ class RegisterController extends Controller
         if ($request->has('ref')) {
             session(['referrer' => $request->query('ref')]);
         }
+        return view('auth.register', ['url'=>'ref']);
+    }
 
-        return view('auth.register');
+    public function createRefUser(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        if (request()->has('avatar')) {            
+            $avatar = request()->file('avatar');
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatarPath = public_path('/images/');
+            $avatar->move($avatarPath, $avatarName);
+        }
+        $referrer = User::whereUsername(session()->pull('referrer'))->first();
+
+
+        $refuser = User::create([
+            'name' => $request['firstname']." ".$request['lastname'],
+            'phone' => $request['phone'],
+            'address' => $request['address']." ".$request['address2']." ".$request['city']." ".$request['postcode']." ".$request['country'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'referrer_id' => $request['referrer_id'],
+            'password' => Hash::make($request['password']),
+            'dob' => date('Y-m-d', strtotime($request['dob'])),
+            // 'avatar' => "/images/" . $avatarName,
+
+        ]);
+
+       // return View::make('auth.thankyou')->with(compact('teacher'));
+       return view('auth.thankyou', ['user' => $refuser]);
     }
 
     /**
@@ -93,7 +122,7 @@ class RegisterController extends Controller
      * @param  array  $data
      * @return \App\Models\User
      */
-    protected function create(array $data)
+    protected function create(Request $request)
     {
 
         if (request()->has('avatar')) {            
@@ -108,17 +137,17 @@ class RegisterController extends Controller
             'name' => $request['firstname']." ".$request['lastname'],
             'phone' => $request['phone'],
             'address' => $request['address']." ".$request['address2']." ".$request['city']." ".$request['postcode']." ".$request['country'],
-            'username'    => $data['username'],
-            'email' => $data['email'],
+            'username'    => $request['username'],
+            'email' => $request['email'],
             'referrer_id' => $referrer ? $referrer->id : null,
-            'password' => Hash::make($data['password']),
-            'dob' => date('Y-m-d', strtotime($data['dob'])),
+            'password' => Hash::make($request['password']),
+            'dob' => date('Y-m-d', strtotime($request['dob'])),
             // 'avatar' => "/images/" . $avatarName,
         ]);
 
         // event(new UserRegistrationEvent($user));
         // return $user;
-        return view('auth.thankyou', compact('user'));
+        return view('auth.thankyou', ['user' => $user]);
 
 
 

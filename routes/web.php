@@ -18,6 +18,7 @@ Route::group(['prefix' => '/'], function(){
     Route::get('/','App\Http\Controllers\Frontend\HomepageController@index')->name('homepage');
     Route::get('/about','App\Http\Controllers\Frontend\AboutController@index')->name('about');
     Route::get('/contact','App\Http\Controllers\Frontend\ContactController@index')->name('contact');
+    Route::post('/contact/send','App\Http\Controllers\Frontend\ContactController@ctsend')->name('contact.send');
     Route::get('/thankyou', [App\Http\Controllers\HomeController::class, 'thankyou'])->name('thankyou');
 
 });
@@ -54,6 +55,7 @@ Route::post('/login/user', 'App\Http\Controllers\Auth\LoginController@Userlogin'
 // User Registration
 Route::get('/register/user', 'App\Http\Controllers\Auth\RegisterController@ShowRegiterForm');
 Route::post('/register/user', 'App\Http\Controllers\Auth\RegisterController@createUser');
+Route::post('/register/ref', 'App\Http\Controllers\Auth\RegisterController@createRefUser');
 
 Auth::routes(['verify' => true]);
 // User Dashboard Fuction
@@ -64,6 +66,8 @@ Route::middleware(['verified'])->group(function () {
             Route::get('/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
             
             Route::get('/user/{id}', 'App\Http\Controllers\HomeController@referelink')->name('user.referel');
+
+            Route::get('/ref/user/{username}', 'App\Http\Controllers\HomeController@reflist')->name('user.reflist');
             
             // Booking online
             Route::group(['prefix' => 'booking'], function(){
@@ -205,6 +209,26 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\WallettypeController@update')->name('wallettype.update');
         
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\WallettypeController@destroy')->name('wallettype.destroy');
+        
+            });
+
+            // Promote Level Route for Crud
+            
+            Route::group(['prefix' => 'promote'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\PromoteLevelController@index')->name('promote.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\PromoteLevelController@create')->name('promote.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\PromoteLevelController@store')->name('promote.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\PromoteLevelController@edit')->name('promote.edit');
+
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\PromoteLevelController@show')->name('promote.show');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\PromoteLevelController@update')->name('promote.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\PromoteLevelController@destroy')->name('promote.destroy');
         
             });
 

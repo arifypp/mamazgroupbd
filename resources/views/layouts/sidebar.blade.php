@@ -111,6 +111,16 @@
                     </ul>
                 </li>
 
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-promote">কাস্টমার প্রমোট লেভেল</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('promote.manage') }}" key="t-tui-promotion">লেভেল ম্যানেজমেন্ট</a></li>
+                    </ul>
+                </li>
+
 
                 <li class="menu-title" key="t-apps">@lang('translation.Apps')</li>
 
