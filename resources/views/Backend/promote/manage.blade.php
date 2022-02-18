@@ -20,10 +20,15 @@
             <div class="card card-body">
                 <form action="{{ route('promote.store') }}" method="post">
                     @csrf
-                    <div class="mb-5">
-                        <label for="formrow-websiteherotitle-input" class="form-label">ওয়ালেট নাম</label>
+                    <div class="mb-3">
+                        <label for="formrow-websiteherotitle-input" class="form-label">পদবি নাম</label>
                         <input type="text" name="promotename" class="form-control" id="formrow-websiteherotitle-input" placeholder="প্রমোট লেভেল নাম লিখুন!">
-                        <span class="text-danger">@error('walletname'){{ $message }} @enderror</span>
+                        <span class="text-danger">@error('promotename'){{ $message }} @enderror</span>
+                    </div>
+                    <div class="mb-5">
+                        <label for="formrow-websiteherotitle-input" class="form-label">পদবি শর্ট নাম</label>
+                        <input type="text" name="promoteshortname" class="form-control" id="formrow-websiteherotitle-input" placeholder="প্রমোট লেভেল শর্ট নাম লিখুন!">
+                        <span class="text-danger">@error('promoteshortname'){{ $message }} @enderror</span>
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary waves-effect waves-light">সেভ করুন</button>
@@ -38,7 +43,7 @@
                     <thead>
                         <tr>
                             <th>ক্র.নং</th>
-                            <th>ওয়ালেট নাম</th>
+                            <th>পদবি নাম</th>
                             <th>অ্যাকশন</th>
                         </tr>
                     </thead>
@@ -90,7 +95,7 @@
                 
                 $.ajax({
                     type: 'POST',
-                    url:  "{{url('/admin/wallettype/delete')}}/" + id,
+                    url:  "{{url('/admin/promote/delete')}}/" + id,
                     data: {_token: CSRF_TOKEN},
                     dataType: 'JSON',
                     success: function (results) {

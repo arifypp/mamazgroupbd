@@ -45,13 +45,24 @@ class PromoteLevelController extends Controller
         //
         $request->validate([
             'promotename' => 'required',
+            'promoteshortname' => 'required',
         ],
         $message = [
             'promotename.required'   =>  'এই ঘরটি পূরণ করুন',
+            'promoteshortname.required'   =>  'এই ঘরটি পূরণ করুন',
         ]);
+
+        foreach($message as $error ){
+            $notification = array(
+                'message'       => 'নতুন!!!',
+                'alert-type'    => 'error'
+            );
+        }
+        
 
         $walletType = PromoteLevel::create([
             'name' => $request->promotename,
+            'shortfom'  =>  $request->promoteshortname,
         ]);
 
         $notification = array(
@@ -104,5 +115,22 @@ class PromoteLevelController extends Controller
     public function destroy($id)
     {
         //
+        $delete = PromoteLevel::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";
+            
+        } else {
+            $success = true;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }

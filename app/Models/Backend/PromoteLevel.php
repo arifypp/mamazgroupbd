@@ -11,5 +11,6 @@ class PromoteLevel extends Model
     
     protected $fillable = [
         'name',
+        'shortfom',
     ];
 }

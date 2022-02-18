@@ -16,6 +16,7 @@ class CreatePromoteLevelsTable extends Migration
         Schema::create('promote_levels', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
+            $table->string('shortfom');
             $table->timestamps();
         });
     }
