@@ -46,7 +46,7 @@
                                 <th>ক্র.নং</th>
                                 <th>লোগো</th>
                                 <th>নাম</th>
-                                <th>স্টাটার্স</th>
+                                <th>এ্যাকশন</th>
                             </tr>
                         </thead>
 
@@ -60,7 +60,9 @@
                                 <td><img src="{{ asset('assets/images/clients/'. $value->image) }}" class="img-fluid" width="50"></td>
                                 <td>{{ $value->name }}</td>
                                 <td>{{ $value->url }}</td>
-                                <td>status</td>
+                                <td>
+                                <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
+                                </td>
                             </tr>
                         @endforeach    
                         </tbody>
@@ -102,4 +104,58 @@
 
         </div>
     </div>
+@endsection
+
+@section('script')
+<script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
+<script type="text/javascript">
+    function deleteConfirmation(id) {
+        swal.fire({
+            title: "ডিলেট?",
+            icon: 'question',
+            text: "দয়া করে কনর্ফাম করুন!",
+            type: "warning",
+            showCancelButton: !0,
+            confirmButtonText: "হ্যা, ডিলেট করুন!",
+            cancelButtonText: "না, বাতিল করুন!",
+            dangerMode: true,
+            reverseButtons: !0
+        }).then(function (e) {
+            if (e.value === true) {
+                var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
+                $.ajaxSetup({
+	                headers: {
+	                    'X-CSRF-TOKEN': '{{csrf_token()}}'
+	                }
+	            });
+                
+                $.ajax({
+                    type: 'POST',
+                    url:  "{{url('/homesettings/homesettings/')}}/" + id,
+                    data: {_token: CSRF_TOKEN},
+                    dataType: 'JSON',
+                    success: function (results) {
+                        if (results.success === true) {
+                            swal.fire("Done!", results.message, "success");
+                            // refresh page after 2 seconds
+                            $('.table').load(document.URL + ' .table');     // Using .reload() method.
+                        } else {
+                            swal.fire("Error!", results.message, "error");
+                        }
+                    }
+                });
+            } else {
+                e.dismiss;
+            }
+        }, function (dismiss) {
+            return false;
+        })
+    }
+</script>
 @endsection

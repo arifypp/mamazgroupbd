@@ -90,6 +90,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('homesetting.manage') }}" key="t-tui-homehero">হিরো সেটিং</a></li>
                         <li><a href="{{ route('homesetting.favclient') }}" key="t-full-homeclient">প্রিয় ক্লাইন্ট সেটিং</a></li>
+                        <li><a href="{{ route('service.manage') }}" key="t-full-service">সার্ভিস সেটিং</a></li>
                     </ul>
                 </li>
 
@@ -118,6 +119,7 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('promote.manage') }}" key="t-tui-promotion">লেভেল ম্যানেজমেন্ট</a></li>
+                        <li><a href="{{ route('promote.create') }}" key="t-tui-message">লেভেল মেসেজ</a></li>
                     </ul>
                 </li>
 

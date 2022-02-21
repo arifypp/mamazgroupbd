@@ -78,6 +78,8 @@ Route::middleware(['verified'])->group(function () {
                 // booking pdf file
                 Route::get('/pdfgenerate/{id}', 'App\Http\Controllers\Frontend\BookingController@generatepdf')->name('booking.generatepdf');
 
+                // Leveling
+                Route::post('/fetchmessage', 'App\Http\Controllers\Backend\PromoteLevelController@fetchmessage')->name('promote.fetchmessage');
         
                 Route::get('/create', 'App\Http\Controllers\Frontend\BookingController@create')->name('booking.create');
         
@@ -218,9 +220,13 @@ Route::middleware(['verified'])->group(function () {
 
                 Route::get('/manage', 'App\Http\Controllers\Backend\PromoteLevelController@index')->name('promote.manage');
         
-                Route::get('/create', 'App\Http\Controllers\Backend\PromoteLevelController@create')->name('promote.create');
+                Route::get('/create/message/', 'App\Http\Controllers\Backend\PromoteLevelController@create')->name('promote.create');
         
                 Route::post('/store', 'App\Http\Controllers\Backend\PromoteLevelController@store')->name('promote.store');
+
+                Route::post('/store/message', 'App\Http\Controllers\Backend\PromoteLevelController@storemessage')->name('promote.message.store');
+
+                Route::post('/delete/message/{id}', 'App\Http\Controllers\Backend\PromoteLevelController@destroymessage')->name('promote.destroymessage');
         
                 Route::get('/edit/{id}', 'App\Http\Controllers\Backend\PromoteLevelController@edit')->name('promote.edit');
 
@@ -346,10 +352,26 @@ Route::middleware(['verified'])->group(function () {
 
                 Route::post('/favclientupdate/{id}', 'App\Http\Controllers\Backend\HomepageController@favclientupdate')->name('homesetting.favclientupdate');
 
+                Route::post('/favclientdelete/{id}', 'App\Http\Controllers\Backend\HomepageController@favclientdelete')->name('homesetting.favclientdelete');
+
                 Route::post('/favclientlogo', 'App\Http\Controllers\Backend\HomepageController@favclientlogo')->name('homesetting.favclientlogo');
 
+            });
+
+            // সার্ভিস পেইজ সেটিং
+            Route::group(['prefix' => 'service'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\ServiceController@index')->name('service.manage');
+
+                Route::post('/store/pagehead/{id}', 'App\Http\Controllers\Backend\ServiceController@storehead')->name('service.pagehead');
+
+                Route::post('/store/service/', 'App\Http\Controllers\Backend\ServiceController@storeservice')->name('service.storeservice');
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\ServiceController@destroy')->name('service.destroy');
+                
 
             });
+
             
         });
     });

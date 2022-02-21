@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Backend\HompageHero;
 use App\Models\Backend\FavClient;
 use App\Models\Backend\FavclientLogo;
+use App\Models\Frontend\{ourservices, Ourserviceshead};
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Str;
@@ -60,6 +61,7 @@ class HomepageController extends Controller
 
     }
 
+
     public function favclientlogo(Request $request)
     {
         $request->validate([
@@ -104,6 +106,30 @@ class HomepageController extends Controller
 
         return back()->with($notification);
 
+    }
+
+    public function favclientdelete()
+    {
+        $delete = FavclientLogo::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";
+            if( File::exists('assets/images/clients/' . $delete->image) ) {
+                File::delete('assets/images/clients/' . $delete->image);
+            }
+            
+        } else {
+            $success = true;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 
     /**

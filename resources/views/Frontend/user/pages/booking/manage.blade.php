@@ -577,38 +577,38 @@ $("#permanetdivision").on('change',function(e){
 
 // Submit form
 $(function(){
-                $.ajaxSetup({
-                headers: {
-                        "X-CSRFToken": '{{csrf_token()}}'
-                    }
-                });
-                $('#submitform').submit(function(e){
-                    e.preventDefault();
-                    var mydata = $(this).serialize();
-                    $.ajax({
-                        method : 'POST',
-                        url : "{{ route('booking.store') }}",
-                        data:mydata,
-                        success: function(response) {
-                            if(response.success){
-                                toastr.success(response.message);
-                            }
-                            setTimeout(function(){
-                                document.getElementById("submitform").reset();
-                            }, 3000);
-                            
-                    },
-                    error:function (response){
-                        $('.text-danger').html('');
-                        $('.text-danger').delay(5000).fadeOut();
-                        $.each(response.responseJSON.errors,function(field_name,error){
-                            $(document).find('[name='+field_name+']').after('<span class="text-strong text-danger">' +error+ '</span>')
-                        })
-                    }
+            $.ajaxSetup({
+            headers: {
+                    "X-CSRFToken": '{{csrf_token()}}'
+                }
+            });
+            $('#submitform').submit(function(e){
+                e.preventDefault();
+                var mydata = $(this).serialize();
+                $.ajax({
+                    method : 'POST',
+                    url : "{{ route('booking.store') }}",
+                    data:mydata,
+                    success: function(response) {
+                        if(response.success){
+                            toastr.success(response.message);
+                        }
+                        setTimeout(function(){
+                            document.getElementById("submitform").reset();
+                        }, 3000);
+                        
+                },
+                error:function (response){
+                    $('.text-danger').html('');
+                    $('.text-danger').delay(5000).fadeOut();
+                    $.each(response.responseJSON.errors,function(field_name,error){
+                        $(document).find('[name='+field_name+']').after('<span class="text-strong text-danger">' +error+ '</span>')
                     })
+                }
                 })
-
             })
+
+        })
 
 
 </script>

@@ -33,14 +33,9 @@
           <div class="col-md-7">
              <div class="clients-slider swiper">
                 <div class="swiper-wrapper align-items-center">
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-1.png') }}" class="img-fluid" alt=""></div>
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-2.png') }}" class="img-fluid" alt=""></div>
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-3.png') }}" class="img-fluid" alt=""></div>
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-4.png') }}" class="img-fluid" alt=""></div>
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-5.png') }}" class="img-fluid" alt=""></div>
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-6.png') }}" class="img-fluid" alt=""></div>
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-7.png') }}" class="img-fluid" alt=""></div>
-                   <div class="swiper-slide"><img src="{{ asset('Frontend/assets/img/clients/client-8.png') }}" class="img-fluid" alt=""></div>
+                @foreach( App\Models\Backend\FavclientLogo::all() as $value )
+                   <div class="swiper-slide"><img src="{{ asset('assets/images/clients/'. $value->image) }}" class="img-fluid" alt="{{ $value->name }}"></div>
+                 @endforeach  
                 </div>
                 <div class="swiper-pagination"></div>
              </div>
@@ -53,8 +48,10 @@
  <section id="services" class="services section-bg">
     <div class="container">
        <div class="section-title1">
-          <h2>আমাদের <span>সার্ভিসেস</span></h2>
-          <p> আমাদের জনপ্রিয় সার্ভিসেসের তালিকাগুলো নিচে উল্লেখ করা হল: </p>
+       @foreach( App\Models\Frontend\Ourserviceshead::all() as $value )
+          <h2> {!! $value->title !!} </h2>
+          <p> {{ $value->desc }} </p>
+       @endforeach
        </div>
        <div class="design">
           <div class="row">

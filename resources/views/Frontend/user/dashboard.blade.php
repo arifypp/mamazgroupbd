@@ -288,6 +288,14 @@
                   <div class="card p-3 text-dark">
                      <div class="card-title">
                         <a href="#">Target Rank &nbsp; <i class="fas fa-link"></i> </a>
+                        <select name="level" id="level" style="float:right;">
+                           @foreach(App\Models\Backend\PromoteLevel::all() as $levelname)
+                           <option value="{{ $levelname->id }}">{{ $levelname->name }}</option>
+                           @endforeach
+                        </select>
+                        <select name="" id="state-dd">
+                           
+                        </select>
                      </div>
                   <ul class="nav nav-pills" id="pills-tab" role="tablist">
                      <li class="nav-item" role="presentation">
@@ -431,6 +439,35 @@
       if(activeTab){
          $('#myTab a[href="' + activeTab + '"]').tab('show');
       }
+   });
+
+   $(document).ready(function () {
+            $('#level').on('change', function () {
+                var idCountry = this.value;
+               //  console.log(idCountry);
+                $("#state-dd").html('');
+                $.ajax({
+                    url: "{{ route('promote.fetchmessage') }}",
+                    type: "POST",
+                    data: {
+                        levels_id: idCountry,
+                        _token: '{{csrf_token()}}'
+                    },
+                    dataType: 'json',
+                    success: function (result) {
+                       console.log(result);
+                        $('#state-dd').html('<option value="">Select State</option>');
+                        $.each(result.target_messages, function (key, value) {
+                            $("#state-dd").append('<option value="' + value
+                                .id + '">' + value.name + '</option>');
+
+                       console.log(value.name);
+
+                        });
+                        $('#city-dd').html('<option value="">Select City</option>');
+                    }
+                });
+            });
    });
 </script>
 @endsection

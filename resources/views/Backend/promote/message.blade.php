@@ -1,34 +1,39 @@
 @extends('layouts.master')
 
-@section('title') প্রমোট লেভেল @endsection
+@section('title') প্রমোট লেভেল মেসেজ @endsection
 
 @section('css')
     <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
     <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+
     @endsection
 
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') প্রমোট লেভেল @endslot
-        @slot('title') প্রমোট লেভেল @endslot
+        @slot('li_1') প্রমোট লেভেল মেসেজ @endslot
+        @slot('title') প্রমোট লেভেল মেসেজ @endslot
     @endcomponent
 
     <!-- Starting content -->
     <div class="row">
         <div class="col-md-4 col-lg-4 col-xl-4 col-sm-12 col-4">
             <div class="card card-body">
-                <form action="{{ route('promote.store') }}" method="post">
+                <form action="{{ route('promote.message.store') }}" method="post">
                     @csrf
                     <div class="mb-3">
-                        <label for="formrow-websiteherotitle-input" class="form-label">পদবি নাম</label>
-                        <input type="text" name="promotename" class="form-control" id="formrow-websiteherotitle-input" placeholder="প্রমোট লেভেল নাম লিখুন!">
-                        <span class="text-danger">@error('promotename'){{ $message }} @enderror</span>
+                        <label for="formrow-websiteherotitle-input" class="form-label">মেসেজেস</label>
+                        <textarea name="promotemessage" id="promotemessage" class="form-control" cols="10" rows="3"></textarea>
+                        <span class="text-danger">@error('promotemessage'){{ $message }} @enderror</span>
                     </div>
                     <div class="mb-5">
-                        <label for="formrow-websiteherotitle-input" class="form-label">পদবি শর্ট নাম</label>
-                        <input type="text" name="promoteshortname" class="form-control" id="formrow-websiteherotitle-input" placeholder="প্রমোট লেভেল শর্ট নাম লিখুন!">
-                        <span class="text-danger">@error('promoteshortname'){{ $message }} @enderror</span>
+                        <label for="formrow-websiteherotitle-input" class="form-label">পদবি নাম</label>
+                        <select name="levelname" id="" class="form-control">
+                            @foreach( $promoteLevel as $value )
+                            <option value="{{ $value->id }}">{{ $value->name }}</option>
+                            @endforeach
+                        </select>
+                        <span class="text-danger">@error('levelname'){{ $message }} @enderror</span>
                     </div>
                     <div class="mb-3">
                         <button type="submit" class="btn btn-primary waves-effect waves-light">সেভ করুন</button>
@@ -43,6 +48,7 @@
                     <thead>
                         <tr>
                             <th>ক্র.নং</th>
+                            <th>মেসেজ নাম</th>
                             <th>পদবি নাম</th>
                             <th>অ্যাকশন</th>
                         </tr>
@@ -51,10 +57,14 @@
 
                     <tbody>
                         @php $i = 1;  @endphp
-                        @foreach( $promote as $value )
+                        @foreach( $Promotemessage as $value )
                         <tr>
                             <td>{{ $i++ }}</td>
                             <td>{{ $value->name }}</td>
+                            <td>
+                                <span class="badge-success">{{ $value->promote->name }}</span>                              
+
+                            </td>
                             <td>
                                 <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
                                 <!-- <a href="{{ route('promote.edit', $value->id) }}" class="text-primary"><i class="mdi mdi-18px mdi-pen"></i></a> -->
@@ -102,7 +112,7 @@
                 
                 $.ajax({
                     type: 'POST',
-                    url:  "{{url('/admin/promote/delete')}}/" + id,
+                    url:  "{{url('/admin/promote/delete/message')}}/" + id,
                     data: {_token: CSRF_TOKEN},
                     dataType: 'JSON',
                     success: function (results) {
