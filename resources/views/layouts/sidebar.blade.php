@@ -91,6 +91,17 @@
                         <li><a href="{{ route('homesetting.manage') }}" key="t-tui-homehero">হিরো সেটিং</a></li>
                         <li><a href="{{ route('homesetting.favclient') }}" key="t-full-homeclient">প্রিয় ক্লাইন্ট সেটিং</a></li>
                         <li><a href="{{ route('service.manage') }}" key="t-full-service">সার্ভিস সেটিং</a></li>
+                        <li>
+                            <a href="javascript: void(0);" class="has-arrow"
+                                key="t-level-1-2">গ্যালারি সেটিং</a>
+                            <ul class="sub-menu" aria-expanded="true">
+                                <li><a href="{{ route('gallery.manage') }}" key="t-gallery-cat">গ্যালারি ক্যাটাগরি</a>
+                                </li>
+                                <li><a href="javascript: void(0);" key="t-gallery-photo">গ্যালারি ফটো</a>
+                                </li>
+                            </ul>
+                    
+                    </li>
                     </ul>
                 </li>
 

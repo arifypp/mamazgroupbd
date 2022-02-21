@@ -90,7 +90,7 @@ class PromoteLevelController extends Controller
 
     public function fetchmessage(Request $request)
     {
-        $data = TargetMessage::where("levels_id", $request->name)->get(['name', 'levels_id']);
+        $data = TargetMessage::where("levels_id", $request->levels_id)->get(['name', 'levels_id']);
         return response()->json($data);
     }
 

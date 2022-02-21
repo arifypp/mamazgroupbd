@@ -63,6 +63,7 @@
                                 <td>
                                 <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
                                 </td>
+                                
                             </tr>
                         @endforeach    
                         </tbody>
@@ -86,7 +87,7 @@
                                 </div>
                                 <div class="mb-3">
                                     <label for="" class="form-label">সার্ভিস বিবরণ (বিস্তারিত)</label>
-                                    <textarea name="description" cols="30" rows="10" class="form-control"></textarea>
+                                    <textarea name="description" cols="30" rows="10" class="form-control" id="elm1"></textarea>
                                 </div>
                                 <div class="mb-3">
                                     <label for="">সার্ভিস স্টাটার্স</label>
@@ -117,6 +118,7 @@
                     </div>
                 </div>
             </div>
+
 
         </div>
     </div>
@@ -207,18 +209,5 @@
 //     })
 
 // })
-
-    @if(count($errors) > 0)
-        @foreach($errors->all() as $error)
-            toastr.error("{{ $error }}");
-        @endforeach
-    @endif
 </script>
-@endsection
-@section('script')
-    <!--tinymce js-->
-    <!-- <script src="assets/libs/tinymce/tinymce.min.js"></script> -->
-
-    <!-- init js -->
-    <!-- <script src="assets/js/pages/form-editor.init.js"></script> -->
 @endsection

@@ -22,7 +22,7 @@
           </div>
           <div class="col-lg-4">
             <div class="button-design">
-            <a href="">আজকেই শুরু করুন</a>
+            <a href="{{ url('/login/user') }}">আজকেই শুরু করুন</a>
           </div>
           </div>
         </div>

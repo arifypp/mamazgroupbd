@@ -55,126 +55,15 @@
        </div>
        <div class="design">
           <div class="row">
-             <div class="col-md-6 col-lg-2 offset-lg-1">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">আকসির প্রোপারটিস</a></h4>
-                </div>
-             </div>
+          @foreach( App\Models\Frontend\Ourservice::all() as $value)
              <div class="col-md-6 col-lg-2">
                 <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">মামাজ বেস্ট বাড়ি এবং ইন্টেরিও</a></h4>
+                   <img src="{{ asset('assets/images/service/'. $value->image) }}" class="img-fluid" alt="">
+                   <h4 class="title"><a href="{{ $value->slug }}">{{ $value->name }}</a></h4>
                 </div>
              </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">প্রোপারটি ডেভেলোপমেন্ট </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> ইকো পার্ক রিসোট এবং সুইমিং </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> বেস্ট রিসার্চ সেন্টার </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2 offset-lg-1">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">আইটি এবং সকল সফওয়্যার সল্যুশন</a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">বেস্ট হোম<br> সল্যুশন</a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">বেস্ট ইমপোর্ট এবং এক্সপোর্ট</a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">বেস্ট স্কুল এবং কলেজ</a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">বেস্ট মেডিক্যাল কলেজ</a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2 offset-lg-1">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">ইকো ডেলিভারি বিভার্জ</a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> বেস্ট ট্রেইনিং সেন্টার</a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> ফ্যাশন এবং ডিজাইনার হাউস </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">ইকো টুরিজম এবং ট্রাভেলস </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> বেস্ট আইডিয়া এবং সল্যুশন </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2 offset-lg-1">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="">ইকো এগ্রি এবং নাসারি </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> বেস্ট রিহাভ সেন্টার </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> বেস্ট ইকো ইন্ডাসট্রিজ </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> বেস্ট লাইফ রিক্স সাপোর্ট </a></h4>
-                </div>
-             </div>
-             <div class="col-md-6 col-lg-2">
-                <div class="icon-box">
-                   <img src="{{ asset('Frontend/assets/img/group.png') }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href=""> বেস্ট <br> ফাউন্ডেশন </a></h4>
-                </div>
-             </div>
+            @endforeach
+
           </div>
        </div>
     </div>

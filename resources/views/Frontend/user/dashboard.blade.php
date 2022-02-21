@@ -293,9 +293,6 @@
                            <option value="{{ $levelname->id }}">{{ $levelname->name }}</option>
                            @endforeach
                         </select>
-                        <select name="" id="state-dd">
-                           
-                        </select>
                      </div>
                   <ul class="nav nav-pills" id="pills-tab" role="tablist">
                      <li class="nav-item" role="presentation">
@@ -314,7 +311,7 @@
                      </ul>
                      <div class="tab-content" id="pills-tabContent">
                         <div class="tab-pane fade show active" id="pills-lastmonth" role="tabpanel" aria-labelledby="pills-home-tab">
-                           <ul>
+                           <ul id="LevelMsg">
                               <li>
                               <small>রেফারেন্স ইউজার ৭জন তৈরি করা সম্পূর্ণ হয়নি এখনো।</small>
                               <div class="progress" style="height: 2px;">
@@ -330,7 +327,7 @@
                            </ul>
                         </div>
                         <div class="tab-pane fade" id="pills-currentMonth" role="tabpanel" aria-labelledby="pills-currentMonth-tab">
-                           <ul>
+                           <ul id="LevelMsg">
                               <li>
                               <small>রেফারেন্স ইউজার ৭জন তৈরি করা সম্পূর্ণ হয়নি এখনো।</small>
                               <div class="progress" style="height: 2px;">
@@ -445,7 +442,7 @@
             $('#level').on('change', function () {
                 var idCountry = this.value;
                //  console.log(idCountry);
-                $("#state-dd").html('');
+                $("#LevelMsg").html('');
                 $.ajax({
                     url: "{{ route('promote.fetchmessage') }}",
                     type: "POST",
@@ -455,16 +452,16 @@
                     },
                     dataType: 'json',
                     success: function (result) {
-                       console.log(result);
-                        $('#state-dd').html('<option value="">Select State</option>');
-                        $.each(result.target_messages, function (key, value) {
-                            $("#state-dd").append('<option value="' + value
-                                .id + '">' + value.name + '</option>');
-
-                       console.log(value.name);
-
+                        var obj = ( result );
+                        console.log(result);
+                        // $('#state-dd').html('<option value="">Select State</option>');
+                        $.each(obj, function (key, value) {
+                           $("#LevelMsg").append('<li>'+'<small>' + value.name + '</small>'
+                           + '<div class="progress" style="height: 2px;">'+ '<div class="progress-bar" role="progressbar" style="width: 15%;" aria-valuenow="15" aria-valuemin="0" aria-valuemax="100"></div>'+
+                           '</div>' +'</li>');
+                           console.log(value.name);
                         });
-                        $('#city-dd').html('<option value="">Select City</option>');
+                        // $('#city-dd').html('<option value="">Select City</option>');
                     }
                 });
             });

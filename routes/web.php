@@ -17,6 +17,7 @@ Route::group(['prefix' => '/'], function(){
     // Homepage
     Route::get('/','App\Http\Controllers\Frontend\HomepageController@index')->name('homepage');
     Route::get('/about','App\Http\Controllers\Frontend\AboutController@index')->name('about');
+    Route::get('/services','App\Http\Controllers\Frontend\ServiceController@index')->name('services');
     Route::get('/contact','App\Http\Controllers\Frontend\ContactController@index')->name('contact');
     Route::post('/contact/send','App\Http\Controllers\Frontend\ContactController@ctsend')->name('contact.send');
     Route::get('/thankyou', [App\Http\Controllers\HomeController::class, 'thankyou'])->name('thankyou');
@@ -370,6 +371,23 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\ServiceController@destroy')->name('service.destroy');
                 
 
+            });
+
+            // Gallery settings
+            Route::group(['prefix' => 'gallery'], function(){
+
+                Route::get('/manage', 'App\Http\Controllers\Backend\GalleryController@index')->name('gallery.manage');
+        
+                Route::get('/create', 'App\Http\Controllers\Backend\GalleryController@create')->name('gallery.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\GalleryController@store')->name('gallery.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\GalleryController@edit')->name('gallery.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\GalleryController@update')->name('gallery.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\GalleryController@destroy')->name('gallery.destroy');
+        
             });
 
             

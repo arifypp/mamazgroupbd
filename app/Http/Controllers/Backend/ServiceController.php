@@ -75,10 +75,10 @@ class ServiceController extends Controller
     {
         //
         $request->validate([
-            'name'          =>  ['required'],
-            'status'        =>  ['required', 'not_in:3'],
-            'featured'      =>  ['required', 'not_in:3'],
-            'image' => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
+            'name'                  =>  ['required'],
+            'status'                =>  ['required', 'not_in:3'],
+            'featured'              =>  ['required', 'not_in:3'],
+            'image'                 => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
         ],
         $message = [
             'name.required'         =>  ['এই ঘরটি পূরণ করুন'],
