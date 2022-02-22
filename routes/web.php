@@ -381,12 +381,16 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/create', 'App\Http\Controllers\Backend\GalleryController@create')->name('gallery.create');
         
                 Route::post('/store', 'App\Http\Controllers\Backend\GalleryController@store')->name('gallery.store');
+
+                Route::post('/store/cat', 'App\Http\Controllers\Backend\GalleryController@storecat')->name('gallery.storecat');
         
                 Route::get('/edit/{id}', 'App\Http\Controllers\Backend\GalleryController@edit')->name('gallery.edit');
         
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\GalleryController@update')->name('gallery.update');
         
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\GalleryController@destroy')->name('gallery.destroy');
+
+                Route::post('/remove', 'App\Http\Controllers\Backend\GalleryController@remove')->name('gallery.remove');
         
             });
 

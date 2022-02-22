@@ -97,7 +97,7 @@
                             <ul class="sub-menu" aria-expanded="true">
                                 <li><a href="{{ route('gallery.manage') }}" key="t-gallery-cat">গ্যালারি ক্যাটাগরি</a>
                                 </li>
-                                <li><a href="javascript: void(0);" key="t-gallery-photo">গ্যালারি ফটো</a>
+                                <li><a href="{{ route('gallery.create') }}" key="t-gallery-photo">গ্যালারি ফটো</a>
                                 </li>
                             </ul>
                     

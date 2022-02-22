@@ -104,9 +104,11 @@
  <section id="team" class="achivement">
     <div class="container">
        <div class="section-title">
-          <h3>আমাদের <span>অর্জিত সাফল্য</span></h3>
-          <p>বিগত কয়েক বছরের আমাদেরি অর্জিত সফল্যর কিছু সংখ্যাক ছবি নিচে দেওয়া হল। শুধু মাত্র আপনাদের অনুপ্রেরণার জন্য:</p>
-       </div>
+       @foreach( App\Models\Backend\GalleryTitle::all() as $value )
+          <h3>{!! $value->title !!}</h3>
+          <p> {{ $value->desc }} </p>
+       @endforeach
+         </div>
        <div class="row">
        </div>
     </div>
@@ -117,13 +119,11 @@
        <div class="row">
           <div class="col-md-12 col-lg -12">
              <div class="tab">
-                <button class="tablinks" onclick="openCity(event, 'Client')" id="defaultOpen"><i class="fas fa-long-arrow-alt-right"></i>আমাদের ক্লাইন্ট</button>
-                <button class="tablinks" onclick="openCity(event, 'Certification')" ><i class="fas fa-long-arrow-alt-right"></i>আমাদের অর্জন</button>
-                <button class="tablinks" onclick="openCity(event, 'Land')" id="defaultOpen"><i class="fas fa-long-arrow-alt-right"></i>আমাদের ল্যান্ড</button>
-                <button class="tablinks" onclick="openCity(event, 'Building')" id="defaultOpen"><i class="fas fa-long-arrow-alt-right"></i>আমাদের বিল্ডিং</button>
-                <!-- <button class="tablinks" onclick="openCity(event, 'Paris')">Paris</button>
-                   <button class="tablinks" onclick="openCity(event, 'Tokyo')">Tokyo</button> -->
-             </div>
+            @foreach( App\Models\Backend\GalleryCategory::all() as $value )
+                <button class="tablinks" onclick="openCity(event, 'Client')" id="defaultOpen"><i class="fas fa-long-arrow-alt-right"></i>{{ $value->name }}</button>
+            @endforeach
+               </div>
+
              <div id="Client" class="tabcontent">
                 <div class="row">
                    <div class="col-md-4 col-lg-4">

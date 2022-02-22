@@ -5,12 +5,14 @@ namespace App\Models\Backend;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Gallery extends Model
+class GalleryCategory extends Model
 {
     use HasFactory;
-    protected $table = 'galleries';
+
+    protected $table = 'galleriescat';
 
     protected $fillable = [
-        'title', 'desc'
+        'name'
     ];
+
 }
