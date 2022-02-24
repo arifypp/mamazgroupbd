@@ -11,7 +11,7 @@ use App\Models\Backend\GalleryCategory;
 use App\Models\Backend\GalleryTitle; 
 use Response;
 use Session;
-
+use File;
 class GalleryController extends Controller
 {
     /**
@@ -168,5 +168,26 @@ class GalleryController extends Controller
     public function destroy($id)
     {
         //
+        $delete = Gallery::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";
+
+            // if( File::exists('' . $delete->image) ) {
+            //     File::delete('' . $delete->image);
+            // }
+            
+        } else {
+            $success = false;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }

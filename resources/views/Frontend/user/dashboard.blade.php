@@ -376,6 +376,31 @@
                      </div>
                   </div>
                </div>
+
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-body text-center">
+        <img src="{{ asset('/admin/assets/images/cg.svg') }}" class="img-fluid" alt="Congrasulation" width="150"><br><br>
+        <h1>স্বাগতম!!!</h1>
+        <p>আপনি এখন মার্কেটিং এক্সিউটিভ পদে পদান্নিত হয়েছেন।</p>
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">ধন্যবাদ!!!</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
             </div>
          </div>
       </div>

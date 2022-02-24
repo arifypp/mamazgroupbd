@@ -18,7 +18,7 @@
                               $countReferenceid = App\Models\User::where('referrer_id', Auth::user()->id)->count();
                             @endphp
                             @if( $countReferenceid <= 7 )
-                            <small>Customer</small><br>
+                            <small>Marketing Associate</small><br>
                             @elseif( $countReferenceid <= 14 )
                             <small>Marketing Cordinator</small><br>
                             @elseif( $countReferenceid <= 21 )

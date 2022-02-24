@@ -120,35 +120,25 @@
           <div class="col-md-12 col-lg -12">
              <div class="tab">
             @foreach( App\Models\Backend\GalleryCategory::all() as $value )
-                <button class="tablinks" onclick="openCity(event, 'Client')" id="defaultOpen"><i class="fas fa-long-arrow-alt-right"></i>{{ $value->name }}</button>
+                <button class="tablinks" onclick="openCity(event, '{{ $value->id }}')" id="defaultOpen"><i class="fas fa-long-arrow-alt-right"></i>{{ $value->name }}</button>
             @endforeach
                </div>
 
-             <div id="Client" class="tabcontent">
-                <div class="row">
-                   <div class="col-md-4 col-lg-4">
-                      <img src="{{ asset('Frontend/assets/img/group.png') }} ">
-                   </div>
-                   <div class="col-md-4 col-lg-4">
-                      <img src="{{ asset('Frontend/assets/img/group.png') }} ">
-                   </div>
-                   <div class="col-md-4 col-lg-4">
-                      <img src="{{ asset('Frontend/assets/img/group.png') }} ">
-                   </div>
-                </div>
-             </div>
-             <div id="Certification" class="tabcontent">
-                <h3>আমাদের ক্লাইন্ট</h3>
-                <p>Paris is the capital of France.</p>
-             </div>
-             <div id="Land" class="tabcontent">
-                <h3>Tokyo</h3>
-                <p>Tokyo is the capital of Japan.</p>
-             </div>
-             <div id="Building" class="tabcontent">
-                <h3>Content Will Be Here</h3>
-                <p>Tokyo is the capital of Japan.</p>
-             </div>
+            @php 
+               $dataCat = App\Models\Backend\GalleryCategory::all();
+            @endphp
+            @foreach( $dataCat as $Catgoryid )
+               <div id="{{ $Catgoryid->id }}" class="tabcontent">
+                  <div class="row">
+                  @foreach( App\Models\Backend\Gallery::where('gallaryscatid', $Catgoryid->id)->get() as $value )
+                     <div class="col-md-4 col-lg-4">
+                        <img src="{{ asset(''.$value->image) }} " class="img-fluid">
+                     </div>
+                     @endforeach
+                  </div>
+               </div>
+               
+            @endforeach
           </div>
        </div>
     </div>

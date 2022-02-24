@@ -48,7 +48,7 @@
                         @foreach( App\Models\Backend\Gallery::orderBy('id','asc')->get() as $value )
                             <tr>
                                 <td>{{ $i++ }}</td>
-                                <td>{{ $value->gallaryscatid }}</td>
+                                <td>{{ $value->gallerycat->name }}</td>
                                 <td> <img src="{{ asset(''.$value->image) }}" alt="" class="img-fluid" width="40"> </td>
                                 <td>
                                 <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
@@ -176,7 +176,7 @@ $(function() {
                 
                 $.ajax({
                     type: 'POST',
-                    url:  "{{url('/admin/service/delete')}}/" + id,
+                    url:  "{{url('/admin/gallery/delete')}}/" + id,
                     data: {_token: CSRF_TOKEN},
                     dataType: 'JSON',
                     success: function (results) {
