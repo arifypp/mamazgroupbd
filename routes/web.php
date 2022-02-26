@@ -394,6 +394,20 @@ Route::middleware(['verified'])->group(function () {
         
             });
 
+            // Our details 
+            Route::group(['prefix' => 'our-setting'], function(){
+                Route::get('/manage', 'App\Http\Controllers\Backend\OurDetailsController@index')->name('oursetting.manage');
+                Route::post('/store', 'App\Http\Controllers\Backend\OurDetailsController@store')->name('oursetting.store');
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\OurDetailsController@update')->name('oursetting.update');
+                
+            });
+
+            // About content             
+            Route::group(['prefix' => 'about-setting'], function() {
+                Route::get('/manage','App\Http\Controllers\Frontend\AboutController@create')->name('about.create');
+                
+            });
+
             
         });
     });

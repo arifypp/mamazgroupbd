@@ -4,6 +4,12 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\Frontend\About;
+use App\Models\Frontend\AboutContent;
+use Illuminate\Support\Str;
+use Image;
+use File;
+use Session;
 
 class AboutController extends Controller
 {

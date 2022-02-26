@@ -73,29 +73,61 @@
  <section id="about" class="about">
     <div class="container">
        <div class="row">
+         @foreach( App\Models\Backend\OurDetails::all() as $value )
           <div class="col-lg-5 d-flex align-items-center justify-content-center about-img">
              <img src="{{ asset('Frontend/assets/img/Image1.png') }}" class="img-fluid" alt="">
           </div>
           <div class="col-lg-6 pt-5 pt-lg-0">
-             <h3> আমাদের <span> সম্পর্কে </span></h3>
-             <p>
-                মামাজ কোম্পানির প্রধান লক্ষ্য হচ্ছে, আপনাকে প্রতিষ্টিত করা এবং বাংলাদেশের সকল ধর্মের বেকার মানুষদের পাশে দারানো। মামাজের পূর্ণরূপ হচ্ছে, মানুষ মানুষের জন্য। আমাদের উদ্দেশ্য আপনাকে সাফল্য দিকে নিয়ে যাওয়া। তাছাড়াও মামাজ প্রতিষ্ঠানটির আরো অনেক চমৎকার সুযোগ রয়েছে, যেখান থেকে আপনি নিজের স্বপ্নকে বাস্তবায়ন করতে পারবেন।
-             </p>
+             <h3> {!! $value->title !!} </h3>
+             {!! $value->desc !!}
              <div class="row">
                 <div class="col-md-4">
-                   <h4>50K</h4>
+
+                   <h4>
+                   @php 
+                     $Alluser = App\Models\User::where('auth_role', 0)->count();
+                     $num = $Alluser;
+                     $units = ['', 'K', 'M', 'B', 'T'];
+                        for ($i = 0; $num >= 1000; $i++) {
+                              $num /= 1000;
+                        }
+                        echo round($num, 1) . $units[$i];
+                     @endphp
+                   </h4>
                    <p>ক্লাইন্ট</p>
+
                 </div>
                 <div class="col-md-4">
-                   <h4>20K</h4>
-                   <p>রিভিউস</p>
+                   <h4>
+                   @php 
+                     $Alluser = App\Models\User::all()->count();
+                     $num = $Alluser;
+                     $units = ['', 'K', 'M', 'B', 'T'];
+                        for ($i = 0; $num >= 1000; $i++) {
+                              $num /= 1000;
+                        }
+                        echo round($num, 1) . $units[$i];
+                     @endphp
+                   </h4>
+                   <p>ব্যবহারকারী</p>
                 </div>
                 <div class="col-md-4">
-                   <h4>20K</h4>
-                   <p>স্যাটিসফাইড</p>
+                   <h4>
+                   @php 
+                     $Alluser = App\Models\Frontend\Booking::all()->count();
+                     $num = $Alluser;
+                     $units = ['', 'K', 'M', 'B', 'T'];
+                        for ($i = 0; $num >= 1000; $i++) {
+                              $num /= 1000;
+                        }
+                        echo round($num, 1) . $units[$i];
+                     @endphp
+                   </h4>
+                   <p>বুকিং</p>
                 </div>
              </div>
           </div>
+         @endforeach
        </div>
     </div>
  </section>
