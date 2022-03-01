@@ -405,7 +405,12 @@ Route::middleware(['verified'])->group(function () {
             // About content             
             Route::group(['prefix' => 'about-setting'], function() {
                 Route::get('/manage','App\Http\Controllers\Frontend\AboutController@create')->name('about.create');
-                
+
+                Route::post('/storepagetitle', 'App\Http\Controllers\Frontend\AboutController@storepagetitle')->name('about.storepagetitle');
+
+                Route::post('/update/pagetitle/{id}', 'App\Http\Controllers\Frontend\AboutController@updatepagetitle')->name('about.updatepagetitle');
+
+                Route::post('/store', 'App\Http\Controllers\Frontend\AboutController@store')->name('about.store');
             });
 
             

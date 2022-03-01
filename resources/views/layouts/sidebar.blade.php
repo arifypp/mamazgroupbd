@@ -111,7 +111,7 @@
                             <span key="t-about setting">এবাউট পেইজ সেটিং</span>
                         </a>
                         <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="{{ route('gallery.manage') }}" key="t-about-manage">ম্যানেজ এবাউট</a>
+                            <li><a href="{{ route('about.create') }}" key="t-about-manage">ম্যানেজ এবাউট</a>
                                 </li>
                         </ul>
                     </li>

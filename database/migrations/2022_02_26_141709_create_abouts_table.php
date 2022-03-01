@@ -38,5 +38,6 @@ class CreateAboutsTable extends Migration
     public function down()
     {
         Schema::dropIfExists('abouts');
+        Schema::dropIfExists('aboutscontents');
     }
 }

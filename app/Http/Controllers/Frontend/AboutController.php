@@ -32,17 +32,112 @@ class AboutController extends Controller
     public function create()
     {
         //
+        $about = About::find(1);
+        return view('Backend.settings.aboutpage', compact('about'));
+    }
+    
+    // Store page title and description
+    public function storepagetitle(Request $request)
+    {
+        $request->validate([
+            'title'     =>  ['required'],
+            'desc'      =>  ['required', 'min:10'],
+        ],
+        $message = [
+            'title.required'    =>  'ঘরটি পূরণ করা আবশ্যক।',
+            'desc.required'     =>  'ঘরটি পূরণ করা আবশ্যক।',
+            'desc.min'          =>  'কমপক্ষে ১০টি শব্দের বেশি লিখুন।',
+        ]);
+
+        $pagetitle = new About;
+        $pagetitle->title   = $request->title;
+        $pagetitle->desc    = $request->desc;
+
+        $pagetitle->save();
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
+
+    }
+    
+
+    public function updatepagetitle(Request $request, $id)
+    {
+        $updateabout = About::find($id);
+
+        if( !is_null ($updateabout) )
+        {
+            $updateabout->title   = $request->title;
+            $updateabout->desc    = $request->desc;
+
+            $updateabout->save();
+            $notification = array(
+                'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+                'alert-type'    => 'success'
+            );
+
+            return back()->with($notification);
+        }
+        else{
+            $notification = array(
+                'message'       => 'লিংকের মধ্যে ত্রুটি রুয়েছে।!!!',
+                'alert-type'    => 'error'
+            );
+    
+            return back()->with($notification);
+        }
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'name'              =>  ['required'],
+            'description'       =>  ['required'],
+            'layout'            =>  ['required', 'not_in:0'],
+            'image'             =>  ['nullable', 'mimes:jpeg,png,jpg,gif,svg|max:2048']
+        ],
+        $message = [
+            'name.required' =>  'এই ঘরটি পূরণ করুন!',
+            'description.required'  =>  'এই ঘরটি পূরণ করুন!',
+            'layout.required'   =>  'এই ঘরটি পূরণ করুন!',
+            'layout.not_in'   =>  'এই ঘরটি পূরণ করুন!',
+            'image.null'    =>  'ছবি নির্বাচন করুন!' ,
+            'image.mimes'    =>  'সঠিক ফরম্যাটে ছবি আপলোড করুন করুন!' ,
+        ]);
+
+        $aboutcontent = new AboutContent;
+        $aboutcontent->title        =   $request->name;
+        $aboutcontent->desc         =   $request->description;
+        $aboutcontent->layout       =   $request->layout;
+
+        if(!is_null($request->image)){
+            $aboutimg = $request->file('image');
+            if( !is_null($aboutimg) ){
+                // Delete Existing Image
+                if( File::exists('assets/images/aboutpage' . $aboutcontent->image) ) {
+                    File::delete('assets/images/aboutpage' . $aboutcontent->image);
+                }
+                
+                $img = rand() . '.' . $aboutimg->getClientOriginalExtension();
+                $location = public_path('assets/images/aboutpage' . $img);
+
+                Image::make($aboutimg)->save($location);
+                $aboutcontent->image = $img;
+            }
+        }
+
+        $aboutcontent->save();
+
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
     }
 
     /**
