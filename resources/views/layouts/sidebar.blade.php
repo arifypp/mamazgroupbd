@@ -117,6 +117,18 @@
                     </li>
 
                 <li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-home"></i>
+                        <span key="t-contact setting">যোগাযোগ পেইজ সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('contact.manage') }}" key="t-contact-manage">ম্যানেজ যোগাযোগ পেইজ</a>
+                            </li>
+                    </ul>
+                </li>
+
+                <li>
                     <a href="{{ route('settings.manage') }}" class="waves-effect">
                         <i class="bx bx-aperture"></i>
                         <span key="t-settings">বেসিক সেটিং</span>

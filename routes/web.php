@@ -411,6 +411,20 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/update/pagetitle/{id}', 'App\Http\Controllers\Frontend\AboutController@updatepagetitle')->name('about.updatepagetitle');
 
                 Route::post('/store', 'App\Http\Controllers\Frontend\AboutController@store')->name('about.store');
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Frontend\AboutController@destroy')->name('about.destroy');
+            });
+
+            // contact page setting 
+            Route::group(['prefix' => 'contact'], function(){
+                Route::get('/manage','App\Http\Controllers\Frontend\ContactController@manage')->name('contact.manage');
+
+                Route::post('/store','App\Http\Controllers\Frontend\ContactController@store')->name('contact.store');
+
+                Route::post('/update/{id}','App\Http\Controllers\Frontend\ContactController@update')->name('contact.update');
+
+                Route::post('/delete/{id}','App\Http\Controllers\Frontend\ContactController@destroy')->name('contact.delete');
+
             });
 
             

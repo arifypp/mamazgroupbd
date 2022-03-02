@@ -35,7 +35,7 @@
               <input type="text" class="form-control" name="subject" id="subject" placeholder="আপনার বিষয়"  autocomplete="off">
             </div>
             <div class="form-group mt-3">
-              <textarea name="message" class="form-control" cols="30" rows="10" ></textarea>
+              <textarea name="message" class="form-control" cols="30" rows="10" style="height:250px;"></textarea>
             </div>
             <div class="my-3">
             
@@ -49,24 +49,25 @@
           <div class="info">
             <h3>দ্রুত যোগাযোগ</h3>
             <span>আপনার যদি কোনো প্রয়োজনীয় তথ্য জানার থাকে তাহলে আমাদেরকে সরাসরি ফোন করতে পারেন।</span>
+            @foreach( App\Models\Backend\ContactpageInfo::all() as $value )
             <div class="address">
               <i class="bi bi-geo-alt"></i>
               <h4>ঠিকানা:</h4>
-              <p>A108 Adam Street, New York, NY 535022</p>
+              <p>{{ $value->address }}</p>
             </div>
 
             <div class="email">
               <i class="bi bi-envelope"></i>
               <h4>ই-মেইল:</h4>
-              <p>info@example.com</p>
+              <p>{{ $value->email }}</p>
             </div>
 
             <div class="phone">
               <i class="bi bi-phone"></i>
               <h4>ফোন:</h4>
-              <p>+1 5589 55488 55s</p>
+              <p>{{ $value->phone }}</p>
             </div>
-
+            @endforeach
             <div class="social-links mt-1">
             <a href="#" class="twitter"><i class="bx bxl-twitter"></i></a>
             <a href="#" class="facebook"><i class="bx bxl-facebook"></i></a>

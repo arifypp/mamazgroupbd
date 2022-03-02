@@ -5,6 +5,14 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Frontend\ContactPage;
+use App\Models\Backend\ContactpageInfo;
+use Illuminate\Support\Str;
+use Illuminate\Support\Facades\Notification;
+use App\Models\User;
+use App\Notifications\ContactMessage;
+use Image;
+use File;
+use Session;
 
 class ContactController extends Controller
 {
@@ -17,6 +25,13 @@ class ContactController extends Controller
     {
         //
         return view('Frontend.pages.contact');
+    }
+
+    public function manage()
+    {
+        $contactinfo = ContactpageInfo::find(1);
+        return view('Backend.settings.contactpage', compact('contactinfo'));
+
     }
 
     /**
@@ -38,6 +53,32 @@ class ContactController extends Controller
     public function store(Request $request)
     {
         //
+        $request->validate([
+            'addressinfo'   =>  ['required'],
+            'email'     =>  ['required'],
+            'phone'     =>  ['required'],
+        ],
+        $message = [
+            'addressinfo.required'      =>  'ঠিকানা পুরণ করা আবশ্যক!',
+            'email.required'        =>  'ইমেইল পুরণ করা আবশ্যক!',
+            'phone.required'        =>  'মোবাইল পুরণ করা আবশ্যক!',
+        ]);
+
+        
+        $contatinfo = new ContactpageInfo;
+        $contatinfo->address       =   $request->addressinfo;
+        $contatinfo->email         =   $request->email;
+        $contatinfo->phone         =   $request->phone;
+
+        $contatinfo->save();
+
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
+        
     }
 
     /**
@@ -55,10 +96,10 @@ class ContactController extends Controller
             'message'       =>  ['required'],
         ],
         $message = [
-            'name.required'         =>  'This field is required',
-            'email.required'        =>  'This field is required',
-            'subject.required'      =>  'This field is required',
-            'message.required'      =>  'This field is required',
+            'name.required'         =>  'এই ঘরটি পুরণ করুন।',
+            'email.required'        =>  'এই ঘরটি পুরণ করুন।',
+            'subject.required'      =>  'এই ঘরটি পুরণ করুন।',
+            'message.required'      =>  'এই ঘরটি পুরণ করুন।',
         ]
     );
 
@@ -70,7 +111,11 @@ class ContactController extends Controller
     $contact->message       =   $request->message;
 
     $contact->save();
-    return response()->json(['success' =>true, 'message'=> 'আপনার ডাটা পাঠানো হয়েছে!!!']);
+
+    $admin = User::where('auth_role', 3)->get();
+    Notification::send($admin, new ContactMessage($contact));
+
+    return response()->json(['success' =>true, 'message'=> 'আপনার ম্যাসেজ পাঠানো হয়েছে!!!']);
 
     }
 
@@ -106,6 +151,19 @@ class ContactController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $contatinfo = ContactpageInfo::find($id);
+        $contatinfo->address       =   $request->addressinfo;
+        $contatinfo->email         =   $request->email;
+        $contatinfo->phone         =   $request->phone;
+
+        $contatinfo->save();
+
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
     }
 
     /**
@@ -117,5 +175,22 @@ class ContactController extends Controller
     public function destroy($id)
     {
         //
+        $delete = ContactPage::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";
+            
+        } else {
+            $success = false;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }
