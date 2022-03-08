@@ -87,7 +87,7 @@
               <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i> <a href="#">লগইন করুন</a></li>
               <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i> <a href="#">একাউন্ট তৈরি করুন</a></li>
               <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i> <a href="#">ড্যাশবোর্ড যান</a></li>
-              <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i> <a href="#">আমাদের সম্পর্কে</a></li>
+              <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i> <a href="#">এজেন্ট আবেদন</a></li>
               <li><i class="fa fa-long-arrow-right" aria-hidden="true"></i> <a href="#">আমাদের সার্ভিস</a></li>
             </ul>
           </div>

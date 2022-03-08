@@ -27,16 +27,7 @@
    </head>
    <body>
       <!-- Pre Loader ============================================ -->
-      <div class="loader" id="loader">
-         <span></span>
-         <span></span>
-         <span></span>
-         <span></span>
-         <span></span>
-         <span></span>
-         <span></span>
-         <span></span>
-     </div>
+   
       @include('Frontend.includes.header')
       {{-- @include('Frontend.includes.hero') --}}
       <!-- End Hero -->

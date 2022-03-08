@@ -32,11 +32,12 @@ evt.currentTarget.className += " active";
 document.getElementById("defaultOpen").click();
 </script>
 <script type="text/javascript">
-  jQuery(document).ready(function() {
-    jQuery(window).on('load',function(){
-      jQuery('.loader').fadeOut(500);
-    });
-  });
+  // jQuery(document).ready(function() {
+  //   jQuery(window).on('load',function(){
+  //     jQuery('.loader').fadeOut(500);
+  //     jQuery('.loader').hide();
+  //   });
+  // });
   
   $(window).on('load', function(){
     setTimeout(function() {

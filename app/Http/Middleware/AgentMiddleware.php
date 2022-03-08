@@ -8,7 +8,7 @@ use Auth;
 use Response;
 use Session;
 
-class UserMiddleware
+class AgentMiddleware
 {
     /**
      * Handle an incoming request.
@@ -20,7 +20,6 @@ class UserMiddleware
     public function handle(Request $request, Closure $next)
     {
         if (Auth::check()) {
-            // Status checking 
             if(Auth::user()->status == 1){
                 Auth::logout();
                 $notification = array(
@@ -29,27 +28,23 @@ class UserMiddleware
                 );
 				return redirect(url('login/user'))->with('AuthroleErrors', 'আপনার একাউন্ট ডিসেবল করা হয়েছে!')->with($notification);
             }
-
-            if (auth()->user()->auth_role == 0) {
+            
+            if (auth()->user()->auth_role == 1) {
                 return $next($request);
             }
             else{
                 Auth::logout();
+
                 $notification = array(
-                    'message' => 'দু:খিত সঠিক লিঙ্ক ব্যবহার করুন!',
+                    'message' => 'আপনার দেওয়া তথ্য সঠিক নয়!',
                     'alert-type' => 'error'
                 );
-                return redirect(url('login/user'))->with('AuthroleErrors', 'You can not access the user area!')->with($notification);
+                return redirect(url('login/agent'))->with('AuthroleErrors', 'You can not access the agent area!', $notification);
             }
         }
         else {
 			Auth::logout();
-            return redirect(url('login/user'))->with('AuthroleErrors', 'Something wrong!');
-
+			return redirect(url('login/agent'))->with('AuthroleErrors', 'Something wrong!');
 		}
-        
-        //if not user 
-        // return back()->with('error', 'You\'re not authenticate user');
-        
     }
 }

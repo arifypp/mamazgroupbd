@@ -7,6 +7,9 @@ use App\Providers\RouteServiceProvider;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
 use Auth;
+use Response;
+use Session;
+
 class LoginController extends Controller
 {
     /*
@@ -42,7 +45,11 @@ class LoginController extends Controller
     public function logout()
     {
         Auth::logout();
-        return redirect('/login/user');
+        $notification = array(
+            'message' => 'লগআউট সম্পন্ন হয়েছে!',
+            'alert-type' => 'error'
+        );
+        return redirect('/login/user')->with($notification);
     }
 
     // this is for admin 
@@ -51,7 +58,13 @@ class LoginController extends Controller
         return view('auth.login', ['url'=>'admin']);
     }
 
-    // login credentials 
+    // this is for agent
+    public function showUserAgentloginform()
+    {
+        return view('auth.login', ['url'=>'agent']);
+    }
+
+    // login admin credentials 
     public function Adminlogin(Request $request)
     {
         $this->validate($request, [
@@ -60,16 +73,47 @@ class LoginController extends Controller
         ]);
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
-            if(Auth::user()->is_super == 3)
+            if(Auth::user()->auth_role == 3)
             {
-                return redirect()->route('admin.dashboard');
+                $notification = array(
+                    'message' => 'স্বাগতম লগইন সম্পন্ন হয়েছে!',
+                    'alert-type' => 'success'
+                );
+                return redirect()->route('admin.dashboard')->with($notification);
             }
             
         }
         return back()->withInput($request->only('email', 'remember'))->withErrors(
             [
                 'email' => 'Email or Password doesn\'t matched in our database!',
-                'status_error'  => 'testing',
+            ]
+        );
+
+    }
+
+    // Agent Login
+    public function Agentlogin(Request $request)
+    {
+        $this->validate($request, [
+            'email'   => 'required',
+            'password' => 'required|min:8'
+        ]);
+
+        if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
+            if(Auth::user()->auth_role == 1)
+            {
+                $notification = array(
+                    'message' => 'স্বাগতম এজেন্ট ড্যাশবোর্ড!',
+                    'alert-type' => 'success'
+                );
+
+                return redirect()->route('agent.dashboard')->with($notification);
+            }
+            
+        }
+        return back()->withInput($request->only('email', 'remember'))->withErrors(
+            [
+                'email' => 'Email or Password doesn\'t matched in our database!',
             ]
         );
 
@@ -91,16 +135,19 @@ class LoginController extends Controller
     
 
         if (Auth::attempt(['email' => $request->email, 'password' => $request->password], true) || Auth::attempt(['phone' => request('phone'), 'password' => request('password')], true)) {
-            if(Auth::user()->is_super == 0)
+            if(Auth::user()->auth_role == 0)
             {
-                return redirect()->route('user.dashboard');
+                $notification = array(
+                    'message' => 'স্বাগতম লগইন সম্পন্ন হয়েছে!',
+                    'alert-type' => 'success'
+                );
+                return redirect()->route('user.dashboard')->with($notification);
             }
             
         }
         return back()->withInput($request->only('email', 'remember'))->withErrors(
             [
                 'email' => 'Email or Password doesn\'t matched in our database!',
-                'status_error'  => 'testing',
             ]
         );
     }

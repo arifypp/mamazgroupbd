@@ -11,6 +11,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 use App\Events\UserRegistrationEvent;
 use View;
+use Response;
+use Session;
+
 class RegisterController extends Controller
 {
     /*
@@ -111,9 +114,13 @@ class RegisterController extends Controller
             // 'avatar' => "/images/" . $avatarName,
 
         ]);
+        $notification = array(
+            'message' => 'রেজিস্ট্রেশন সম্পন্ন হয়েছে!',
+            'alert-type' => 'success'
+        );
 
        // return View::make('auth.thankyou')->with(compact('teacher'));
-       return view('auth.thankyou', ['user' => $refuser]);
+       return view('auth.thankyou', ['user' => $refuser])->with($notification);
     }
 
     /**
@@ -147,7 +154,11 @@ class RegisterController extends Controller
 
         // event(new UserRegistrationEvent($user));
         // return $user;
-        return view('auth.thankyou', ['user' => $user]);
+        $notification = array(
+            'message' => 'রেজিস্ট্রেশন সম্পন্ন হয়েছে!',
+            'alert-type' => 'success'
+        );
+        return view('auth.thankyou', ['user' => $user])->with($notification);
 
 
 
@@ -157,6 +168,7 @@ class RegisterController extends Controller
     public function ShowRegiterForm(){
         return view('auth.register', ['url'=>'user']);
     }
+    
 
     // User created  
     protected function createUser(Request $request){
@@ -185,8 +197,50 @@ class RegisterController extends Controller
 
         ]);
 
+        $notification = array(
+            'message' => 'রেজিস্ট্রেশন সম্পন্ন হয়েছে!',
+            'alert-type' => 'success'
+        );
+
        // return View::make('auth.thankyou')->with(compact('teacher'));
-       return view('auth.thankyou', ['user' => $teacher]);
+       return view('auth.thankyou', ['user' => $teacher])->with($notification);
+    }
+
+    public function ShowAgentRegiterForm()
+    {
+        return view('auth.register', ['url'=>'agent']);
+    }
+
+    public function createAgentUser(Request $request)
+    {
+        $this->validator($request->all())->validate();
+
+        if (request()->has('avatar')) {            
+            $avatar = request()->file('avatar');
+            $avatarName = time() . '.' . $avatar->getClientOriginalExtension();
+            $avatarPath = public_path('/images/');
+            $avatar->move($avatarPath, $avatarName);
+        }
+
+
+        $teacher = User::create([
+            'name' => $request['firstname']." ".$request['lastname'],
+            'phone' => $request['phone'],
+            'address' => $request['address']." ".$request['address2']." ".$request['city']." ".$request['postcode']." ".$request['country'],
+            'username' => $request['username'],
+            'email' => $request['email'],
+            'password' => Hash::make($request['password']),
+            'dob' => date('Y-m-d', strtotime($request['dob'])),
+            'auth_role' =>  1,
+            // 'avatar' => "/images/" . $avatarName,
+
+        ]);
+
+        $notification = array(
+            'message' => 'রেজিস্ট্রেশন সম্পন্ন হয়েছে!',
+            'alert-type' => 'success'
+        );
+        return Redirect()->route('Agentlogin')->with($notification);
     }
 
 }

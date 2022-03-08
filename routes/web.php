@@ -53,6 +53,14 @@ Route::post('/login/admin', 'App\Http\Controllers\Auth\LoginController@Adminlogi
 Route::get('/login/user', 'App\Http\Controllers\Auth\LoginController@showUserloginform')->name('userlogin');
 Route::post('/login/user', 'App\Http\Controllers\Auth\LoginController@Userlogin');
 
+// Agent Login
+Route::get('/login/agent', 'App\Http\Controllers\Auth\LoginController@showUserAgentloginform')->name('Agentlogin');
+Route::post('/login/agent', 'App\Http\Controllers\Auth\LoginController@Agentlogin');
+
+// Agent Registration
+Route::get('/register/agent', 'App\Http\Controllers\Auth\RegisterController@ShowAgentRegiterForm');
+Route::post('/register/agent', 'App\Http\Controllers\Auth\RegisterController@createAgentUser');
+
 // User Registration
 Route::get('/register/user', 'App\Http\Controllers\Auth\RegisterController@ShowRegiterForm');
 Route::post('/register/user', 'App\Http\Controllers\Auth\RegisterController@createUser');
@@ -154,6 +162,11 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/delete/{id}', 'App\Http\Controllers\Frontend\ApplicationController@destroy')->name('apply.destroy');
         
             });
+        });
+    });
+    Route::group(['prefix' => 'agent'], function(){
+        Route::group(['middleware' => 'agent'], function () {
+            Route::get('/dashboard','App\Http\Controllers\Backend\AgentDashboardController@index')->name('agent.dashboard');
         });
     });
     Route::group(['prefix' => 'admin'], function(){

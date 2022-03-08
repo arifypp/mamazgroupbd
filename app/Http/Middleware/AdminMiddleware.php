@@ -5,6 +5,9 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Request;
 use Auth;
+use Response;
+use Session;
+
 class AdminMiddleware
 {
     /**
@@ -22,7 +25,11 @@ class AdminMiddleware
             }
             else{
                 Auth::logout();
-                return redirect(url('login/admin'))->with('AuthroleErrors', 'You can not access the admin area!');
+                $notification = array(
+                    'message' => 'অনুগ্রহ করে সঠিক লিংক ব্যবহার করুন!',
+                    'alert-type' => 'error'
+                );
+                return redirect(url('login/admin'))->with('AuthroleErrors', 'You can not access the admin area!')->with($notification);
             }
         }
         else {
