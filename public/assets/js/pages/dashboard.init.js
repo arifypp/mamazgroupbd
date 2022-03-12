@@ -78,7 +78,7 @@ options = {
       }
     }
   },
-  colors: ["#556ee6"],
+  colors: ["#38a3a5"],
   fill: {
     type: "gradient",
     gradient: {
@@ -93,7 +93,7 @@ options = {
   stroke: {
     dashArray: 4
   },
-  series: [67],
+  series: [70],
   labels: ["Series A"]
 };
 (chart = new ApexCharts(document.querySelector("#radialBar-chart"), options)).render();

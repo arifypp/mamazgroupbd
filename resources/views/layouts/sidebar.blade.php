@@ -15,6 +15,17 @@
                         <span key="t-dashboards">ড্যাশবোর্ড</span>
                     </a>
                 </li>
+                <li class="menu-title" key="t-apps">এজেন্ট সেটিং</li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-wallet"></i>
+                        <span key="t-payment">পেমেন্ট রিকুয়েস্ট</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('payament.request') }}" key="t-payment-pending"> পেন্ডিং রিকুয়েস্ট </a></li>
+                        <li><a href="{{ route('payament.approve') }}" key="t-payment-approve"> এপ্রুভ রিকুয়েস্ট</a></li>
+                    </ul>
+                </li>
 
                 <li class="menu-title" key="t-apps">ফিচারড সেটিং</li>
                 <li>

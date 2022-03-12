@@ -4,8 +4,13 @@ namespace App\Models\Frontend;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use App\Models\User;
 class Addmoney extends Model
 {
     use HasFactory;
+
+    public function user()
+    {
+        return $this->belongsTo(User::class, 'auth_id');
+    }
 }

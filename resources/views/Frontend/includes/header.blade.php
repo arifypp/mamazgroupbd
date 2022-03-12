@@ -19,17 +19,16 @@
          
            <li><a class="nav-link scrollto @if( Route::currentRouteNamed('services')) active @endif" href="{{ route('services') }}">সার্ভিসেস</a> </li>
           <li ><a class="nav-link scrollto @if( Route::currentRouteNamed('contact')) active @endif" href="{{ route('contact') }}">যোগাযোগ</a></li>
-          @auth
-          @php 
-              $user = auth()->user()->id; 
-              $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
-          @endphp
-          <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড <span> &nbsp;| @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif</span></a>
-        </li>
-        @endauth
-        @guest
+            @if( Auth::check() && Auth::user()->role == 3) 
+            @php 
+                $user = auth()->user()->id; 
+                $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
+            @endphp
+            <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড <span> &nbsp;| @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif</span></a>
+          </li>
+          @else
           <li><a class="getstarted scrollto" href="{{ route('userlogin') }}">সাইনইন করুন </a></li>
-        @endguest 
+          @endif
         </ul>
         <i class="bi bi-list mobile-nav-toggle"></i>
       </nav><!-- .navbar -->

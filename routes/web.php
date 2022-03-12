@@ -167,6 +167,11 @@ Route::middleware(['verified'])->group(function () {
     Route::group(['prefix' => 'agent'], function(){
         Route::group(['middleware' => 'agent'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\AgentDashboardController@index')->name('agent.dashboard');
+
+            // Add money
+            Route::get('/add-money', 'App\Http\Controllers\Backend\Agent\AddMoneyController@index')->name('agent.addmoney');
+            Route::post('/add-money/store', 'App\Http\Controllers\Backend\Agent\AddMoneyController@store')->name('agent.store');
+
         });
     });
     Route::group(['prefix' => 'admin'], function(){
@@ -188,6 +193,25 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/update/{id}', 'App\Http\Controllers\Backend\LandcatController@update')->name('landcat.update');
         
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\LandcatController@destroy')->name('landcat.destroy');
+        
+            });
+
+            // Agent Payment Route For CRUD
+            Route::group(['prefix' => 'payment'], function(){
+
+                Route::get('/request', 'App\Http\Controllers\Backend\PaymentController@index')->name('payament.request');
+        
+                Route::get('/approve', 'App\Http\Controllers\Backend\PaymentController@approve')->name('payament.approve');
+
+                Route::get('/show/{id}','App\Http\Controllers\Backend\PaymentController@show')->name('payament.show');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\PaymentController@store')->name('payament.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\PaymentController@edit')->name('payament.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\PaymentController@update')->name('payament.update');
+        
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\PaymentController@destroy')->name('payament.destroy');
         
             });
 

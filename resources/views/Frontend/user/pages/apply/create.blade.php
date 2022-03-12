@@ -8,9 +8,9 @@
       <div class="main-body">
          <div class="mobiledevice">
             <div class="row">
-               <div class="col-md-2">
+               <div class="col-md-3">
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <div class="topbar1">
                      <h5>আবেদন করুন</h5>
                   </div>
@@ -19,7 +19,7 @@
          </div>
       </div>
       @include('Frontend/user/bookingleft')
-      <div class="col-md-10"style="background-color: #F8FAFD; padding-top: 0px;">
+      <div class="col-md-9"style="background-color: #F8FAFD; padding-top: 0px;">
          <form action="{{ route('apply.store') }}" method="post" enctype="multipart/form-data" id="submitform">
          @csrf
          <div class="row">
@@ -38,7 +38,7 @@
                   <div class="card-body">
                      <div class="form-group">
                         <label for="name">আপনার নাম লিখুন</label>
-                        <input type="text" name="name" id="name" class="form-control" placeholder="নাম লিখুন" value="{{ old('name') }}">
+                        <input type="text" name="name" id="name" class="form-control" placeholder="নাম লিখুন" value="{{ old('name', optional(Auth::user())->name) }}">
                         <span class="text-danger">@error('name'){{ $message }} @enderror</span>
                      </div>
                      <div class="form-group">
@@ -170,7 +170,7 @@
                <div class="card p-2 border-0">
                   <div class="card-body">
                     <div class="form-group text-right mr-auto d-block">
-                        <button type="submit" class="btn btn-primary float-right" style="float:right;">আবেদন করুন</button>
+                        <button type="submit" id="submit" class="btn btn-primary float-right" style="float:right;">আবেদন করুন</button>
                     </div>                            
                   </div>
                </div>
@@ -180,4 +180,24 @@
       </div>
    </div>
 </section>
+@endsection
+
+@section('script')
+<script>
+   // Notification 
+   @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+
+   $(document).ready(function() {
+        $(document).on('submit', 'form', function() {
+            $('button').attr('disabled', 'disabled');
+            $("#submit").attr("disabled", true);
+            $("#submit").text("প্রসেসিং ...");
+            $('#submit').append('<div class="spinner-border spinner-border-sm"></div>')
+        });
+    });
+</script>
 @endsection
