@@ -168,9 +168,13 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'agent'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\AgentDashboardController@index')->name('agent.dashboard');
 
+            Route::get('/notifyseen/{id}','App\Http\Controllers\Backend\AgentDashboardController@notify')->name('agent.notify');
+
             // Add money
             Route::get('/add-money', 'App\Http\Controllers\Backend\Agent\AddMoneyController@index')->name('agent.addmoney');
             Route::post('/add-money/store', 'App\Http\Controllers\Backend\Agent\AddMoneyController@store')->name('agent.store');
+            Route::get('/money-read/{id}', 'App\Http\Controllers\Backend\Agent\AddMoneyController@readnotify')->name('agent.readnotify');
+
 
         });
     });
@@ -178,6 +182,8 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'admin'], function () {
 
             Route::get('/dashboard','App\Http\Controllers\Backend\DashboardController@index')->name('admin.dashboard');
+
+            Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
 
             // Landcat Route For CRUD
             Route::group(['prefix' => 'landcat'], function(){

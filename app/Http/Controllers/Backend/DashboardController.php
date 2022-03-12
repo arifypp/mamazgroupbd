@@ -4,6 +4,14 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\DatabaseNotification;
+use App\Models\Frontend\Addmoney;
+use App\Notifications\AddmoneyApproveNotification;
+use App\Models\User;
+use CoreProc\WalletPlus\Models\WalletType;
+use Auth;
+use Session;
 
 class DashboardController extends Controller
 {
@@ -21,6 +29,17 @@ class DashboardController extends Controller
         //
         return view('Backend.dashboard');
 
+    }
+
+    // Notification seen 
+    public function notify(Request $request, $id)
+    {
+        $notification = auth()->user()->notifications()->find($id);
+
+        if($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['success' =>true, 'message'=> 'mark as read!!!']);
     }
 
     /**

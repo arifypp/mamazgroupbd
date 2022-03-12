@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Backend;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\DatabaseNotification;
 use App\Models\Frontend\Addmoney;
 use App\Notifications\AddmoneyApproveNotification;
 use App\Models\User;
@@ -24,6 +25,13 @@ class PaymentController extends Controller
         //
         $money = Addmoney::orderBy('id', 'desc')->where('status', 0)->get();
         return view('Backend.paymentrequest.manage', compact('money'));
+    }
+
+    public function approve()
+    {
+        //
+        $money = Addmoney::orderBy('id', 'desc')->where('status', 1)->get();
+        return view('Backend.paymentrequest.approved', compact('money'));
     }
 
     /**
@@ -103,8 +111,8 @@ class PaymentController extends Controller
             $CashMoney->balance;
         }
 
-        $user = User::where('auth_role', $moneyUpdate->auth_id)->get();
-        Notification::send($user, new AddmoneyApproveNotification($moneyUpdate));
+        $userRequest = User::where('id', $moneyUpdate->auth_id)->get();
+        Notification::send($userRequest, new AddmoneyApproveNotification($moneyUpdate));
 
         $notification = array(
             'message'       => 'রিকুয়েস্ট এ্যাপ্রুভ হয়েছে এবং পেমেন্ট পাঠানো সম্পন্ন হয়েছে!!!',

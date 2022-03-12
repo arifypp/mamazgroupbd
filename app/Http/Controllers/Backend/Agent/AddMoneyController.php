@@ -81,6 +81,17 @@ class AddMoneyController extends Controller
 
     }
 
+    // Notification read 
+    public function readnotify(Request $request, $id)
+    {
+        $notification = auth()->user()->notifications()->find($id);
+
+        if($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['success' =>true, 'message'=> 'mark as read!!!']);
+    }
+
     /**
      * Display the specified resource.
      *

@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') পেমেন্ট রিকুয়েস্ট @endsection
+@section('title') পেমেন্ট এ্যাপ্রুভ @endsection
 
 @section('css')
     <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -10,8 +10,8 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') পেমেন্ট রিকুয়েস্ট @endslot
-        @slot('title') পেমেন্ট রিকুয়েস্ট @endslot
+        @slot('li_1') পেমেন্ট এ্যাপ্রুভ @endslot
+        @slot('title') পেমেন্ট এ্যাপ্রুভ @endslot
     @endcomponent
 
     <!-- Starting content -->
@@ -41,7 +41,7 @@
                             <td>{{ $i }}</td>
                             <td>{{ $value->user->name }}</td>
                             <td>{{ $value->user->username }}</td>
-                            <td>৳{{ $value->amount }}</td>
+                            <td>৳ {{ number_format( $value->amount , 0 , '.' , ',' ) }} BDT</td>
                             <td>
                                 @if( $value->bookingmoneymehtod == 'bkash' )
                                 <span class="text-info">Bkash</span>
@@ -124,11 +124,7 @@
                                         </div>
                                         <div class="modal-footer">
                                             <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                                            <form action="{{ route('payament.update', $value->id) }}" method="post">
-                                                @csrf
-                                                <input type="hidden" name="auth_user" value="{{ $value->user->id }}">
-                                            <button type="submit" class="btn btn-primary" id="submit">Accept Request</button>
-                                            </form>
+                                            <button type="button" class="btn btn-primary disabled" id="submit">Approved</button>
                                         </div>
                                         </div>
                                     </div>
@@ -152,15 +148,6 @@
 @endsection
 @section('script')
 <script type="text/javascript">
-$(document).ready(function() {
-    $(document).on('submit', 'form', function() {
-        $('button').attr('disabled', 'disabled');
-        $("#submit").attr("disabled", true);
-        $("#submit").text("Processing ...");
-        $('#submit').append('<div class="spinner-border spinner-border-sm"></div>')
-    });
-});
-
     $(document).ready( function () {
         $('#land_table').DataTable();
     } );

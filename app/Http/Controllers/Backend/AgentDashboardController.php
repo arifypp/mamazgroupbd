@@ -4,6 +4,11 @@ namespace App\Http\Controllers\Backend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Notification;
+use Illuminate\Notifications\DatabaseNotification;
+use App\Models\User;
+use Auth;
+use Session;
 
 class AgentDashboardController extends Controller
 {
@@ -16,6 +21,16 @@ class AgentDashboardController extends Controller
     {
         //
         return view('Backend.Agent.dashboard');
+    }
+
+    public function notify(Request $request, $id)
+    {
+        $notification = auth()->user()->notifications()->find($id);
+
+        if($notification) {
+            $notification->markAsRead();
+        }
+        return response()->json(['success' =>true, 'message'=> 'mark as read!!!']);
     }
 
     /**

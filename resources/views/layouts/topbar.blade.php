@@ -144,7 +144,7 @@
                         </div>
                     </a>
                     @elseif(Str::snake(class_basename($notification->type)) == 'addmoney_notification')
-                    <a href="{{ route('bbooking.show', $notification->data['id']) }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('bbooking.notifyread', $notification->id) }}">
+                    <a href="{{ route('payament.request') }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('notify.seend', $notification->id) }}">
                         <div class="d-flex">
                             <div class="avatar-xs me-3">
                                 <span class="avatar-title bg-primary rounded-circle font-size-16">
@@ -263,41 +263,38 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
 </div><!-- /.modal -->
 
 
-@section('script')
+@section('script-bottom')
 <script>
       $(document).ready(function(){
-      $(document).on("click", '#MarkasRead', function(e){
-        e.preventDefault();
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-              }
-          });
+            $('a[data-id]').click(function () {
 
-          var token = '{{ Session::token() }}';
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                var token = '{{ Session::token() }}';
+            
+                var notif_id   = $(this).attr('data-id');
+                var href        = $(this).attr('href');
+                var targetHref = $(this).data('data-attr');
 
-          let href = $(this).attr('data-attr');
-          let post_id = $(this).attr('data-id');
+                $.ajax({
+                    type:'GET',
+                    url:'/admin/notifyseen/'+notif_id,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data : {id:notif_id, _token: token},
+                    success:function(data){
+                        if(data.success){
+                            console.log('Success for read notification');
+                            window.location= href;
+                        }
+                    }
+                });
 
-        //   console.log(post_id); 
-          
-          $.ajax({    
-              type: 'GET',
-              url: href,
-              data : {id:post_id, _token: token},
-              success:function(res){
-                if(res.success){
-                        console.log('Success for read notification');
-                  }
-              },
-              error:function (res){
-                    console.log("error");
-                }
-          });
-
-          return false;
-      })
-    });
+                return false;
+            });
+        });
 </script>
 
 @endsection

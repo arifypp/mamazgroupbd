@@ -143,6 +143,24 @@
                             </div>
                         </div>
                     </a>
+                    @elseif(Str::snake(class_basename($notification->type)) == 'addmoney_approve_notification')
+                    <a href="{{ route('agent.addmoney') }}" class="text-reset notification-item" id="NotificationReader" data-id="{{ $notification->id }}" data-attr="{{ route('agent.readnotify', $notification->id) }}">
+                        <div class="d-flex">
+                            <div class="avatar-xs me-3">
+                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                    <i class="mdi mdi-check"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    ৳ {{ $notification->data['amount'] }} টাকার পেমেন্ট রিকুয়েস্ট এ্যাপ্রুভ করুন।
+                                </h6>
+                                <div class="font-size-12 text-muted">
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                     @endif
                 @empty
                 <a href="javascript:void(0)" class="text-reset notification-item">
@@ -244,41 +262,37 @@ aria-labelledby="myLargeModalLabel" aria-hidden="true">
 </div><!-- /.modal -->
 
 
-@section('script')
+@section('script-bottom')
 <script>
-      $(document).ready(function(){
-      $(document).on("click", '#MarkasRead', function(e){
-        e.preventDefault();
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-              }
-          });
+        $(document).ready(function(){
+            $('a[data-id]').click(function () {
 
-          var token = '{{ Session::token() }}';
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                    }
+                });
+                var token = '{{ Session::token() }}';
+            
+                var notif_id   = $(this).attr('data-id');
+                var href        = $(this).attr('href');
 
-          let href = $(this).attr('data-attr');
-          let post_id = $(this).attr('data-id');
+                $.ajax({
+                    type:'GET',
+                    url:'/agent/notifyseen/'+notif_id,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data : {id:notif_id, _token: token},
+                    success:function(data){
+                        if(data.success){
+                            console.log('Success for read notification');
+                            window.location= href;
+                        }
+                    }
+                });
 
-        //   console.log(post_id); 
-          
-          $.ajax({    
-              type: 'GET',
-              url: href,
-              data : {id:post_id, _token: token},
-              success:function(res){
-                if(res.success){
-                        console.log('Success for read notification');
-                  }
-              },
-              error:function (res){
-                    console.log("error");
-                }
-          });
-
-          return false;
-      })
-    });
+                return false;
+            });
+        });
 </script>
 
 @endsection

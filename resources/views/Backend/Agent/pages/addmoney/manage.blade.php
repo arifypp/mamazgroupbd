@@ -107,6 +107,9 @@
     @endif
 </script>
 <script type="text/javascript">
+$(document).ready( function () {
+    $('.table').DataTable();
+} );
 $(document).ready(function() {
     $("#amount").change(function(){
         var mamazpoisha = $("#amount").val() / 100;
