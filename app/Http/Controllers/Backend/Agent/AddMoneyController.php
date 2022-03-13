@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\AddmoneyNotification;
 use App\Models\Frontend\Addmoney;
+use CoreProc\WalletPlus\Models\WalletType;
 use App\Models\User;
 use Auth;
 use Session;
@@ -23,6 +24,81 @@ class AddMoneyController extends Controller
         //
         $money = Addmoney::orderBy('id', 'desc')->where('auth_id', Auth::user()->id)->get();
         return view('Backend.Agent.pages.addmoney.manage', compact('money'));
+
+    }
+
+    // User money request 
+    public function userrequest()
+    {
+        $money = Addmoney::orderBy('id', 'desc')->get();
+        return view('Backend.Agent.pages.addmoney.request', compact('money'));
+    }
+
+    // User request accept 
+    public function userrequestaccept(Request $request, $id)
+    {
+        $moneaccept = Addmoney::find($id);
+        if( $moneaccept->status == 1)
+        {
+            $notification = array(
+                'message'       => 'Already Approved!!!',
+                'alert-type'    => 'error'
+            );
+            return back()->with($notification);
+        }
+
+        // Payment accept and decrease amount from current balance 
+
+        $user = User::find( $request->auth_user );
+
+        // Check if nice balance
+        $agentBalance = auth()->user()->wallet('Mamaz Money');
+        
+        $findwallelt = WalletType::where("name", "=", "Mamaz Money")->get();
+        $walletidrequest = $findwallelt['0']->id;
+
+        if( $agentBalance->balance <=  $moneaccept->amount/100)
+        {
+            $notification = array(
+                'message'       => 'আপনার ওয়ালেটে পর্যাপ্ত টাকা নেই!!!',
+                'alert-type'    => 'warning'
+            );
+            return back()->with($notification);
+        }
+
+
+        if( empty( $user->wallets()->wallet_type_id )  )
+        {
+            $user->wallets()->create(['wallet_type_id' => $walletidrequest]);
+            // Add payment
+            $admoneydeposit = $user->wallet('Mamaz Money');
+            $admoneydeposit->incrementBalance($moneaccept->amount/100);
+            $admoneydeposit->balance;
+
+            $AgentDcrease = auth()->user()->wallet('Mamaz Money');
+            $AgentDcrease->decrementBalance($moneaccept->amount/100);
+            $AgentDcrease->balance;
+        }
+        else
+        {
+            $CashMoney = $user->wallet('Mamaz Money');
+            $CashMoney->incrementBalance($moneaccept->amount/100);
+            $CashMoney->balance;
+
+            // Decrease money 
+            $AgentDcrease = auth()->user()->wallet('Mamaz Money');
+            $AgentDcrease->decrementBalance($moneaccept->amount/100);
+            $AgentDcrease->balance;
+        }
+
+        $moneaccept->status =   1;
+        $moneaccept->save();
+
+        $notification = array(
+            'message'       => 'রিকুয়েস্ট এ্যাপ্রুভ হয়েছে এবং পেমেন্ট পাঠানো সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+        return back()->with($notification);
 
     }
 

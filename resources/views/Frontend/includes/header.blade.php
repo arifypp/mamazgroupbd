@@ -19,7 +19,7 @@
          
            <li><a class="nav-link scrollto @if( Route::currentRouteNamed('services')) active @endif" href="{{ route('services') }}">সার্ভিসেস</a> </li>
           <li ><a class="nav-link scrollto @if( Route::currentRouteNamed('contact')) active @endif" href="{{ route('contact') }}">যোগাযোগ</a></li>
-            @if( Auth::check() && Auth::user()->role == 3) 
+            @if( Auth::check() && Auth::user()->role == 0) 
             @php 
                 $user = auth()->user()->id; 
                 $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();

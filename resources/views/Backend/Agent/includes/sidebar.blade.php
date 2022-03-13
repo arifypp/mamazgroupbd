@@ -23,7 +23,8 @@
                         <span key="t-booking">টাকা যুক্ত করুন</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('agent.addmoney') }}" key="t-landcat-pending"> অ্যাড মানি </a></li>
+                        <li><a href="{{ route('agent.addmoney') }}" key="t-cash-sending"> অ্যাড মানি </a></li>
+                        <li><a href="{{ route('agent.userrequest') }}" key="t-cash-request"> মানি রিকুয়েস্ট </a></li>
                     </ul>
                 </li>
                 <li>

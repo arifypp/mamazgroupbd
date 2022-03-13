@@ -7,6 +7,7 @@ use App\Models\Frontend\Addmoney;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Notifications\AddmoneyNotification;
 use CoreProc\WalletPlus\Models\WalletType;
 use Response;
 use DB;
@@ -78,28 +79,14 @@ class AddmoneyController extends Controller
         $moneyadd->rockettransiction        =   $request->rockettransiction;
         $moneyadd->rocketnumber             =   $request->rocketnumber;
         
-        // $moneyadd->save();
+        $moneyadd->save();
         
-        $user = User::find( $request->auth_id );
-
-        // $wallet = $user->wallets()->create();
-
-        // $wallet->incrementBalance($request->amount);
-
-        $user->wallets()->create(['wallet_type_id' => 9]);
-
-        $admoneydeposit = $user->wallet('Cash Money');
-        $admoneydeposit->incrementBalance($request->amount);
-        $admoneydeposit->balance; 
-
-        // $walletType = WalletType::create([
-        //     'name' => 'Cash Money',
-        //     'decimals' => 0, // Set how many decimal points your wallet accepts here. Defaults to 0.
-        // ]);
-
+        // Notitification here 
+        // $authenticate = User::where('auth_role', 3)->get();
+        // Notification::send($authenticate, new AddmoneyNotification($moneyadd));
 
         $notification = array(
-            'message'       => 'পেমেন্ট পাঠানো সম্পন্ন হয়েছে!!!',
+            'message'       => 'রিকুয়েস্ট পাঠানো সম্পন্ন হয়েছে!!!',
             'alert-type'    => 'success'
         );
         return back()->with($notification);

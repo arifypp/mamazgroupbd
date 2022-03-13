@@ -8,9 +8,9 @@
       <div class="main-body">
          <div class="mobiledevice">
             <div class="row">
-               <div class="col-md-2">
+               <div class="col-md-3">
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <div class="topbar1">
                      <h5>টাকা অ্যাড করুন</h5>
                   </div>
@@ -19,7 +19,7 @@
          </div>
       </div>
       @include('Frontend/user/bookingleft')
-      <div class="col-md-10"style="background-color: #F8FAFD; padding-top: 0px;">
+      <div class="col-md-9"style="background-color: #F8FAFD; padding-top: 0px;">
          <form action="{{ route('addmoney.store') }}" method="post" enctype="multipart/form-data" id="submitform">
          @csrf
          <input type="hidden" name="auth_id" value="{{ auth()->user()->id }}">
@@ -34,7 +34,7 @@
                       <!-- Amount -->
                     <div class="form-group">
                         <label for="amount">এমাউন্ট</label>
-                        <input type="text" name="amount" class="form-control" placeholder="এমাউন্ট বসান">
+                        <input type="text" name="amount" class="form-control" id="amount" placeholder="এমাউন্ট বসান" value="{{ old('amount') }}">
                         <span class="text-danger">@error('amount'){{ $message }} @enderror</span>
                     </div>
                      <div class="form-group">
@@ -82,7 +82,9 @@
                         <span class="text-danger">@error('rocketnumber'){{ $message }} @enderror</span>
                     </div>
                      <div class="form-group text-right col-md-12">
-                         <button type="submit" class="btn btn-primary">সাবমিট করুন</button>
+                     <div id="resultmpoisha"></div><br>
+
+                         <button type="submit" id="submit" class="btn btn-primary">সাবমিট করুন</button>
                      </div>
                   </div>
                </div>
@@ -96,6 +98,28 @@
 
 @section('script')
 <script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
+<script>
+    $(document).ready(function() {
+        $(document).on('submit', 'form', function() {
+            $('button').attr('disabled', 'disabled');
+            $("#submit").attr("disabled", true);
+            $("#submit").text("প্রসেসিং ...");
+            $('#submit').append('<div class="spinner-border spinner-border-sm"></div>')
+        });
+    });
+    $(document).ready(function() {
+        $("#amount").change(function(){
+            var mamazpoisha = $("#amount").val() / 100;
+            $("#resultmpoisha").html("<center><h2 class='text-danger'>"+"৳"+ mamazpoisha+" পয়সা"+"</h2></center>"+"<div class='alert alert-danger'>"+"উপরের টাকাটি আপনার মামাজ পয়সাতে যুক্ত হবে। রাজি থাকলে সাবমিট করুন।"+"</div>");
+
+        });
+    });
     // Booking money
     $(function () {
         $("#bookingmoneymehtod").change(function () {

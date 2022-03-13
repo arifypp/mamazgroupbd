@@ -164,6 +164,7 @@ Route::middleware(['verified'])->group(function () {
             });
         });
     });
+    // Agent Web Routes 
     Route::group(['prefix' => 'agent'], function(){
         Route::group(['middleware' => 'agent'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\AgentDashboardController@index')->name('agent.dashboard');
@@ -173,7 +174,9 @@ Route::middleware(['verified'])->group(function () {
             // Add money
             Route::get('/add-money', 'App\Http\Controllers\Backend\Agent\AddMoneyController@index')->name('agent.addmoney');
             Route::post('/add-money/store', 'App\Http\Controllers\Backend\Agent\AddMoneyController@store')->name('agent.store');
-            Route::get('/money-read/{id}', 'App\Http\Controllers\Backend\Agent\AddMoneyController@readnotify')->name('agent.readnotify');
+            Route::get('/user-request', 'App\Http\Controllers\Backend\Agent\AddMoneyController@userrequest')->name('agent.userrequest');
+            Route::post('/user-request/accept/{id}', 'App\Http\Controllers\Backend\Agent\AddMoneyController@userrequestaccept')->name('agent.userrequestaccept');
+
 
 
         });
