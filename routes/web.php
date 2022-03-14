@@ -135,6 +135,8 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/create', 'App\Http\Controllers\Frontend\AddmoneyController@create')->name('addmoney.create');
         
                 Route::post('/store', 'App\Http\Controllers\Frontend\AddmoneyController@store')->name('addmoney.store');
+
+                Route::get('/find/agent', 'App\Http\Controllers\Frontend\AddmoneyController@findagent')->name('addmoney.findagent');
         
                 Route::get('/edit/{id}', 'App\Http\Controllers\Frontend\AddmoneyController@edit')->name('addmoney.edit');
         
@@ -176,6 +178,7 @@ Route::middleware(['verified'])->group(function () {
             Route::post('/add-money/store', 'App\Http\Controllers\Backend\Agent\AddMoneyController@store')->name('agent.store');
             Route::get('/user-request', 'App\Http\Controllers\Backend\Agent\AddMoneyController@userrequest')->name('agent.userrequest');
             Route::post('/user-request/accept/{id}', 'App\Http\Controllers\Backend\Agent\AddMoneyController@userrequestaccept')->name('agent.userrequestaccept');
+            Route::post('/request/delete/{id}', 'App\Http\Controllers\Backend\Agent\AddMoneyController@destroy')->name('agent.destroy');
 
 
 

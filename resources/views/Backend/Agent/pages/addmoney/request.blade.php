@@ -34,7 +34,8 @@
                                 $i = 1;
                             @endphp
                             @foreach( $money as $value )
-                            @if( $value->user->referrer_id == Auth::user()->id )
+                            <!-- ( $value->user->referrer_id == Auth::user()->id || $value->user->agent_id == Auth::user()->id ) -->
+                            @if( $value->agent_id == Auth::user()->id )
                             <tr>
                                 <td>{{ $i++ }}</td>
                                 <td>{{ $value->user->name }}</td>
@@ -134,6 +135,15 @@
         </div>
     </div>
 
+    <div class="modal fade" id="transferporcess" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-body text-center">
+                    <img src="{{ asset('/assets/images/payment_process.gif') }}" class="img-fluid" alt="Congrasulation"><br><br>
+                </div>
+            </div>
+        </div>
+    </div>
 @endsection
 @section('script')
 <script>
@@ -151,6 +161,7 @@ $(document).ready( function () {
 $(document).ready(function() {
     $(document).on('submit', 'form', function() {
         $('button').attr('disabled', 'disabled');
+        $('#transferporcess').modal('show');
         $("#submit").attr("disabled", true);
         $("#submit").text("প্রসেসিং ...");
         $('#submit').append('<div class="spinner-border spinner-border-sm"></div>')
@@ -179,7 +190,7 @@ function deleteConfirmation(id) {
                 
                 $.ajax({
                     type: 'POST',
-                    url:  "{{url('/admin/payment/delete')}}/" + id,
+                    url:  "{{url('/agent/request/delete')}}/" + id,
                     data: {_token: CSRF_TOKEN},
                     dataType: 'JSON',
                     success: function (results) {

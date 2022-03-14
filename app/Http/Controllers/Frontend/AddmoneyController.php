@@ -7,7 +7,7 @@ use App\Models\Frontend\Addmoney;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use App\Models\User;
-use App\Notifications\AddmoneyNotification;
+use App\Notifications\Agent\MoneyRequestNotification;
 use CoreProc\WalletPlus\Models\WalletType;
 use Response;
 use DB;
@@ -35,6 +35,14 @@ class AddmoneyController extends Controller
         return view('Frontend.user.pages.addmoney.create');
     }
 
+    // find agent user
+    public function findagent(Request $request)
+    {
+        $data = User::orderby('name','asc')->select('id','name', 'username', 'auth_role')->where('name', 'like', '%' .$request->agentusers . '%')->orWhere('username', 'like', '%' .$request->agentusers . '%')->where('auth_role', 1)->limit(5)->get();
+        
+        return ['results' => $data];
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -46,6 +54,7 @@ class AddmoneyController extends Controller
         //
         $request->validate([
             'amount'                =>  ['required','min:3'],
+            'agent_id'              =>  ['required', 'not_in:0'],
             'bookingmoneymehtod'    =>  ['required', 'not_in:0'],
             'bkashtransiction'      =>  ['required_if:bookingmoneymehtod,bkash'],
             'bkashnumber'           =>  ['required_if:bookingmoneymehtod,bkash'],
@@ -55,9 +64,10 @@ class AddmoneyController extends Controller
             'rocketnumber'          =>  ['required_if:bookingmoneymehtod,rocket'],
         ],
         $message = [
-            'amount.required'               =>  'দয়া করে টাকার পরিমাণ বসান।',
+            'amount.required'               =>  'অনুগ্রহ করে টাকার পরিমাণ বসান।',
             'bookingmoneymehtod.required'   =>  'টাকার মাধ্যম পছন্দ করুন।',
             'bookingmoneymehtod.not_in'     =>  'টাকার মাধ্যম পছন্দ করুন।',
+            'agent_id.not_in'               =>  'এজেন্ট নির্বাচন করুন।',
             'bkashtransiction.required_if'  =>  'তথ্যটি পূরণ করা আবশ্যক।',
             'bkashnumber.required_if'       =>  'তথ্যটি পূরণ করা আবশ্যক।',
             'nagadtransiction.required_if'  =>  'তথ্যটি পূরণ করা আবশ্যক।',
@@ -69,7 +79,8 @@ class AddmoneyController extends Controller
         
         $moneyadd = new Addmoney;
 
-        $moneyadd->auth_id                   =  $request->auth_id;
+        $moneyadd->auth_id                  =   $request->auth_id;
+        $moneyadd->agent_id                 =   $request->agent_id;
         $moneyadd->amount                   =   $request->amount;
         $moneyadd->bookingmoneymehtod       =   $request->bookingmoneymehtod;
         $moneyadd->bkashtransiction         =   $request->bkashtransiction;
@@ -82,8 +93,8 @@ class AddmoneyController extends Controller
         $moneyadd->save();
         
         // Notitification here 
-        // $authenticate = User::where('auth_role', 3)->get();
-        // Notification::send($authenticate, new AddmoneyNotification($moneyadd));
+        $authenticate = User::where('id', $moneyadd->agent_id)->get();
+        Notification::send($authenticate, new MoneyRequestNotification($moneyadd));
 
         $notification = array(
             'message'       => 'রিকুয়েস্ট পাঠানো সম্পন্ন হয়েছে!!!',
@@ -263,6 +274,6 @@ class AddmoneyController extends Controller
      */
     public function destroy($id)
     {
-        //
+        
     }
 }

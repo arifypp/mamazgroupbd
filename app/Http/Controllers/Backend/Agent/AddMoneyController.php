@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use App\Notifications\AddmoneyNotification;
+use App\Notifications\Agent\MoneyApprovedNotification;
 use App\Models\Frontend\Addmoney;
 use CoreProc\WalletPlus\Models\WalletType;
 use App\Models\User;
@@ -93,6 +94,8 @@ class AddMoneyController extends Controller
 
         $moneaccept->status =   1;
         $moneaccept->save();
+
+        Notification::send($user, new MoneyApprovedNotification($moneaccept));
 
         $notification = array(
             'message'       => 'রিকুয়েস্ট এ্যাপ্রুভ হয়েছে এবং পেমেন্ট পাঠানো সম্পন্ন হয়েছে!!!',
@@ -211,5 +214,21 @@ class AddMoneyController extends Controller
     public function destroy($id)
     {
         //
+        $delete = Addmoney::where('id', $id)->delete();
+
+        // check data deleted or not
+        if ($delete == 1) {
+            $success = true;
+            $message = "ডিলেট সম্পন্ন হয়েছে!!!";            
+        } else {
+            $success = true;
+            $message = "ডিলেটে ত্রুটি রয়েছে!!!";
+        }
+
+        //  Return response
+        return response()->json([
+            'success' => $success,
+            'message' => $message,
+        ]);
     }
 }
