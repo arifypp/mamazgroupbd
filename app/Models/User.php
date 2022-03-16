@@ -7,7 +7,7 @@ use CoreProc\WalletPlus\Models\Traits\HasWallets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-
+use Auth;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasWallets;
@@ -55,6 +55,134 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getReferralLinkAttribute()
     {
         return $this->referral_link = route('register', ['ref' => $this->username]);
+    }
+
+    public static function PromoteLevel()
+    {
+        $output = '';
+        $referlID = User::where('referrer_id', Auth::user()->id)->count();
+
+        if( Auth::user()->auth_promote == 0 && $referlID > 0)
+        {
+            $output = '<small>Project Co-Ordinator</small><br>';
+        }
+        elseif( Auth::user()->auth_promote == 1 && $referlID > 13)
+        {
+            $output = '<small>Marketing Executive</small><br>';
+        }
+        elseif( Auth::user()->auth_promote == 2 && $referlID > 20)
+        {
+            $output = '<small>Assitant General Manager</small><br>';
+        }
+        elseif( Auth::user()->auth_promote == 3 && $referlID > 27)
+        {
+            $output = '<small>General Manager</small><br>';
+        }
+        elseif( Auth::user()->auth_promote == 4 && $referlID > 34)
+        {
+            $output = '<small>Project Director</small><br>';
+        }
+        return $output;
+    }
+
+    public static function PromotionMsg()
+    {
+        $levelOutput= '';
+        $Userlevel = User::where('referrer_id', Auth::user()->id)->count();
+
+        if( Auth::check() && $Userlevel > 6 )
+        {
+            $levelOutput    .= '
+            <div class="modal fade" id="PromoteLevel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body text-center">
+                  <img src="/admin/assets/images/cg.svg" class="img-fluid" alt="Congrasulation" width="150"><br><br>
+                  <h1>স্বাগতম!!!</h1>
+                  <p>আপনি এখন মার্কেটিং এক্সিউটিভ পদে পদান্নিত হয়েছেন।</p>
+                    <button type="button" class="btn btn-primary" data-bs-dismiss="modal" id="promotelevelupdate">ধন্যবাদ!!!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+            ';
+        }
+        elseif( Auth::check() && $Userlevel > 13 )
+        {
+            $levelOutput    .= '
+            <div class="modal fade" id="PromoteLevel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body text-center">
+                  <img src="/admin/assets/images/cg.svg" class="img-fluid" alt="Congrasulation" width="150"><br><br>
+                  <h1>স্বাগতম!!!</h1>
+                  <p>আপনি এখন পদে পদান্নিত হয়েছেন।</p>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">ধন্যবাদ!!!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+            ';
+        }
+        elseif( Auth::check() && $Userlevel > 20 )
+        {
+            $levelOutput    .= '
+            <div class="modal fade" id="PromoteLevel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body text-center">
+                  <img src="/admin/assets/images/cg.svg" class="img-fluid" alt="Congrasulation" width="150"><br><br>
+                  <h1>স্বাগতম!!!</h1>
+                  <p>আপনি এখন পদে 20 পদান্নিত হয়েছেন।</p>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">ধন্যবাদ!!!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+            ';
+        }
+
+        elseif( Auth::check() && $Userlevel > 27 )
+        {
+            $levelOutput    .= '
+            <div class="modal fade" id="PromoteLevel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body text-center">
+                  <img src="/admin/assets/images/cg.svg" class="img-fluid" alt="Congrasulation" width="150"><br><br>
+                  <h1>স্বাগতম!!!</h1>
+                  <p>আপনি এখন পদে 270 পদান্নিত হয়েছেন।</p>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">ধন্যবাদ!!!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+            ';
+        }
+
+        elseif( Auth::check() && $Userlevel > 34 )
+        {
+            $levelOutput    .= '
+            <div class="modal fade" id="PromoteLevel" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered">
+              <div class="modal-content">
+                <div class="modal-body text-center">
+                  <img src="/admin/assets/images/cg.svg" class="img-fluid" alt="Congrasulation" width="150"><br><br>
+                  <h1>স্বাগতম!!!</h1>
+                  <p>আপনি এখন পদে 34 পদান্নিত হয়েছেন।</p>
+                  <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                  <button type="button" class="btn btn-primary">ধন্যবাদ!!!</button>
+                </div>
+              </div>
+            </div>
+          </div>
+            ';
+        }
+
+        return $levelOutput;
     }
 
     /**

@@ -10,11 +10,11 @@
           <div class="mobiledevice">
       <div class="row">
         
-        <div class="col-md-2">
+        <div class="col-md-3">
           
         </div>
   
-        <div class="col-md-10">
+        <div class="col-md-9">
           <div class="topbar1">
             <h5>বুকিং করুন</h5>
             
@@ -25,7 +25,7 @@
        @include('Frontend/user/bookingleft')
   
   
-               <div class="col-md-10"style="background-color: #F8FAFD; padding-top: 0px;">
+               <div class="col-md-9"style="background-color: #F8FAFD; padding-top: 0px;">
                <form action="" method="post" enctype="multipart/form-data" id="submitform">
                         @csrf
                 <div class="row">

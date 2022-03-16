@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use App\Models\User;
+use Auth;
 
 class DashboardController extends Controller
 {
@@ -21,6 +23,17 @@ class DashboardController extends Controller
     {
         //
         return view('Frontend.user.dashboard');
+    }
+
+    public function updatepromoid(Request $request, $id)
+    {
+        $promotelevel = User::find($id);
+        if( $promotelevel->auth_promote == Auth::user()->auth_promote )
+        {
+            $promotelevel->auth_promote += 1;
+        }
+        $promotelevel->save();
+        return response()->json(['success' =>true, 'message'=> 'Level is up now!!!']);
     }
 
     /**

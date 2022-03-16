@@ -11,9 +11,9 @@
       <div class="main-body">
          <div class="mobiledevice">
             <div class="row">
-               <div class="col-md-2">
+               <div class="col-md-3">
                </div>
-               <div class="col-md-10">
+               <div class="col-md-9">
                   <div class="topbar1">
                      <h5>রিপোর্ট করুন</h5>
                   </div>
@@ -21,7 +21,7 @@
             </div>
          </div>
          @include('Frontend/user/bookingleft')
-         <div class="col-md-10"style="background-color: #F8FAFD; padding-top: 0px;">
+         <div class="col-md-9"style="background-color: #F8FAFD; padding-top: 0px;">
             <form action="{{ route('report.store') }}" method="post" enctype="multipart/form-data" id="submitform">
                @csrf
                <div class="row">
@@ -37,7 +37,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="date" class="form-control" id="datepicker" value="{{ old('date') }}"/>
+                                        <input type="text" name="date" class="form-control" id="datepicker" value="{{ old('date') }}" autocomplete="off"/>
                                         <span class="text-danger">@error('date'){{ $message }} @enderror</span>
                                     </td>
                                     <td>
@@ -60,11 +60,11 @@
                                         <span class="text-danger">@error('email'){{ $message }} @enderror</span>
                                     </td>
                                     <td>
-                                        <input type="text" name="invitedate" class="form-control" id="datepickerone" value="{{ old('invitedate') }}"/>
+                                        <input type="text" name="invitedate" class="form-control" id="datepickerone" value="{{ old('invitedate') }}" autocomplete="off"/>
                                         <span class="text-danger">@error('invitedate'){{ $message }} @enderror</span>
                                     </td>
                                     <td>
-                                        <input type="text" name="officevisitdate" class="form-control" id="datepickertwo" value="{{ old('officevisitdate') }}"/>
+                                        <input type="text" name="officevisitdate" class="form-control" id="datepickertwo" value="{{ old('officevisitdate') }}" autocomplete="off"/>
                                         <span class="text-danger">@error('officevisitdate'){{ $message }} @enderror</span>
                                     </td>
                                 </tr>
@@ -75,7 +75,7 @@
                                 </tr>
                                 <tr>
                                     <td>
-                                        <input type="text" name="sidevisitdate" class="form-control" id="datepickerthree" value="{{ old('sidevisitdate') }}"/>
+                                        <input type="text" name="sidevisitdate" class="form-control" id="datepickerthree" value="{{ old('sidevisitdate') }}" autocomplete="off"/>
                                         <span class="text-danger">@error('sidevisitdate'){{ $message }} @enderror</span>
                                     </td>
                                     <td>
@@ -173,16 +173,14 @@
                                 </tr>
                                 <tr>
                                     <td colspan="3">
-                                        <textarea name="comment" class="form-control" id="" cols="30" rows="10">
-                                            {{ old('comment') }}
-                                        </textarea>
+                                        <textarea name="comment" class="form-control" id="" cols="30" rows="15">{{ old('comment') }}</textarea>
                                         <span class="text-danger">@error('comment'){{ $message }} @enderror</span>   
                                     </td>
                                 </tr>
                                 <tfoot>
                                     <tr>
                                         <td colspan="3">
-                                            <button type="submit" name="submit" class="btn btn-primary btn-block text-right" style="float:right;">সাবমিট করুন</button>
+                                            <button type="submit" name="submit" id="submit" class="btn btn-primary btn-block text-right" style="float:right;">সাবমিট করুন</button>
                                         </td>
                                     </tr>
                                 </tfoot>
@@ -201,6 +199,24 @@
 @endsection
 
 @section('script')
+<script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(document).on('submit', 'form', function() {
+        $('button').attr('disabled', 'disabled');
+        $("#submit").attr("disabled", true);
+        $("#submit").text("প্রসেসিং ...");
+        $('#submit').append('<div class="spinner-border spinner-border-sm"></div>')
+        });
+    });
+</script>
 <script type="text/javascript">
     var i = 0;
     $("#dynamic-ar").click(function () {

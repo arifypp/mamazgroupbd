@@ -1,16 +1,13 @@
 <?php
 
-namespace App\Http\Controllers\Backend;
+namespace App\Http\Controllers\Backend\Agent;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Notification;
-use Illuminate\Notifications\DatabaseNotification;
 use App\Models\User;
 use Auth;
-use Session;
 
-class AgentDashboardController extends Controller
+class UserController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -20,29 +17,8 @@ class AgentDashboardController extends Controller
     public function index()
     {
         //
-        return view('Backend.Agent.dashboard');
-    }
-
-    public function notify(Request $request, $id)
-    {
-        $notification = auth()->user()->notifications()->find($id);
-
-        if($notification) {
-            $notification->markAsRead();
-        }
-        return response()->json(['success' =>true, 'message'=> 'mark as read!!!']);
-    }
-
-    // User level updating
-    public function updatepromoid(Request $request, $id)
-    {
-        $promotelevel = User::find($id);
-        if( $promotelevel->auth_promote == Auth::user()->auth_promote )
-        {
-            $promotelevel->auth_promote += 1;
-        }
-        $promotelevel->save();
-        return response()->json(['success' =>true, 'message'=> 'Level is up now!!!']);
+        $user = User::all();        
+        return view('Backend.Agent.pages.user.manage', compact('user'));
 
     }
 

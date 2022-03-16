@@ -376,40 +376,19 @@
                      </div>
                   </div>
                </div>
-
-
-
-
-
-<!-- Modal -->
-<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-      <div class="modal-body text-center">
-        <img src="{{ asset('/admin/assets/images/cg.svg') }}" class="img-fluid" alt="Congrasulation" width="150"><br><br>
-        <h1>স্বাগতম!!!</h1>
-        <p>আপনি এখন মার্কেটিং এক্সিউটিভ পদে পদান্নিত হয়েছেন।</p>
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary">ধন্যবাদ!!!</button>
-      </div>
-    </div>
-  </div>
-</div>
-
-
-
-
-
-
             </div>
          </div>
       </div>
    </div>
-   </div>
+</div>
 </section>
+<!-- Level Promotion modal  -->
+{!! App\Models\User::PromotionMsg() !!}
+
 @endsection
 
 @section('script')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.0/js.cookie.js"></script>
 <script>
    // A $( document ).ready() block.
    $( document ).ready(function() {
@@ -491,5 +470,40 @@
                 });
             });
    });
+
+   $(document).ready(function(){
+        setTimeout(function(){
+            if(!Cookies.get('modalShown')) {
+                $("#PromoteLevel").modal('show');
+                Cookies.set('modalShown', true);
+            } else {
+                console.log('Your modal won\'t show again as it\'s shown before.');
+            }
+        },1000);
+    })
+
+    $(document).ready(function() {
+        $('#promotelevelupdate').on('click', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            var token = '{{ Session::token() }}';
+            var auth_id = '{{ Auth::user()->id }}';
+            $.ajax({
+                    type:'POST',
+                    url:'/auth/promotion/'+auth_id,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data : {id:auth_id, _token: token},
+                    success:function(data){
+                        if(data.success){
+                            console.log('Success for read notification');
+                            // window.location= href;
+                        }
+                    }
+                });
+        })
+    });
 </script>
 @endsection

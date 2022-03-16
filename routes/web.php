@@ -73,6 +73,9 @@ Route::middleware(['verified'])->group(function () {
         Route::group(['middleware' => 'auth_role'], function () {
 
             Route::get('/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
+
+            // User promotion level updating
+            Route::post('/promotion/{id}','App\Http\Controllers\Frontend\DashboardController@updatepromoid')->name('user.updatepromoid');
             
             Route::get('/user/{id}', 'App\Http\Controllers\HomeController@referelink')->name('user.referel');
 
@@ -170,6 +173,8 @@ Route::middleware(['verified'])->group(function () {
     Route::group(['prefix' => 'agent'], function(){
         Route::group(['middleware' => 'agent'], function () {
             Route::get('/dashboard','App\Http\Controllers\Backend\AgentDashboardController@index')->name('agent.dashboard');
+            // User promotion level updating
+            Route::post('/promotion/{id}','App\Http\Controllers\Backend\AgentDashboardController@updatepromoid')->name('agent.updatepromoid');
 
             Route::get('/notifyseen/{id}','App\Http\Controllers\Backend\AgentDashboardController@notify')->name('agent.notify');
 
@@ -180,7 +185,31 @@ Route::middleware(['verified'])->group(function () {
             Route::post('/user-request/accept/{id}', 'App\Http\Controllers\Backend\Agent\AddMoneyController@userrequestaccept')->name('agent.userrequestaccept');
             Route::post('/request/delete/{id}', 'App\Http\Controllers\Backend\Agent\AddMoneyController@destroy')->name('agent.destroy');
 
+            // All user under agent
+            Route::group(['prefix' => 'users'], function() {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Agent\UserController@index')->name('user.manage');
 
+            });
+
+            // All application under agent 
+            Route::group(['prefix' => 'application'], function() {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Agent\ApplicationController@index')->name('agent.application');
+                Route::get('/approved', 'App\Http\Controllers\Backend\Agent\ApplicationController@approved')->name('agent.approved.application');
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\Agent\ApplicationController@show')->name('agent.application.show');
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Agent\ApplicationController@update')->name('agent.application.update');
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Agent\ApplicationController@destroy')->name('agent.application.destroy');
+            });
+
+            // All Report under agent 
+            Route::group(['prefix' => 'reports'], function() {
+                Route::get('/pending', 'App\Http\Controllers\Backend\Agent\ReportsController@index')->name('agent.report.pending');
+                Route::get('/approved', 'App\Http\Controllers\Backend\Agent\ReportsController@approved')->name('agent.approved.report');
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\Agent\ReportsController@show')->name('agent.report.show');
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Agent\ReportsController@update')->name('agent.report.update');
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Agent\ReportsController@destroy')->name('agent.report.destroy');
+            });
 
         });
     });

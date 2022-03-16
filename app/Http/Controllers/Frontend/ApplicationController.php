@@ -101,14 +101,11 @@ class ApplicationController extends Controller
 
         $application->save();
 
-        $user = User::where('id', auth()->user()->referrer_id)->get();
+        $user = User::where('id', $application->referrelID)->get();
         Notification::send($user, new ApplicationNotification($application));
 
-        $bookinguser = User::where('id', auth()->user()->id)->get();
-        Notification::send($bookinguser, new ApplicationNotification($application));
-
-        $admin = User::where('auth_role', 3)->get();
-        Notification::send($admin, new ApplicationNotification($application));
+        // $bookinguser = User::where('id', $application->auth_id)->get();
+        // Notification::send($bookinguser, new ApplicationNotification($application));
 
 
         $notification = array(

@@ -1,25 +1,26 @@
 <?php
 
-namespace App\Notifications;
+namespace App\Notifications\Agent;
 
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Notifications\Messages\MailMessage;
 use Illuminate\Notifications\Notification;
 
-class ApplicationNotification extends Notification implements ShouldQueue
+class ReportApprovedNotification extends Notification implements ShouldQueue
 {
     use Queueable;
-    protected $application;
+
+    protected $reports;
     /**
      * Create a new notification instance.
      *
      * @return void
      */
-    public function __construct($application)
+    public function __construct($reports)
     {
         //
-        $this->application  = $application;
+        $this->reports = $reports;
     }
 
     /**
@@ -43,9 +44,9 @@ class ApplicationNotification extends Notification implements ShouldQueue
     {
         return (new MailMessage)
         ->greeting('হ্যালো! ' .$notifiable->name)
-        ->subject('আবেদন নোটিফিকেশন')
-        ->line($this->application['name']. ' কাজ করার জন্য আবেদন করেছেন । মামাজ কর্তৃপক্ষকে আবেদনটি যাচাই/বাচাই করে দেখার অনুরোধ করা হচ্ছে।')
-        ->action('আবেদন সম্পর্কে জানতে ক্লিক করুন', route('apply.manage'))
+        ->subject('রিপোর্ট এ্যাপ্রুভ')
+        ->line($this->reports['name']. ' আপনার রিপোর্টটি এ্যাপ্রুভ করা হয়েছে।')
+        ->action('রিপোর্ট সম্পর্কে জানতে ক্লিক করুন', route('homepage'))
         ->line('ভালবাসা অবিরাম মামাজের সঙ্গে থাকার জন্য!');
     }
 
@@ -55,12 +56,12 @@ class ApplicationNotification extends Notification implements ShouldQueue
      * @param  mixed  $notifiable
      * @return array
      */
-    public function toDatabase($notifiable)
+    public function toArray($notifiable)
     {
         return [
             //
-            'id'                => $this->application->id,
-            'name'              => $this->application->name,
+            'id'                => $this->reports->id,
+            'name'              => $this->reports->name,
             'created_at'        => $notifiable
         ];
     }

@@ -124,7 +124,44 @@
                             </div>
                         </div>
                     </a>
+                    @elseif(Str::snake(class_basename($notification->type)) == 'user_report_notification')
+                    <a href="{{ route('agent.report.pending') }}" class="text-reset notification-item" id="NotificationReader" data-id="{{ $notification->id }}" data-attr="{{ route('agent.notify', $notification->id) }}">
+                        <div class="d-flex">
+                            <div class="avatar-xs me-3">
+                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                    <i class="mdi mdi-bell"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    {{ $notification->data['name'] }} একটি রিপোর্ট প্রেরণ করেছেন। অনুগ্রহ করে বিস্তারিত দেখুন।
+                                </h6>
+                                <div class="font-size-12 text-muted">
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
+                    @elseif(Str::snake(class_basename($notification->type)) == 'application_notification')
+                    <a href="{{ route('agent.application') }}" class="text-reset notification-item" id="NotificationReader" data-id="{{ $notification->id }}" data-attr="{{ route('agent.notify', $notification->id) }}">
+                        <div class="d-flex">
+                            <div class="avatar-xs me-3">
+                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                    <i class="mdi mdi-bell"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    {{ $notification->data['name'] }} একটি আবেদন প্রেরণ করেছেন। অনুগ্রহ করে বিস্তারিত দেখুন।
+                                </h6>
+                                <div class="font-size-12 text-muted">
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                     @endif
+                     
                 @empty
                 <a href="javascript:void(0)" class="text-reset notification-item">
                     <div class="flex-grow-1">
@@ -149,15 +186,13 @@
                 data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                 <img class="rounded-circle header-profile-user" src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                     alt="Header Avatar">
-                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
+                <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span><br>
+                {!! App\Models\User::PromoteLevel() !!}
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
             </button>
             <div class="dropdown-menu dropdown-menu-end">
                 <!-- item-->
-                <a class="dropdown-item" href="contacts-profile"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">@lang('translation.Profile')</span></a>
-                <a class="dropdown-item" href="#"><i class="bx bx-wallet font-size-16 align-middle me-1"></i> <span key="t-my-wallet">@lang('translation.My_Wallet')</span></a>
-                <a class="dropdown-item d-block" href="#" data-bs-toggle="modal" data-bs-target=".change-password"><span class="badge bg-success float-end">11</span><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">@lang('translation.Settings')</span></a>
-                <a class="dropdown-item" href="#"><i class="bx bx-lock-open font-size-16 align-middle me-1"></i> <span key="t-lock-screen">@lang('translation.Lock_screen')</span></a>
+                <a class="dropdown-item d-block" href="#" data-bs-toggle="modal" data-bs-target=".change-password"><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">@lang('translation.Settings')</span></a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">@lang('translation.Logout')</span></a>
                 <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">

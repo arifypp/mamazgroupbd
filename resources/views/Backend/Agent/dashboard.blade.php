@@ -110,7 +110,17 @@
                         </div>
                     </div>
                 </div>
-                <p class="text-muted mb-0">এটা একটি ডিজিটাল প্লাটফর্ম যেখানে প্রতি মাসের একটা ফুল পেমেন্ট এর ডায়াগ্রাম তৈরি করা হয়েছে। যার মাধ্যমে এডমিন এবং কর্তৃপক্ষ খুব সহজে বুঝতে পারবে মাসিক ইনকাম।</p>
+            </div>
+        </div>
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title mb-4">রেফারেল লিঙ্ক</h4>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <input type="text" name="" id="" class="form-control referllink" value="{{ route('homepage') }}/register?ref={{ Auth::user()->username }}" readonly><br>
+                        <button class="btn btn-primary btn-sm text-center w-100" id="copyreflink"> <i class="fas fa-copy"></i> লিঙ্ক কপি করুন</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -371,6 +381,9 @@
     </div>
 </div>
 <!-- end modal -->
+<!-- Promotions Modal Level Show -->
+
+{!! App\Models\User::PromotionMsg() !!}
 
 <!--  Update Profile example -->
 <div class="modal fade update-profile" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -433,6 +446,19 @@
 <!-- profile init -->
 <script src="{{ URL::asset('/assets/js/pages/profile.init.js') }}"></script>
 <!-- Chartradial -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.0/js.cookie.js"></script>
+<script type="text/javascript">
+$('#copyreflink').click(function(){
+    $(this).siblings('input.referllink').select();      
+    document.execCommand("copy");
+    $("#copyreflink").text("লিঙ্ক কপি হয়েছে");
+    var msg = 'রেফারেল লিঙ্ক কপি সম্পূর্ণ হয়েছে।'; 
+    toastr.success(msg); 
+    toastr.options = { onclick: function () { alert(msg); } }
+
+});
+
+</script>
 <script type="text/javascript">
 var options = {
   chart: {
@@ -561,6 +587,42 @@ options = {
                 $('#avatarError').text(response.responseJSON.errors.avatar);
             }
         });
+    });
+
+  
+    $(document).ready(function(){
+        setTimeout(function(){
+            if(!Cookies.get('modalShown')) {
+                $("#PromoteLevel").modal('show');
+                Cookies.set('modalShown', true);
+            } else {
+                console.log('Your modal won\'t show again as it\'s shown before.');
+            }
+        },1000);
+    })
+
+    $(document).ready(function() {
+        $('#promotelevelupdate').on('click', function(){
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
+                }
+            });
+            var token = '{{ Session::token() }}';
+            var auth_id = '{{ Auth::user()->id }}';
+            $.ajax({
+                    type:'POST',
+                    url:'/agent/promotion/'+auth_id,
+                    headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')},
+                    data : {id:auth_id, _token: token},
+                    success:function(data){
+                        if(data.success){
+                            console.log('Success for read notification');
+                            // window.location= href;
+                        }
+                    }
+                });
+        })
     });
 </script>
 @endsection
