@@ -205,16 +205,5 @@
         $('#city').select2();
         $('#city').select2({ width: '100%', placeholder: "Select an Option" });
     })
-    // $(document).ready(function() {
-    //     $('#city').select2({
-    //         minimumInputLength: 2,
-    //         ajax: {
-    //             url:"{{ route('addmoney.findagent') }}",
-    //             type:"GET",
-    //             dataType: 'json',
-    //         },
-    //     });
-    // });
-
 </script>
 @endsection

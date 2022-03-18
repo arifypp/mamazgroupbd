@@ -8,6 +8,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Auth;
+use DB;
+
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasWallets;
@@ -183,6 +185,106 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
         return $levelOutput;
+    }
+
+    // User level promote by numnber
+    public static function PromoteNumber()
+    {
+        $UserCountLevel = User::where('id', Auth::user()->id)->get();
+        foreach( $UserCountLevel as $userID )
+        {
+          return $userID->auth_promote;
+        }
+    }
+
+    // User asset money 
+    public static function AssetMoney()
+    {
+      $BDT = "৳";
+      $AssetWallets = auth()->user()->wallet('Assets Money');
+      if( !empty( $AssetWallets->balance ) ){
+        return $BDT. $AssetWallets->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+
+    }
+
+    // User cash money 
+    public static function CashMoney()
+    {
+      $BDT = "৳";
+      $CashWallets = auth()->user()->wallet('Cash Money');
+      if( !empty( $CashWallets->balance ) ){
+        return $BDT. $CashWallets->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+
+    }
+
+    // User agent money 
+    public static function AgentMoney()
+    {
+      $BDT = "৳";
+      $AgentCash = auth()->user()->wallet('Agent Money');
+      if( !empty( $AgentCash->balance ) ){
+        return $BDT. $AgentCash->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+
+    }
+
+    // User charity money 
+    public static function CharityMoney()
+    {
+      $BDT = "৳";
+      $CharityCash = auth()->user()->wallet('Agent Money');
+      if( !empty( $CharityCash->balance ) ){
+        return $BDT. $CharityCash->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+
+    }
+
+    // User vat/tax money 
+    public static function VatTaxCost()
+    {
+      $BDT = "৳";
+      $VatTaxCost = auth()->user()->wallet('Vat And Text');
+      if( !empty( $VatTaxCost->balance ) ){
+        return $BDT. $VatTaxCost->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+
+    }
+
+    // User vat/tax money 
+    public static function MamazPoisa()
+    {
+      $BDT = "৳";
+      $MamazCash = auth()->user()->wallet('Mamaz Money');
+      if( !empty( $MamazCash->balance ) ){
+        return $BDT. $MamazCash->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+
     }
 
     /**

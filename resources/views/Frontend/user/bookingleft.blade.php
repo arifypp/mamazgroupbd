@@ -34,7 +34,7 @@
                     @php 
                     $myapplcaition = App\Models\Frontend\Application::where('auth_id', Auth::user()->id)->get();
                     @endphp
-                    @if(  $myapplcaition['0']->status == 0 )
+                    @if( !empty( $myapplcaition['0']->status == 0 ) )
 
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('apply.create') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
                       <a href="{{ route('apply.create') }}"><h6><i class="fas fa-pen"></i>আবেদন করুন</h6></a>
@@ -65,8 +65,8 @@
                      
                     </li>
                   @endif  
-                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap ">
-                      <a href="profile.html"><h6><i class="fas fa-user-cog"></i>প্রোফাইল সেটিং</h6></a>
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap  @if( Route::currentRouteNamed('user.usersetting', Auth::user()->username)) active @endif">
+                      <a href="{{ route('user.usersetting', Auth::user()->username) }}"><h6><i class="fas fa-user-cog"></i>প্রোফাইল সেটিং</h6></a>
                      
                     </li>
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap">

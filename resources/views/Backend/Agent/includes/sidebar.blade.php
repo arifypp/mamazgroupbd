@@ -79,81 +79,15 @@
                         <li><a href="{{ route('agent.approved.report') }}" key="t-total-reports"> এ্যাপ্রুভ রিপোর্ট </a></li>
                     </ul>
                 </li>
-                
-                <li class="menu-title" key="t-apps">প্লাটফর্ম সেটিং</li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-home"></i>
-                        <span key="t-homesettings">হোম পেইজ সেটিং</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('homesetting.manage') }}" key="t-tui-homehero">হিরো সেটিং</a></li>
-                        <li><a href="{{ route('homesetting.favclient') }}" key="t-full-homeclient">প্রিয় ক্লাইন্ট সেটিং</a></li>
-                        <li><a href="{{ route('service.manage') }}" key="t-full-service">সার্ভিস সেটিং</a></li>
-                        <li><a href="{{ route('oursetting.manage') }}" key="t-our-settings">আমাদের সেটিং</a></li>
-                        <li>
-                            <a href="javascript: void(0);" class="has-arrow"
-                                key="t-level-1-2">গ্যালারি সেটিং</a>
-                            <ul class="sub-menu" aria-expanded="true">
-                                <li><a href="{{ route('gallery.manage') }}" key="t-gallery-cat">গ্যালারি ক্যাটাগরি</a>
-                                </li>
-                                <li><a href="{{ route('gallery.create') }}" key="t-gallery-photo">গ্যালারি ফটো</a>
-                                </li>
-                            </ul>
-                    
-                    </li>
-                    </ul>
-                </li>
-                <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-home"></i>
-                            <span key="t-about setting">এবাউট পেইজ সেটিং</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="{{ route('about.create') }}" key="t-about-manage">ম্যানেজ এবাউট</a>
-                                </li>
-                        </ul>
-                    </li>
-
-                <li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-home"></i>
-                        <span key="t-contact setting">যোগাযোগ পেইজ সেটিং</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="true">
-                        <li><a href="{{ route('contact.manage') }}" key="t-contact-manage">ম্যানেজ যোগাযোগ পেইজ</a>
-                            </li>
-                    </ul>
-                </li>
-
-                <li>
-                    <a href="{{ route('settings.manage') }}" class="waves-effect">
-                        <i class="bx bx-aperture"></i>
-                        <span key="t-settings">বেসিক সেটিং</span>
-                    </a>
-                </li>
 
                 <li class="menu-title" key="t-apps">অন্যান্য সেটিং</li>
-                <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-home"></i>
-                        <span key="t-wallettype">ওয়ালেট টাইপবক্স</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('wallettype.manage') }}" key="t-tui-wallettypehome">ওয়ালেট ম্যানেজমেন্ট</a></li>
-                    </ul>
-                </li>
 
                 <li>
-                    <a href="javascript: void(0);" class="has-arrow waves-effect">
-                        <i class="bx bx-user"></i>
-                        <span key="t-promote">কাস্টমার প্রমোট লেভেল</span>
-                    </a>
-                    <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('promote.manage') }}" key="t-tui-promotion">লেভেল ম্যানেজমেন্ট</a></li>
-                        <li><a href="{{ route('promote.create') }}" key="t-tui-message">লেভেল মেসেজ</a></li>
-                    </ul>
+                    <a class="waves-effect" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off"></i> <span key="t-logout">লগআউট</span></a>
+                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                        @csrf
+                    </form>
+                   
                 </li>
             </ul>
         </div>

@@ -41,9 +41,48 @@ class DashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function usersetting($username)
     {
         //
+        $users = User::where('username',$username)->first();
+        if( !empty($users) )
+        {
+            return view('Frontend.user.userprofile', compact('users'));
+        }
+        else
+        {
+            $notification = array(
+                'message'       => 'ডাটা পাওয়া যায়নি!!!',
+                'alert-type'    => 'error'
+            );    
+            return back()->with($notification);
+        }
+    }
+
+    public function updateuser(Request $request, $id)
+    {
+        $user = User::find($id);
+        if( !empty($user) )
+        {
+            $user->name         =   $request->name;
+            $user->username     =   $request->username;
+            $user->email        =   $request->email;
+            $user->address      =   $request->address;
+            $user->dob          =   $request->dob;
+
+            $user->save();
+
+            return response()->json(['success' =>true, 'message'=> 'ডাটা সেভ হয়েছে!!!']);
+
+        }
+        else
+        {
+            $notification = array(
+                'message'       => 'ডাটা পাওয়া যায়নি!!!',
+                'alert-type'    => 'error'
+            );    
+            return response()->json(['success' =>true, 'message'=> 'ডাটা পাওয়া যায়নি!!!']);
+        }
     }
 
     /**

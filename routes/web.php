@@ -74,12 +74,17 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/dashboard','App\Http\Controllers\Frontend\DashboardController@index')->name('user.dashboard');
 
+            Route::post('/userupdate/{id}','App\Http\Controllers\Frontend\DashboardController@updateuser')->name('user.updatedata');
+
             // User promotion level updating
             Route::post('/promotion/{id}','App\Http\Controllers\Frontend\DashboardController@updatepromoid')->name('user.updatepromoid');
             
             Route::get('/user/{id}', 'App\Http\Controllers\HomeController@referelink')->name('user.referel');
 
             Route::get('/ref/user/{username}', 'App\Http\Controllers\HomeController@reflist')->name('user.reflist');
+
+            // User profile update
+            Route::get('/usersettings/{username}','App\Http\Controllers\Frontend\DashboardController@usersetting')->name('user.usersetting');
             
             // Booking online
             Route::group(['prefix' => 'booking'], function(){

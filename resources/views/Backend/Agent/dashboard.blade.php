@@ -59,31 +59,19 @@
                                 </div>
                                 <div class="col-6">
                                     <h5 class="font-size-15">
-                                    @php 
-                                        $user = auth()->user()->id; 
-                                        $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
-                                    @endphp
-                                    @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                        {{ App\Models\User::CashMoney() }}
                                     </h5>
                                     <p class="text-muted mb-0">বর্তমান টাকা</p>
                                 </div>
                                 <div class="col-6"><br>
                                     <h5 class="font-size-15">
-                                    @php 
-                                        $user = auth()->user()->id; 
-                                        $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                                    @endphp
-                                        @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                        {{ App\Models\User::MamazPoisa() }}
                                     </h5>
                                     <p class="text-muted mb-0">মামাজ পয়সা</p>
                                 </div>
                                 <div class="col-6"><br>
                                     <h5 class="font-size-15">
-                                    @php 
-                                        $user = auth()->user()->id; 
-                                        $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
-                                    @endphp
-                                    @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                        {{ App\Models\User::AssetMoney() }}
                                     </h5>
                                     <p class="text-muted mb-0">অ্যাসেট টাকা</p>
                                 </div>
@@ -133,11 +121,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">অ্যাসেট টাকা</p>
                                 <h4 class="mb-0">
-                                    @php 
-                                        $user = auth()->user()->id; 
-                                        $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
-                                    @endphp
-                                    @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                   {{ App\Models\User::AssetMoney() }}
                                 </h4>
                             </div>
 
@@ -159,11 +143,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">ক্যাশ টাকা</p>
                                 <h4 class="mb-0">
-                                @php 
-                                    $user = auth()->user()->id; 
-                                    $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 9)->get();
-                                    @endphp
-                                    @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                    {{ App\Models\User::CashMoney() }}
                                 </h4>
                             </div>
 
@@ -185,11 +165,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">এজেন্ট টাকা</p>
                                 <h4 class="mb-0">
-                                @php 
-                                    $user = auth()->user()->id; 
-                                    $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 11)->get();
-                                @endphp
-                                        @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                    {{ App\Models\User::AgentMoney() }}
                                 </h4>
                             </div>
 
@@ -211,11 +187,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">চ্যারিটি দান টাকা</p>
                                 <h4 class="mb-0">
-                                @php 
-                                    $user = auth()->user()->id; 
-                                    $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 12)->get();
-                                @endphp
-                                    @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                    {{ App\Models\User::CharityMoney() }}
                                 </h4>
                             </div>
 
@@ -237,11 +209,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">ভ্যাট / ট্যাক্স</p>
                                 <h4 class="mb-0">
-                                @php 
-                                    $user = auth()->user()->id; 
-                                    $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 13)->get();
-                                @endphp
-                                    @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                    {{ App\Models\User::VatTaxCost() }}
                                 </h4>
                             </div>
 
@@ -263,11 +231,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">মামাজ পয়সা</p>
                                 <h4 class="mb-0">
-                                @php 
-                                    $user = auth()->user()->id; 
-                                    $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                                @endphp
-                                    @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                                    {{ App\Models\User::MamazPoisa() }}
                                 </h4>
                             </div>
 

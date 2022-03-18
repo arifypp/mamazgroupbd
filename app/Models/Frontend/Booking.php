@@ -8,6 +8,7 @@ use lemonpatwari\bangladeshgeocode\Models\Division;
 use lemonpatwari\bangladeshgeocode\Models\District;
 use lemonpatwari\bangladeshgeocode\Models\Thana;
 use App\Models\User;
+use Auth;
 class Booking extends Model
 {
     use HasFactory;
@@ -54,5 +55,13 @@ class Booking extends Model
     public function user()
     {
         return $this->belongsTo(User::class, 'bookingauthid');
+    }
+
+    // Counting Booking number by user
+    public static function bookcount()
+    {
+        $booking = Booking::where('bookingauthid', Auth::user()->id )->count();
+
+        return $booking;
     }
 }
