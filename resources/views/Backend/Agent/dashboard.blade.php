@@ -87,10 +87,22 @@
                 <h4 class="card-title mb-4">মাসিক ইনকাম</h4>
                 <div class="row">
                     <div class="col-sm-6">
-                        <p class="text-muted">গত মাস</p>
-                        <h3>৳34,252</h3>
-                        <p class="text-muted"><span class="text-success me-2"> 12% <i class="mdi mdi-arrow-up"></i>
-                            </span> এগিয়ে আগের মাস থেকে।</p>
+                        <p class="text-muted">সবমোর্ট টাকা</p>
+                        <h3>
+                           ৳{{ App\Models\User::RedialChart() }}
+                        </h3>
+                        <p class="text-muted"><span class="text-success me-2"> 
+                        {{ App\Models\User::RedialChart() / 100}}%
+                        <i class="mdi mdi-arrow-up"></i>
+                            </span> 
+                            @if( App\Models\User::RedialChart() / 100  <= 50 )
+                                কমিয়ে আগের মাস থেকে 
+                            @elseif( App\Models\User::RedialChart() / 100  <= 51 && App\Models\User::RedialChart() / 100 >= 100)
+                                এগিয়ে আগের মাস থেকে।
+                            @endif
+                            
+                        
+                        </p>
                     </div>
                     <div class="col-sm-6">
                         <div class="mt-4 mt-sm-0">
@@ -249,7 +261,7 @@
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <h4 class="card-title mb-4">Revenue</h4>
+                        <h4 class="card-title mb-4">মাসিক ইনকাম চার্ট</h4>
                         <div id="revenue-chart" class="apex-charts" dir="ltr"></div>
                     </div>
                 </div>
@@ -511,8 +523,8 @@ options = {
   stroke: {
     dashArray: 4
   },
-  series: [60],
-  labels: ["Series A"]
+  series: ['{{ App\Models\User::RedialChart() / 100 }}'],
+  labels: ["মাসিক ইনকাম"]
 };
 (chart = new ApexCharts(document.querySelector("#radialBar-chart"), options)).render();
 </script>

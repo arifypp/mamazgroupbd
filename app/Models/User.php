@@ -9,7 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Auth;
 use DB;
-
+use Carbon\Carbon;
 class User extends Authenticatable implements MustVerifyEmail
 {
     use HasFactory, Notifiable, HasWallets;
@@ -285,6 +285,13 @@ class User extends Authenticatable implements MustVerifyEmail
         return $BDT. 0;
       }
 
+    }
+
+    public static function RedialChart()
+    {
+      $SumRedialChart = DB::table('wallets')->where('user_id', auth()->user()->id )->where('created_at','>=',Carbon::now()->subdays(30))->sum('raw_balance', 'created_at');
+      
+      return $SumRedialChart;
     }
 
     /**
