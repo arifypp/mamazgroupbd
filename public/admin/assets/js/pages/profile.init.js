@@ -28,14 +28,14 @@ var options = {
   },
   series: [{
     name: "Revenue",
-    data: [42, 85, 101, 56, 37, 105, 38, 58, 92, 82, 72, 32]
+    data: [40, 85, 101, 56, 37, 105, 38, 58, 92, 82, 72, 32]
   }],
   xaxis: {
-    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+    categories: ["JAN", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
   },
   yaxis: {
     title: {
-      text: "$ (thousands)"
+      text: "৳ (বাৎসরিক রিপোর্ট)"
     }
   },
   fill: {

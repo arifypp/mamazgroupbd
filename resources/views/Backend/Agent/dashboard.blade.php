@@ -262,7 +262,7 @@
                 <div class="card">
                     <div class="card-body">
                         <h4 class="card-title mb-4">মাসিক ইনকাম চার্ট</h4>
-                        <div id="revenue-chart" class="apex-charts" dir="ltr"></div>
+                        <div id="area-chart" class="apex-charts" dir="ltr"></div>
                     </div>
                 </div>
             </div>
@@ -434,6 +434,64 @@ $('#copyreflink').click(function(){
 
 });
 
+</script>
+
+<!-- Chartbar  -->
+<script type="text/javascript">
+(function() { 
+    var BDT = "৳";
+    var options = {
+    series: [{
+        name: 'বর্তমান টাকা',
+        data: [{{ $current }}]
+    }, {
+        name: 'পূর্বের টাকা',
+        data: [BDT + {{ $previous }}]
+    }],
+    chart: {
+        height: 350,
+        type: 'area',
+        toolbar: {
+        show: false
+        }
+    },
+    colors: ['#556ee6', '#f1b44c'],
+    dataLabels: {
+        enabled: false
+    },
+    stroke: {
+        curve: 'smooth',
+        width: 2
+    },
+    fill: {
+        type: 'gradient',
+        gradient: {
+        shadeIntensity: 1,
+        inverseColors: false,
+        opacityFrom: 0.45,
+        opacityTo: 0.05,
+        stops: [20, 100, 100, 100]
+        }
+    },
+    xaxis: {
+        categories: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    },
+    markers: {
+        size: 3,
+        strokeWidth: 3,
+        hover: {
+        size: 4,
+        sizeOffset: 2
+        }
+    },
+    legend: {
+        position: 'top',
+        horizontalAlign: 'right'
+    }
+    };
+    var chart = new ApexCharts(document.querySelector("#area-chart"), options);
+    chart.render();
+    })();
 </script>
 <script type="text/javascript">
 var options = {

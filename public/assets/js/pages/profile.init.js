@@ -35,7 +35,7 @@ var options = {
   },
   yaxis: {
     title: {
-      text: "$ (thousands)"
+      text: "৳ (বাৎসরিক রিপোর্ট)"
     }
   },
   fill: {

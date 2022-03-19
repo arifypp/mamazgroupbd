@@ -7,6 +7,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Notifications\DatabaseNotification;
 use App\Models\User;
+use App\Models\Frontend\WalletsLadger;
 use Auth;
 use Session;
 
@@ -20,7 +21,32 @@ class AgentDashboardController extends Controller
     public function index()
     {
         //
-        return view('Backend.Agent.dashboard');
+        $year = date('Y');
+
+        $current = '';
+        $previous = '';
+        
+        for ($i = 0; $i < 12; $i++) {
+            $start_date = date("Y-m-d", strtotime( date( 'Y-01-01' )." $i months"));
+            $end_date   = date("Y-m-t", strtotime($start_date));
+
+            $currentData =  WalletsLadger::getCountVisitor($start_date, $end_date);
+            $current .= $currentData.',';
+
+            $previous_start_date = date("Y-m-d", strtotime("-1 year", strtotime($start_date)));
+            $previous_end_date = date("Y-m-t", strtotime($previous_start_date));
+
+
+            $previousData =  WalletsLadger::getCountVisitor($previous_start_date, $previous_end_date);
+            $previous .= $previousData.',';
+
+        }
+
+        $data['current'] = rtrim($current,',');
+        $data['previous'] = rtrim($previous,',');
+
+        return view('Backend.Agent.dashboard', $data);
+        
     }
 
     public function notify(Request $request, $id)
