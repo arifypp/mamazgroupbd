@@ -319,65 +319,45 @@
                                     <label for="flatvalue">প্লট বা জমির পরিমান</label>
                                     <select name="flatvalue" id="flatvalue" class="form-control">
                                         <option value="0">ফ্ল্যাটের ধরুন নির্বাচন করুন</option>
-                                        <option value="৫০০">৫০০ SFT</option>
-                                        <option value="১০০০">১০০০ SFT</option>
-                                        <option value="১৫০০">১৫০০ SFT</option>
-                                        <option value="২০০০">২০০০ SFT</option>
+                                        @foreach( App\Models\Backend\LandReserve::all() as $landcat )
+                                        <option value="{{ $landcat->sft }}"> {{ $landcat->sft }} SFT</option>
+                                        @endforeach
                                     </select>
                                     <span class="text-danger">@error('flatvalue'){{ $message }} @enderror</span>
                                 </div>
-                                
                                 <div class="form-group">
-                                    <label for="bookingmoney">বুকিং টাকার পরিমাণ</label>
-                                    <input type="text" name="bookingmoney" id="bookingmoney" class="form-control" placeholder="টাকার পরিমান বসান">
-                                </div>
-                                <div class="form-group">
-                                    <label for="bookingmoneymehtod">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</label>
-                                    <select name="bookingmoneymehtod" id="bookingmoneymehtod" class="form-control">
-                                        <option value="0">টাকা পাঠানোর মাধ্যম নির্বাচন করুন</option>
-                                        <option value="bank">ব্যাংক</option>
-                                        <option value="bkash">বিকাশ</option>
-                                        <option value="Nagad">নগদ</option>
-                                        <option value="rocket">রকেট</option>
-                                        <option value="handcash">নগদ প্রদান</option>
+                                    <label for="">জমির কোয়ালিটি</label>
+                                    <select name="landquality" id="landquality" class="form-control">
+                                        <option value="0">নির্বাচন করুন</option>
+                                        @foreach( App\Models\Backend\LandReserveCat::all() as $key => $cname )
+                                            <option value="{{ $cname->price }}"> {{ $cname->name }} </option>
+                                        @endforeach
                                     </select>
-                                    <span class="text-danger">@error('bookingmoneymehtod'){{ $message }} @enderror</span>
+                                    <div id="landqualiyprice"></div>
                                 </div>
-                                <!-- Bank transictoin -->
-                                <div class="form-group" id="banktransaction" style="display:none;">
-                                    <label for="banktransaction">ব্যাংক স্লিপ নাম্বার</label>
-                                    <input type="text" name="banktransaction" class="form-control" placeholder="স্লিপ নাম্বার বসান">
+                                <div class="form-group">
+                                    <label for="">পেমেন্ট সিস্টেম</label><br>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="fullpayment">
+                                        <label class="form-check-label" for="inlineRadio1">ফুল পেমেন্ট</label>
+                                    </div>
+                                    <div class="form-check form-check-inline">
+                                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="kistypayment">
+                                        <label class="form-check-label" for="inlineRadio2">কিস্তি পেমেন্ট</label>
+                                    </div>                                    
                                 </div>
-                                <div class="form-group" id="bankreferenceno" style="display:none;">
-                                    <label for="bankreferenceno">ব্যাংক রেফারেন্স নাম্বার</label>
-                                    <input type="text" name="bankreferenceno" class="form-control" placeholder="রেফারেন্স নাম্বার বসান">
-                                </div>
-                                <!-- Bkash transictoin -->
-                                <div class="form-group" id="bkashtransiction" style="display:none;">
-                                    <label for="bkashtransiction">বিকাশ ট্রান্জিকশন নাম্বার</label>
-                                    <input type="text" name="bkashtransiction" class="form-control" placeholder="নাম্বার বসান">
-                                </div>
-                                <div class="form-group" id="bkashnumber" style="display:none;">
-                                    <label for="bkashnumber">বিকাশ নাম্বার</label>
-                                    <input type="text" name="bkashnumber" class="form-control" placeholder="নাম্বার বসান">
-                                </div>
-                                <!-- Nagad transictoin -->
-                                <div class="form-group" id="nagadtransiction" style="display:none;">
-                                    <label for="nagadtransiction">নগদ ট্রান্জিকশন নাম্বার</label>
-                                    <input type="text" name="nagadtransiction" class="form-control" placeholder="নাম্বার বসান">
-                                </div>
-                                <div class="form-group" id="nagadnumber" style="display:none;">
-                                    <label for="nagadnumber">নগদ নাম্বার</label>
-                                    <input type="text" name="nagadnumber" class="form-control" placeholder="নাম্বার বসান">
-                                </div>
-                                <!-- Rocket transictoin -->
-                                <div class="form-group" id="rockettransiction" style="display:none;">
-                                    <label for="rockettransiction">রকেট ট্রান্জিকশন নাম্বার</label>
-                                    <input type="text" name="rockettransiction" class="form-control" placeholder="নাম্বার বসান">
-                                </div>
-                                <div class="form-group" id="rocketnumber" style="display:none;">
-                                    <label for="rocketnumber">রকেট নাম্বার</label>
-                                    <input type="text" name="rocketnumber" class="form-control" placeholder="নাম্বার বসান">
+                                <div class="form-group">
+                                    <select name="kistyoption" class="form-control" id="kistyoption" style="display:none;">
+                                        <option value="0">নির্বাচন করুন</option>
+                                        <option value="12">১ বছর</option>
+                                        <option value="24">২ বছর</option>
+                                        <option value="36">৩ বছর</option>
+                                        <option value="48">৪ বছর</option>
+                                        <option value="60">৫ বছর</option>
+                                        <option value="72">৬ বছর</option>
+                                        <option value="84">৭ বছর</option>
+                                        <option value="96">৮ বছর</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
@@ -399,22 +379,24 @@
                                         <tr>
                                             <th>টোটাল ফ্ল্যাটের মূল্যে</th>
                                             <td>:</td>
-                                            <td>৳15,5,0000 BDT</td>
+                                            <td><span id="flatprice"></span></td>
                                         </tr>
                                         <tr>
                                             <th>মাসিক কিস্তি</th>
                                             <td>:</td>
-                                            <td>৳15,0000 BDT</td>
+                                            <td> <span id="monthkisty"></span> </td>
                                         </tr>
                                         <tr>
                                             <th>পয়সা প্রয়োজন</th>
                                             <td>:</td>
-                                            <td>৳15,0000 BDT</td>
+                                            <td> <span  id="poishaproyojon"></span> </td>
                                         </tr>
                                     </tbody>
                                     <tfoot>
                                         <tr class="text-right">
-                                           <td colspan="3"><h4 class="text-danger">৳ 60000 BDT</h4></td>
+                                           <td colspan="4">
+                                               <div class="" id="TotalPrice"></div>
+                                           </td>
                                         </tr>
                                     </tfoot>
                                 </table>
@@ -556,59 +538,61 @@ $("#permanetdivision").on('change',function(e){
             }
         });
     });
+    // Total Amount Calculating
+    $(document).ready(function() {
+        $("#flatvalue").change(function(){
+            var mamazpoisha = $("#flatvalue").val() * 2650;
+            var poisha = mamazpoisha / 100;
+            $("#TotalPrice").html("<center><h2 class='text-danger'>"+"৳"+ mamazpoisha +" টাকা"+"</h2></center>");
 
-// Booking money
-    $(function () {
-        $("#bookingmoneymehtod").change(function () {
-            if ($(this).val() == "bank") {
-                $("#banktransaction").show();
-                $("#bankreferenceno").show();
-                $("#bkashtransiction").hide();
-                $("#bkashnumber").hide();
-                $("#bkashnumber").hide();
-                $("#nagadnumber").hide();
-                $("#nagadtransiction").hide();
-                $("#rockettransiction").hide();
-                $("#rocketnumber").hide();              
-
-            } else if ($(this).val() == "bkash") {
-                $("#bkashtransiction").show();
-                $("#bkashnumber").show();
-                $("#banktransaction").hide();
-                $("#bankreferenceno").hide();
-                $("#nagadnumber").hide();
-                $("#nagadtransiction").hide();
-                $("#rockettransiction").hide();
-                $("#rocketnumber").hide();
-            }else if($(this).val() == "Nagad") {
-                $("#nagadnumber").show();
-                $("#nagadtransiction").show();
-                $("#bkashtransiction").hide();
-                $("#bkashnumber").hide();
-                $("#banktransaction").hide();
-                $("#bankreferenceno").hide();
-                $("#rockettransiction").hide();
-                $("#rocketnumber").hide();
-            }else if ($(this).val() == "rocket") {
-                $("#rockettransiction").show();
-                $("#rocketnumber").show();
-                $("#nagadnumber").hide();
-                $("#nagadtransiction").hide();
-                $("#bkashtransiction").hide();
-                $("#bkashnumber").hide();
-                $("#banktransaction").hide();
-                $("#bankreferenceno").hide();
-            }else {
-                $("#bkashtransiction").hide();
-                $("#bkashnumber").hide();
-                $("#banktransaction").hide();
-                $("#bankreferenceno").hide();
-                $("#nagadnumber").hide();
-                $("#nagadtransiction").hide();
-                $("#rockettransiction").hide();
-                $("#rocketnumber").hide();
-            }
+            $('#flatprice').html("৳ "+mamazpoisha + " BDT");
+            $('#poishaproyojon').html("৳"+poisha+" মামাজ পয়সা");
+    
         });
+
+        $("#landquality").change(function(){
+            var qualityPrice = $('#landquality').val();
+            var mamazpoisha = $("#flatvalue").val() * 2650;
+            var totalprice = (+qualityPrice) + (+mamazpoisha);
+
+            // Poisha projon
+            var poisha = totalprice / 100;
+
+            $('#landqualiyprice').html("৳ "+ qualityPrice +" BDT");
+
+            $("#TotalPrice").html("<center><h2 class='text-danger'>"+"৳"+ totalprice +" টাকা"+"</h2></center>");
+
+            $('#poishaproyojon').html("৳"+poisha+" মামাজ পয়সা");
+        });
+
+        $("input[type='radio']").click(function () {
+
+            radioVal = $(this).val();
+            if( radioVal == 'kistypayment' )
+            {
+                $("#kistyoption").show();
+            }
+            else{
+                $("#kistyoption").hide();
+            }
+            
+        });
+
+        $("#kistyoption").change(function(){
+            var qualityPrice = $('#landquality').val();
+            var mamazpoisha = $("#flatvalue").val() * 2650;
+            var totalprice = (+qualityPrice) + (+mamazpoisha);
+            // Poisha projon
+            var poisha = totalprice / 100;
+            // Monthly payment
+            var kistyoption = $('#kistyoption').val();
+
+            var monthPay = (totalprice) / (kistyoption);
+
+            $('#monthkisty').text("৳ "+Math.round(monthPay)+" BDT");
+        });
+
+
     });
 
 // Submit form

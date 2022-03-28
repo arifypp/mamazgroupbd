@@ -26,13 +26,14 @@
                                 <input type="number" class="form-control" name="sft" placeholder="Enter SFT number"  value="{{ old('lcname', $landreseve->sft)}}">
                             </div>
                         </div>
+                       
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="ক্যাটাগরি">ক্যাটাগরি</label>
-                                <select name="lcat" id="" class="form-control">
+                                <label for="ক্যাটাগরি">জমি</label>
+                                <select name="landid" id="" class="form-control">
                                     <option value="0">নির্বাচন করুন</option>
-                                    @foreach(App\Models\Backend\LandReserveCat::orderby('id', 'desc')->get() as $lcat )
-                                    <option value="{{ $lcat->id }}" @if( $lcat->id == $landreseve->land_cat ) selected @endif>{{ $lcat->name }}</option>
+                                    @foreach(App\Models\Backend\Landcat::orderby('id', 'desc')->get() as $landid )
+                                    <option value="{{ $landid->id }}" @if( $landid->id ==  $landreseve->land_cat) selected @endif >{{ $landid->mainland }} বিগা</option>
                                     @endforeach
                                 </select>
                             </div>

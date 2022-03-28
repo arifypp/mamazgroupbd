@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Backend\LandReserve;
 use App\Models\Backend\LandReserveCat;
+use App\Models\Backend\Landcat;
 class LandReserveController extends Controller
 {
     /**
@@ -43,10 +44,29 @@ class LandReserveController extends Controller
         
         $LandReserve = new LandReserve();
 
-        $LandReserve->sft          =   $request->sft;
-        $LandReserve->land_cat     =   $request->lcat;
+        $LandReserve->sft           =   $request->sft;
+        $LandReserve->cat_id        =   $request->lcat;
+        $LandReserve->land_cat      =   $request->landid;
 
         $LandReserve->save();
+
+        $land = Landcat::where('id', $LandReserve->land_cat)->get();
+
+        foreach( $land as $key => $landvalue )
+        {
+            if( !is_null($landvalue)) 
+            {
+                $landid = Landcat::find($landvalue->id);
+                $minusland = $landvalue->totalsquarefit - $LandReserve->sft;
+
+                $landid->totalsquarefit = $minusland;
+
+                $landid->save();
+            }
+        }
+        
+        
+
 
         $notification = array(
             'message'       => 'জমি রিজার্ভ সম্পন্ন হয়েছে!!!',
@@ -131,8 +151,9 @@ class LandReserveController extends Controller
         //
         $LandReserve = LandReserve::find($id);
 
-        $LandReserve->sft          =   $request->sft;
-        $LandReserve->land_cat     =   $request->lcat;
+        $$LandReserve->sft          =   $request->sft;
+        $LandReserve->cat_id        =   $request->lcat;
+        $LandReserve->land_cat      =   $request->landid;
 
         $LandReserve->save();
 
@@ -153,13 +174,6 @@ class LandReserveController extends Controller
     public function destroy($id)
     {
         //
-        $maincat = LandReserve::where('id', $id)->get();
-
-        foreach( $maincat as $deleteCat )
-        {
-            $subCatDel = LandReserveCat::where('id', $deleteCat->land_cat)->delete();
-        }
-
         $delete = LandReserve::where('id', $id)->delete();
 
         // check data deleted or not

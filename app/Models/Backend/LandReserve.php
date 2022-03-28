@@ -5,6 +5,7 @@ namespace App\Models\Backend;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use App\Models\Backend\LandReserveCat;
+
 class LandReserve extends Model
 {
     use HasFactory;
@@ -19,6 +20,6 @@ class LandReserve extends Model
 
     public function LandCatName()
     {
-        return $this->belongsTo(LandReserveCat::class, 'land_cat');
+        return $this->belongsTo(LandReserveCat::class, 'cat_id');
     }
 }

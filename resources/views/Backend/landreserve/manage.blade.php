@@ -17,8 +17,65 @@
     <!-- Starting content -->
     <div class="row">
         <div class="col-md-12 mb-3 align-self-end text-right align-items-end justify-content-end">
-            
-            <a href="{{ route('landreserve.create') }}" class="btn btn-danger" rel="noopener noreferrer"> জমি রিজার্ভ করুন </a>
+        <a href="{{ route('landreserve.create') }}" class="btn btn-danger" rel="noopener noreferrer"> জমি রিজার্ভ করুন </a>
+            <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#LandCatAdd" class="btn btn-success" rel="noopener noreferrer"> ক্যাটাগরি লিস্ট </a>
+
+            <div class="modal fade" id="LandCatAdd" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true" style="display: none;">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">ক্যাটাগড়ি তৈরি করুন</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('landreserve.catstore') }}" method="post" id="landCat">
+                                @csrf 
+                                <div class="col-md-12">
+                                    <div class="form-group mb-3">
+                                        <label for="ক্যাটাগরির নাম">ক্যাটাগরির নাম</label>
+                                        <input type="text" name="lcname" id="lcname" class="form-control" placeholder="ক্যাটাগরির নাম লিখুন">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="ক্যাটাগরির নাম">ক্যাটাগরির মূল্য</label>
+                                        <input type="text" name="lcprise" id="lcprise" class="form-control" placeholder="ক্যাটাগরির মূল্য লিখুন">
+                                    </div>
+                                    <div class="form-group mb-3">
+                                        <label for="ক্যাটাগরির নাম">ক্যাটাগরির স্ট্যাটাস</label>
+                                        <select name="lcstatus" id="" class="form-control">
+                                            <option value="0">নির্বাচন করুন</option>
+                                            <option value="1">একটিভ</option>
+                                            <option value="1">ইন একটিভ</option>
+                                        </select>
+                                    </div>
+                                </div>
+
+                                <table class="table table-responsive">
+                                    <thead>
+                                        <tr>
+                                            <th>Sl. No</th>
+                                            <th>ক্যাটাগরি নাম</th>
+                                            <th>মূল্য</th>
+                                        </tr>
+                                        <tbody>
+                                            @foreach( App\Models\Backend\LandReserveCat::all() as $key => $catname )
+                                                <tr>
+                                                    <td>{{ $key+1 }}</td>
+                                                    <td> {{ $catname->name }} </td>
+                                                    <td>৳ {{ number_format( $catname->price, 0 , '.' , ',' ) }} BDT </td>
+                                                </tr>
+                                            @endforeach
+                                        </tbody>
+                                    </thead>
+                                </table>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">বন্ধ করুন</button>
+                            <button type="submit" class="btn btn-primary">সেভ করুন</button>
+                        </div>
+                        </form>
+                    </div>
+                </div>
         </div>
 
         <div class="col-md-12 col-lg-12 col-xl-12 col-sm-12 col-12">
@@ -28,8 +85,6 @@
                         <tr>
                             <th>ক্র. নং</th>
                             <th>এস এফ টি</th>
-                            <th>ক্যাটাগড়ি</th>
-                            <th>মূল্য</th>
                             <th>অ্যাকশন</th>
                         </tr>
                     </thead>
@@ -43,8 +98,6 @@
                         <tr>
                             <td>{{ $i }}</td>
                             <td>{{ $value->sft }} SFT</td>
-                            <td>{{ $value->LandCatName->name }}</td>
-                            <td> ৳ {{ number_format( $value->LandCatName->price , 0 , '.' , ',' ) }} BDT </td>
                             <td>
                                 <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#Landdetailsview{{ $value->id }}" class="text-success"><i class="mdi mdi-18px mdi-eye"></i></a>
 
@@ -63,25 +116,12 @@
                                                             <td>:</td>
                                                             <td> {{ $value->sft }} </td>
                                                         </tr>
-                                                        <tr>
-                                                            <th>ক্যাটাগরি নাম</th>
-                                                            <td>:</td>
-                                                            <td> {{ $value->LandCatName->name }} </td>
-                                                        </tr>
-                                                        <tr>
-                                                            <th>মূল্য</th>
-                                                            <td>:</td>
-                                                            <td> <h4 class="text-danger">
-                                                            ৳ {{ number_format( $value->LandCatName->price , 0 , '.' , ',' ) }} BDT
-                                                            </h4> </td>
-                                                        </tr>
-
+                                                        
                                                     </tbody>
                                                 </table>                                        
                                             </div>
                                             <div class="modal-footer">
                                                 <button type="button" class="btn btn-light" data-bs-dismiss="modal">বন্ধ করুন</button>
-                                                <button type="submit" class="btn btn-primary">সেভ করুন</button>
                                             </div>
                                         </div>
                                     </div>

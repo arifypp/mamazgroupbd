@@ -26,14 +26,14 @@
                                 <input type="number" class="form-control" name="sft" placeholder="Enter SFT number">
                             </div>
                         </div>
+                        
                         <div class="col-md-6">
                             <div class="form-group mb-3">
-                                <label for="ক্যাটাগরি">ক্যাটাগরি</label>
-                                <a href="#" data-bs-toggle="modal" data-bs-target="#LandCatAdd" class="bg-primary text-white" style="float:right">Add Category</a>
-                                <select name="lcat" id="" class="form-control">
+                                <label for="ক্যাটাগরি">জমি</label>
+                                <select name="landid" id="" class="form-control">
                                     <option value="0">নির্বাচন করুন</option>
-                                    @foreach(App\Models\Backend\LandReserveCat::orderby('id', 'desc')->get() as $lcat )
-                                    <option value="{{ $lcat->id }}">{{ $lcat->name }}</option>
+                                    @foreach(App\Models\Backend\Landcat::orderby('id', 'desc')->get() as $landid )
+                                    <option value="{{ $landid->id }}">{{ $landid->mainland }} বিগা</option>
                                     @endforeach
                                 </select>
                             </div>
