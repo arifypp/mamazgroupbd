@@ -227,7 +227,6 @@ Route::middleware(['verified'])->group(function () {
 
             // Landcat Route For CRUD
             Route::group(['prefix' => 'landcat'], function(){
-
                 Route::get('/manage', 'App\Http\Controllers\Backend\LandcatController@index')->name('landcat.manage');
         
                 Route::get('/create', 'App\Http\Controllers\Backend\LandcatController@create')->name('landcat.create');
@@ -240,6 +239,22 @@ Route::middleware(['verified'])->group(function () {
         
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\LandcatController@destroy')->name('landcat.destroy');
         
+            });
+
+            Route::group(['prefix' => 'landreserve'], function(){
+                Route::get('/manage', 'App\Http\Controllers\Backend\LandReserveController@index')->name('landreserve.manage');
+
+                Route::get('/create', 'App\Http\Controllers\Backend\LandReserveController@create')->name('landreserve.create');
+
+                Route::post('/store', 'App\Http\Controllers\Backend\LandReserveController@store')->name('landreserve.store');
+
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\LandReserveController@edit')->name('landreserve.edit');
+                
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\LandReserveController@update')->name('landreserve.update');
+
+                Route::post('/catstore', 'App\Http\Controllers\Backend\LandReserveController@catstore')->name('landreserve.catstore');
+
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\LandReserveController@destroy')->name('landreserve.delete');
             });
 
             // Agent Payment Route For CRUD

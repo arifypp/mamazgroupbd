@@ -10,28 +10,6 @@
 @endcomponent
 
 <div class="row">
-    <div class="col-xl-12">
-        <div class="col-12">
-            <div class="card">
-                <div class="card-body">
-                    <h5 class="card-title">Progress Example</h5>
-                    <p class="card-title-desc">You can use these classes with existing components to create new ones.</p>
-
-                    <div class="mt-5">
-                        <div class="position-relative m-4">
-                            <div class="progress" style="height: 1px;">
-                                <div class="progress-bar" role="progressbar" style="width: 50%;" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
-                            </div>
-                            <button type="button" class="position-absolute top-0 start-0 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">1</button>
-                            <button type="button" class="position-absolute top-0 start-50 translate-middle btn btn-sm btn-primary rounded-pill" style="width: 2rem; height:2rem;">2</button>
-                            <button type="button" class="position-absolute top-0 start-100 translate-middle btn btn-sm btn-secondary rounded-pill" style="width: 2rem; height:2rem;">3</button>
-                            
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
     <div class="col-xl-4">
         <div class="card overflow-hidden">
             <div class="bg-primary bg-soft">
@@ -100,51 +78,21 @@
     </div>
     <div class="col-xl-8">
         <div class="row">
-            <div class="col-md-4">
+        <div class="col-md-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">মোট জমি</p>
+                                <p class="text-muted fw-medium">অ্যাসেট টাকা</p>
                                 <h4 class="mb-0">
-                                @php 
-                                $TotalCash = App\Models\Backend\LandValue::find(1);
-                                $MyCash = $TotalCash->totalland;
-                                $num = $MyCash;
-                                $units = ['', 'K', 'M', 'B', 'T'];
-                                    for ($i = 0; $num >= 1000; $i++) {
-                                        $num /= 1000;
-                                    }
-                                    echo round($num, 1) . $units[$i];
-                                @endphp
-                                SFT
+                                   {{ App\Models\User::AssetMoney() }}
                                 </h4>
-                            </div>
-
-                            <div class="flex-shrink-0 align-self-center">
-                                <div class="mini-stat-icon avatar-sm rounded-circle bg-primary">
-                                    <span class="avatar-title">
-                                        <i class="bx bxs-landscape font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mini-stats-wid">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">মোট টাকা</p>
-                                <h4 class="mb-0">৳35, 723</h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center ">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-money font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -157,138 +105,9 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">মোট বুকিং</p>
+                                <p class="text-muted fw-medium">ক্যাশ টাকা</p>
                                 <h4 class="mb-0">
-                                @php 
-                                $TotalBooking = App\Models\Frontend\Booking::orderBy('id', 'desc')->count();
-                                $num = $TotalBooking;
-                                $units = ['', 'K', 'M', 'B', 'T'];
-                                    for ($i = 0; $num >= 1000; $i++) {
-                                        $num /= 1000;
-                                    }
-                                    echo round($num, 1) . $units[$i];
-                                @endphp
-                                </h4>
-                            </div>
-
-                            <div class="flex-shrink-0 align-self-center">
-                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-book-content font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mini-stats-wid">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">মোট ইউজারকারী</p>
-                                <h4 class="mb-0">
-                                @php 
-                                $TotalUsers = App\Models\User::orderBy('id', 'desc')->count();
-                                $num = $TotalUsers;
-                                $units = ['', 'K', 'M', 'B', 'T'];
-                                    for ($i = 0; $num >= 1000; $i++) {
-                                        $num /= 1000;
-                                    }
-                                    echo round($num, 1) . $units[$i];
-                                @endphp
-                                </h4>
-                            </div>
-
-                            <div class="flex-shrink-0 align-self-center">
-                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-user font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mini-stats-wid">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">মোট ওয়ার্কার</p>
-                                <h4 class="mb-0">
-                                @php 
-                                $TotalUsers = App\Models\User::where('auth_role', 2)->count();
-                                $num = $TotalUsers;
-                                $units = ['', 'K', 'M', 'B', 'T'];
-                                    for ($i = 0; $num >= 1000; $i++) {
-                                        $num /= 1000;
-                                    }
-                                    echo round($num, 1) . $units[$i];
-                                @endphp
-                                </h4>
-                            </div>
-
-                            <div class="flex-shrink-0 align-self-center">
-                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-run font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mini-stats-wid">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">মোট কাস্টোমার</p>
-                                <h4 class="mb-0">
-                                @php 
-                                $TotalUsers = App\Models\User::where('auth_role', 0)->count();
-                                $num = $TotalUsers;
-                                $units = ['', 'K', 'M', 'B', 'T'];
-                                    for ($i = 0; $num >= 1000; $i++) {
-                                        $num /= 1000;
-                                    }
-                                    echo round($num, 1) . $units[$i];
-                                @endphp
-                                </h4>
-                            </div>
-
-                            <div class="flex-shrink-0 align-self-center">
-                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bxs-user-rectangle font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-md-4">
-                <div class="card mini-stats-wid">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">আজকের জমি</p>
-                                <h4 class="mb-0">
-                                @php 
-                                $TotalLand = App\Models\Backend\LandValue::whereDay('created_at', '>=', now()->day)->sum('totalland');
-                                $num = $TotalLand;
-                                $units = ['', 'K', 'M', 'B', 'T'];
-                                    for ($i = 0; $num >= 1000; $i++) {
-                                        $num /= 1000;
-                                    }
-                                    echo round($num, 1) . $units[$i];
-                                @endphp
-                                SFT
+                                    {{ App\Models\User::CashMoney() }}
                                 </h4>
                             </div>
 
@@ -308,14 +127,16 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">আজকের টাকা</p>
-                                <h4 class="mb-0">৳66.2</h4>
+                                <p class="text-muted fw-medium">এজেন্ট টাকা</p>
+                                <h4 class="mb-0">
+                                    {{ App\Models\User::AgentMoney() }}
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-money font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -328,14 +149,16 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">আজকের বুকিং</p>
-                                <h4 class="mb-0">82</h4>
+                                <p class="text-muted fw-medium">চ্যারিটি দান টাকা</p>
+                                <h4 class="mb-0">
+                                    {{ App\Models\User::CharityMoney() }}
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-pyramid font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -348,14 +171,16 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">আজকের ওয়ার্কার</p>
-                                <h4 class="mb-0">16</h4>
+                                <p class="text-muted fw-medium">ভ্যাট / ট্যাক্স</p>
+                                <h4 class="mb-0">
+                                    {{ App\Models\User::VatTaxCost() }}
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-run font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -368,14 +193,16 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">আজ. কাস্টোমার</p>
-                                <h4 class="mb-0">16</h4>
+                                <p class="text-muted fw-medium">মামাজ পয়সা</p>
+                                <h4 class="mb-0">
+                                    {{ App\Models\User::MamazPoisa() }}
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-user font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -388,14 +215,16 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">কাজের আবেদন</p>
-                                <h4 class="mb-0">42</h4>
+                                <p class="text-muted fw-medium">পারফর. বোনাস</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-aperture font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -408,14 +237,16 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">আজ. ডিপোজিট</p>
-                                <h4 class="mb-0">৳34000</h4>
+                                <p class="text-muted fw-medium">ফাউন্ডার. বোনাস</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-collapse font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -428,14 +259,16 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">যোগাযোগ</p>
-                                <h4 class="mb-0">54</h4>
+                                <p class="text-muted fw-medium">ননস্পনসর বোনাস</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-envelope font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
@@ -448,21 +281,199 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">রেফা. ব্যবহারকারী</p>
-                                <h4 class="mb-0">$16.2</h4>
+                                <p class="text-muted fw-medium">ল্যান্ড কভারেজ</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center">
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bx-crosshair font-size-24"></i>
+                                        <i class="bx bxs-landmark font-size-24"></i>
                                     </span>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>            
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">ক্লাব বোনাস</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">অ্যা. অ্যাসিভমেন্ট</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">জেনেরেশন বোনাস</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">মানি রিকুয়েস্ট</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">মোট বুকিং</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">মাদার এজেন্ট</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">ফাউন্ডেশন এজেন্ট</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">ল্যান্ড রিজার্ভ মানি</p>
+                                <h4 class="mb-0">
+                                    0
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>  
         </div>
         <!-- end row -->
     </div>

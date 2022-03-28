@@ -21,7 +21,7 @@
          <div class="col-md-9 "style="background-color: #F8FAFD; padding-top: 0px;">
             <div class="uppderdesign">
                <div class="row">
-                  <div class="col-md-3 offset-md-1">
+                  <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            @php 
@@ -153,7 +153,7 @@
                         </form>
                      </div>
                   </div>
-                  <div class="col-md-3 offset-md-1">
+                  <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7 charitymoney">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/4.png') }}" alt="" class="mb-2" width="50"></span><br>
@@ -212,6 +212,90 @@
                               @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
                            </h3>
                            <b>মামাজ পয়সা</b>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="d-flex justify-content-center mt-7 px-7">
+                        <div class="stat">
+                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
+                           @php 
+                              $user = auth()->user()->id; 
+                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
+                           @endphp
+                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           </h3>
+                           <b>পারফোরমেন্স বোনাস</b>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="d-flex justify-content-center mt-7 px-7">
+                        <div class="stat">
+                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
+                           @php 
+                              $user = auth()->user()->id; 
+                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
+                           @endphp
+                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           </h3>
+                           <b>ল্যান্ড কভারেজ বোনাস</b>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="d-flex justify-content-center mt-7 px-7">
+                        <div class="stat">
+                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
+                           @php 
+                              $user = auth()->user()->id; 
+                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
+                           @endphp
+                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           </h3>
+                           <b>নন স্পনসর বোনাস</b>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="d-flex justify-content-center mt-7 px-7">
+                        <div class="stat">
+                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
+                           @php 
+                              $user = auth()->user()->id; 
+                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
+                           @endphp
+                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           </h3>
+                           <b>ক্লাব বোনাস</b>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="d-flex justify-content-center mt-7 px-7">
+                        <div class="stat">
+                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
+                           @php 
+                              $user = auth()->user()->id; 
+                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
+                           @endphp
+                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           </h3>
+                           <b>অ্যাসেট অ্যাসিভমেন্ট</b>
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
+                     <div class="d-flex justify-content-center mt-7 px-7">
+                        <div class="stat">
+                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
+                           @php 
+                              $user = auth()->user()->id; 
+                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
+                           @endphp
+                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           </h3>
+                           <b>জেনেরেশন বোনাস</b>
                         </div>
                      </div>
                   </div>

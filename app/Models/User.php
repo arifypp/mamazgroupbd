@@ -64,9 +64,13 @@ class User extends Authenticatable implements MustVerifyEmail
         $output = '';
         $referlID = User::where('referrer_id', Auth::user()->id)->count();
 
-        if( Auth::user()->auth_promote == 0 && $referlID > 0)
+        if( Auth::user()->auth_promote == -0 && $referlID > 0)
         {
-            $output = '<small>Project Co-Ordinator</small><br>';
+            $output = '<small>Marketing Associate</small><br>';
+        }
+        elseif( Auth::user()->auth_promote == 0 && $referlID > 6)
+        {
+          $output = '<small>Marketing Co-Ordinator</small><br>';
         }
         elseif( Auth::user()->auth_promote == 1 && $referlID > 13)
         {

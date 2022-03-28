@@ -297,6 +297,16 @@
                                 @endif
                             </div>
                         </div>
+                        <div class="card mb-6 p-2">
+                            <div class="card-header text-left">
+                                প্লটের / জমির ঠিকানা
+                            </div>
+                            <div class="card-body">
+                                <div class="alert alert-primary">
+                                    সম্মানিত গ্রাহক ও ক্রেতাগন। আপনার জমির ঠিকানা আমাদের নির্ধারিত ক্রয় করা প্লট/জমির এলাকা থেকে দেওয়া হইবে। উল্লেখিত জায়গা বা স্থান গুলো আমাদের কোম্পানির ম্যানেজার অথবা এমডি নিজে নির্বাচন করবে।
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <!-- Flat/Land Info -->
                     <div class="col-md-6">
@@ -376,12 +386,38 @@
                     <div class="col-md-6">
                         <div class="card mb-6 p-2">
                             <div class="card-header text-left">
-                                প্লটের / জমির ঠিকানা
+                                টোটাল টাকার পরিমাণ
                             </div>
                             <div class="card-body">
-                                <div class="alert alert-primary">
-                                    সম্মানিত গ্রাহক ও ক্রেতাগন। আপনার জমির ঠিকানা আমাদের নির্ধারিত ক্রয় করা প্লট/জমির এলাকা থেকে দেওয়া হইবে। উল্লেখিত জায়গা বা স্থান গুলো আমাদের কোম্পানির ম্যানেজার অথবা এমডি নিজে নির্বাচন করবে। সেক্ষেত্রে প্রত্যেক গ্রাহককে তার জায়গার বা ফ্ল্যাটের টিকানা মোবাইল ফোনের মাধ্যমে জানানো হইবে। 
-                                </div>
+                                <table class="table table-responsive">
+                                    <tbody>
+                                        <tr>
+                                            <th>মোট বুকিং টাকা</th>
+                                            <td>:</td>
+                                            <td>৳1,65,0000 BDT</td>
+                                        </tr>
+                                        <tr>
+                                            <th>টোটাল ফ্ল্যাটের মূল্যে</th>
+                                            <td>:</td>
+                                            <td>৳15,5,0000 BDT</td>
+                                        </tr>
+                                        <tr>
+                                            <th>মাসিক কিস্তি</th>
+                                            <td>:</td>
+                                            <td>৳15,0000 BDT</td>
+                                        </tr>
+                                        <tr>
+                                            <th>পয়সা প্রয়োজন</th>
+                                            <td>:</td>
+                                            <td>৳15,0000 BDT</td>
+                                        </tr>
+                                    </tbody>
+                                    <tfoot>
+                                        <tr class="text-right">
+                                           <td colspan="3"><h4 class="text-danger">৳ 60000 BDT</h4></td>
+                                        </tr>
+                                    </tfoot>
+                                </table>
                             </div>
                         </div>
                         <div class="form-group text-right float-right" style="float:right;">
@@ -601,7 +637,7 @@ $(function(){
                 error:function (response){
                     $('.text-danger').html('');
                     $('.text-danger').delay(5000).fadeOut();
-                    $.each(response.responseJSON.errors,function(field_name,error){
+                    $.each(response.responseJSON.error,function(field_name,error){
                         $(document).find('[name='+field_name+']').after('<span class="text-strong text-danger">' +error+ '</span>')
                     })
                 }

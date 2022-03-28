@@ -36,6 +36,7 @@
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('landcat.manage') }}" key="t-landcat-pending"> জমির লিস্ট দেখুন </a></li>
                         <li><a href="{{ route('landcat.create') }}" key="t-total-landcat"> নতুন জমি যুক্ত করুন</a></li>
+                        <li><a href="{{ route('landreserve.manage') }}" key="t-reseve-land"> জমি রিজার্ভ করুন</a></li>
                     </ul>
                 </li>
                 <li>
