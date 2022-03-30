@@ -265,7 +265,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">পারফর. বোনাস</p>
                                 <h4 class="mb-0">
-                                    0
+                                    {{ App\Models\User::BestPerfomance() }}
                                 </h4>
                             </div>
 

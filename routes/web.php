@@ -225,6 +225,16 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
 
+            Route::group(['prefix' => 'bonusetting'], function() {
+                Route::get('/manage', 'App\Http\Controllers\Backend\DashboardController@bonus')->name('bonus.manage');
+
+                Route::post('/bonusSetPost', 'App\Http\Controllers\Backend\DashboardController@bonusSetPost')->name('bonus.post');
+
+                
+            });
+
+            Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
+
             // Landcat Route For CRUD
             Route::group(['prefix' => 'landcat'], function(){
                 Route::get('/manage', 'App\Http\Controllers\Backend\LandcatController@index')->name('landcat.manage');

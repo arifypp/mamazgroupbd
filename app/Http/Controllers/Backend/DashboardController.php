@@ -9,6 +9,8 @@ use Illuminate\Notifications\DatabaseNotification;
 use App\Models\Frontend\Addmoney;
 use App\Notifications\AddmoneyApproveNotification;
 use App\Models\User;
+use App\Models\Backend\BonusSettings;
+use App\Http\Requests\BonusSettingsClass;
 use CoreProc\WalletPlus\Models\WalletType;
 use Auth;
 use Session;
@@ -40,6 +42,30 @@ class DashboardController extends Controller
             $notification->markAsRead();
         }
         return response()->json(['success' =>true, 'message'=> 'mark as read!!!']);
+    }
+
+    // Bonus settings
+    public function bonus()
+    {
+        return view('Backend.settings.bonus');
+    }
+
+    public function bonusSetPost(BonusSettingsClass $request)
+    {
+        $collection = collect($request->validated());
+        
+            foreach ($collection->all() as $key => $value) {
+                BonusSettings::set($key, $value);
+            }
+
+        
+        $notification = array(
+            'message'       => 'ডাটা আপডেটেড সাকসেসফুল!!!',
+            'alert-type'    => 'success',
+        );
+
+        return back()->with($notification);
+
     }
 
     /**

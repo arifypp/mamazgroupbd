@@ -219,11 +219,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                              {{ App\Models\User::BestPerfomance() }}
                            </h3>
                            <b>পারফোরমেন্স বোনাস</b>
                         </div>

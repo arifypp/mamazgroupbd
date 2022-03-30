@@ -7,6 +7,8 @@ use CoreProc\WalletPlus\Models\Traits\HasWallets;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use App\Models\Frontend\Booking;
+use CoreProc\WalletPlus\Models\WalletType;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -296,6 +298,52 @@ class User extends Authenticatable implements MustVerifyEmail
       $SumRedialChart = DB::table('wallets')->where('user_id', auth()->user()->id )->where('created_at','>=',Carbon::now()->subdays(30))->sum('raw_balance', 'created_at');
       
       return $SumRedialChart;
+    }
+
+    public static function BestPerformanceBonus()
+    {
+      $booking = Booking::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->get(['name','created_at']);
+
+      $bpbonus = config('bonus_settings.bestperformancebonus');
+
+        foreach( $booking as $value )
+        {
+          $user = User::where('id', $value->bookingauthid)->get();
+
+          if( empty( $user->wallets()->wallet_type_id )  )
+          {
+              $user->wallets()->create(['wallet_type_id' => $walletidrequest]);
+              // Add payment
+              
+              $admoneydeposit = $user->wallet('Best Performance');
+              $admoneydeposit->incrementBalance( config($bpbonus) );
+              $admoneydeposit->balance;
+              return $admoneydeposit->balance;
+          }
+          else
+          {
+              $admoneydeposit = $user->wallet('Best Performance');
+              $admoneydeposit->incrementBalance( config($bpbonus) );
+              $admoneydeposit->balance;
+              return $admoneydeposit->balance;
+          }
+          
+        }
+    }
+
+    // User Best performance bonus 
+    public static function BestPerfomance()
+    {
+      $BDT = "৳";
+      $MamzPerformance = auth()->user()->wallet('Best Performance');
+      if( !empty( $MamzPerformance->balance ) ){
+        return $BDT. $MamzPerformance->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+
     }
 
     /**
