@@ -302,28 +302,32 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function BestPerformanceBonus()
     {
-      $booking = Booking::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->get(['name','created_at']);
+      $booking = Booking::whereMonth('created_at', '=', Carbon::now()->subMonth()->month)->get();
 
       $bpbonus = config('bonus_settings.bestperformancebonus');
 
         foreach( $booking as $value )
         {
           $user = User::where('id', $value->bookingauthid)->get();
+               
+          $findwallelt = WalletType::where("name", "=", "Best Performance")->get();
+          $walletidrequest = $findwallelt['0']->id;
 
-          if( empty( $user->wallets()->wallet_type_id )  )
+
+          if( empty( $user->wallets()->wallet_type_id ) ) 
           {
               $user->wallets()->create(['wallet_type_id' => $walletidrequest]);
               // Add payment
               
               $admoneydeposit = $user->wallet('Best Performance');
-              $admoneydeposit->incrementBalance( config($bpbonus) );
+              $admoneydeposit->incrementBalance( $bpbonus );
               $admoneydeposit->balance;
               return $admoneydeposit->balance;
           }
           else
           {
               $admoneydeposit = $user->wallet('Best Performance');
-              $admoneydeposit->incrementBalance( config($bpbonus) );
+              $admoneydeposit->incrementBalance( $bpbonus );
               $admoneydeposit->balance;
               return $admoneydeposit->balance;
           }
@@ -334,15 +338,63 @@ class User extends Authenticatable implements MustVerifyEmail
     // User Best performance bonus 
     public static function BestPerfomance()
     {
-      $BDT = "৳";
-      $MamzPerformance = auth()->user()->wallet('Best Performance');
-      if( !empty( $MamzPerformance->balance ) ){
-        return $BDT. $MamzPerformance->balance; 
-      }
-      else
-      {
-        return $BDT. 0;
-      }
+        $BDT = "৳";
+        $MamzPerformance = auth()->user()->wallet('Best Performance');
+        if( !empty( $MamzPerformance->balance ) ){
+          return $BDT. $MamzPerformance->balance; 
+        }
+        else
+        {
+          return $BDT. 0;
+        }
+
+    }
+
+    // Admin foundership bonus
+    
+    public static function FounderShip()
+    {
+        $BDT = "৳";
+        $FounderShipBonus = auth()->user()->wallet('Foundership Bonus');
+        if( !empty( $FounderShipBonus->balance ) ){
+          return $BDT. $FounderShipBonus->balance; 
+        }
+        else
+        {
+          return $BDT. 0;
+        }
+    }
+
+
+    public static function FounderShipBonus()
+    {
+      $bookingdata = Booking::whereMonth('created_at', date('m'))->whereYear('created_at', date('Y'))->count();
+
+      $bfbonus = config('bonus_settings.foundershipbonus') * $bookingdata;
+
+      $user = User::find(Auth::user()->id);
+
+               
+      $findwallelt = WalletType::where("name", "=", "Foundership Bonus")->get();
+      $walletidrequest = $findwallelt['0']->id;
+
+      if( empty( $user->wallets()->wallet_type_id ) ) 
+        {
+            $user->wallets()->create(['wallet_type_id' => $walletidrequest]);
+            // Add payment
+            
+            $admoneydeposit = $user->wallet('Foundership Bonus');
+            $admoneydeposit->incrementBalance( $bfbonus );
+            $admoneydeposit->balance;
+            return $admoneydeposit->balance;
+        }
+        else
+        {
+            $admoneydeposit = $user->wallet('Foundership Bonus');
+            $admoneydeposit->incrementBalance( $bfbonus );
+            $admoneydeposit->balance;
+            return $admoneydeposit->balance;
+        }
 
     }
 

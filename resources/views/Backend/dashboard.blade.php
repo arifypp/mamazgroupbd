@@ -239,7 +239,7 @@
                             <div class="flex-grow-1">
                                 <p class="text-muted fw-medium">ফাউন্ডার. বোনাস</p>
                                 <h4 class="mb-0">
-                                    0
+                                    {{ App\Models\User::FounderShip() }}
                                 </h4>
                             </div>
 
