@@ -4,7 +4,7 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-
+use App\Models\Frontend\Ourservice;
 class ServiceController extends Controller
 {
     /**
@@ -45,9 +45,14 @@ class ServiceController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show($slug)
     {
         //
+        $value = Ourservice::where('slug', $slug)->first();
+        if( !empty($value) )
+        {
+            return view('Frontend.pages.single-service', compact('value'));
+        }
     }
 
     /**

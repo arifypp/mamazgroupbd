@@ -61,6 +61,60 @@
                                 <td>{{ $value->name }}</td>
                                 <td>{{ $value->slug }}</td>
                                 <td>
+                                <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#EditService{{ $value->id }}"> <i class="fa fa-eye"></i> </a> &nbsp;
+
+
+            <!-- update service -->
+            <div class="modal fade" id="EditService{{ $value->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered modal-lg" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="staticBackdropLabel">এডিট {{ $value->name }} সার্ভিস</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('service.update', $value->id) }}" id="submitdata" method="post" enctype="multipart/form-data">
+                                @csrf
+                                <div class="mb-3">
+                                    <label for="" class="form-label">সার্ভিস টাইটেল</label>
+                                    <input type="text" name="name" value="{{ old('name', $value->name) }}" class="form-control" placeholder="সার্ভিস টাইটেল!">
+                                </div>
+                                <div class="mb-3">
+                                    <label for="" class="form-label">সার্ভিস বিবরণ (বিস্তারিত)</label>
+                                    <textarea name="description" cols="30" rows="10" class="form-control" id="elm1">{!! $value->desc !!}</textarea>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">সার্ভিস স্টাটার্স</label>
+                                    <select name="status" id="" class="form-control">
+                                        <option value="3">নির্বাচন করুন</option>
+                                        <option value="0" @if( $value->status == 0 ) selected @endif>একটিভ</option>
+                                        <option value="1" @if( $value->status == 1 ) selected @endif>ইনএকটিভ</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="">সার্ভিস ফিচারড</label>
+                                    <select name="featured" id="" class="form-control">
+                                        <option value="3">নির্বাচন করুন</option>
+                                        <option value="0" @if( $value->is_featured == 0 ) selected @endif>একটিভ</option>
+                                        <option value="1" @if( $value->is_featured == 1 ) selected @endif>ইনএকটিভ</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <img src="{{ asset('assets/images/service/'. $value->image) }}" alt="">
+                                    <input type="file" class="form-control" name="image">
+                                </div>
+                            
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-light" data-bs-dismiss="modal">বাদ দিন</button>
+                            <button type="submit" class="btn btn-primary">আপডেট করুন</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
                                 <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
                                 </td>
                                 
@@ -131,6 +185,11 @@
             toastr.error("{{ $error }}");
         @endforeach
     @endif
+    function initMCEall(){
+        tinyMCE.init({
+        mode : "textareas",
+        });
+    }
 </script>
 <script type="text/javascript">
     function deleteConfirmation(id) {

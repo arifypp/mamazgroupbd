@@ -18,6 +18,7 @@ Route::group(['prefix' => '/'], function(){
     Route::get('/','App\Http\Controllers\Frontend\HomepageController@index')->name('homepage');
     Route::get('/about','App\Http\Controllers\Frontend\AboutController@index')->name('about');
     Route::get('/services','App\Http\Controllers\Frontend\ServiceController@index')->name('services');
+    Route::get('/services/{slug}','App\Http\Controllers\Frontend\ServiceController@show')->name('services.show');
     Route::get('/contact','App\Http\Controllers\Frontend\ContactController@index')->name('contact');
     Route::post('/contact/send','App\Http\Controllers\Frontend\ContactController@ctsend')->name('contact.send');
     Route::get('/thankyou', [App\Http\Controllers\HomeController::class, 'thankyou'])->name('thankyou');
@@ -475,6 +476,8 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/store/pagehead/{id}', 'App\Http\Controllers\Backend\ServiceController@storehead')->name('service.pagehead');
 
                 Route::post('/store/service/', 'App\Http\Controllers\Backend\ServiceController@storeservice')->name('service.storeservice');
+
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\ServiceController@update')->name('service.update');
 
                 Route::post('/delete/{id}', 'App\Http\Controllers\Backend\ServiceController@destroy')->name('service.destroy');
                 

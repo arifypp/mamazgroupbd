@@ -3,6 +3,8 @@ var __webpack_exports__ = {};
 /*!************************************************!*\
   !*** ./resources/js/pages/form-editor.init.js ***!
   \************************************************/
+  // add all textarea elements to document
+  initMCEall();
 $(document).ready(function () {
   0 < $("#elm1").length && tinymce.init({
     selector: "textarea#elm1",

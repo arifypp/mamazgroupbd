@@ -23,7 +23,7 @@
              <div class="col-md-6 col-lg-2">
                 <div class="icon-box">
                    <img src="{{ asset('assets/images/service/'. $value->image) }}" class="img-fluid" alt="">
-                   <h4 class="title"><a href="{{ $value->slug }}">{{ $value->name }}</a></h4>
+                   <h4 class="title"><a href="{{ route('services.show', $value->slug) }}">{{ $value->name }}</a></h4>
                 </div>
              </div>
             @endforeach

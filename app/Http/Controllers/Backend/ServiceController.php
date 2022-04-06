@@ -157,6 +157,54 @@ class ServiceController extends Controller
     public function update(Request $request, $id)
     {
         //
+        $request->validate([
+            'name'                  =>  ['required'],
+            'status'                =>  ['required', 'not_in:3'],
+            'featured'              =>  ['required', 'not_in:3'],
+            'image'                 => ['nullable', 'image', 'mimes:jpg,jpeg,png', 'max:1024'],
+        ],
+        $message = [
+            'name.required'         =>  ['এই ঘরটি পূরণ করুন'],
+            'status.required'       =>  ['নিবার্চন করুন'],
+            'status.not_in'         =>  ['নিবার্চন করুন'],
+            'featured.required'     =>  ['নিবার্চন করুন'],
+            'featured.not_in'       =>  ['নিবার্চন করুন'],
+            // 'image.required'        =>  ['এই ঘরটি পূরণ করুন'],
+            // 'image.mimes'           =>  ['সঠিক ফরমেট আপলোড করুন'],
+            // 'image.max'             =>  ['২ এমবি এর বেশি আপলোড করা যাবে না'],
+        ]);
+
+        $service = Ourservice::find($id);
+        $service->name              =   $request->name;
+        $service->slug              =   Str::slug($request->name);
+        $service->desc              =   $request->description;
+        $service->status            =   $request->status;
+        $service->is_featured       =   $request->featured;
+
+        if(!is_null($request->image)){
+            $websitefavicondark = $request->file('image');
+            if( !is_null($websitefavicondark) ){
+                // Delete Existing Image
+                if( File::exists('assets/images/service/' . $service->image) ) {
+                    File::delete('assets/images/service/' . $service->image);
+                }
+                
+                $img = rand() . '.' . $websitefavicondark->getClientOriginalExtension();
+                $location = public_path('assets/images/service/' . $img);
+
+                Image::make($websitefavicondark)->save($location);
+                $service->image = $img;
+            }
+        }
+
+        $service->save();
+
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
     }
 
     /**
