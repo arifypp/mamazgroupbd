@@ -23,7 +23,7 @@
                 {!! $value->desc !!}
 
                 <div class="contact-section">
-                    <a href="{{ route('contact.send') }}" class="btn btn-primary btn-block btn-sm">যোগাযোগ করুন</a>
+                    <a href="{{ route('contact') }}" class="btn btn-primary btn-block btn-sm">যোগাযোগ করুন</a>
                 </div>
             </div>
         </div>
