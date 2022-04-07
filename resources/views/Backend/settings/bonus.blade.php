@@ -144,6 +144,16 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> উইথড্র চার্জ</label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="withdrwacharge" class="form-control" value="{{ config('bonus_settings.withdrawcharge') }}" placeholder="ক্লাব বোনাস">
+                                            <div class="input-group-text">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 
                                     <div class="col-md-3 mt-3 mb-3">
                                         <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">পরিবর্তন করুন</button>

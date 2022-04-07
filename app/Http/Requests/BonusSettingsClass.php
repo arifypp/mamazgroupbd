@@ -35,6 +35,7 @@ class BonusSettingsClass extends FormRequest
             'landcoverage'      =>  'required|nullable',
             'clubbonus'         =>  'required|nullable',
             'bestperformancebonus'  =>  'required|nullable',
+            'withdrwacharge'    =>  'required|nullable',
         ];
     }
 }

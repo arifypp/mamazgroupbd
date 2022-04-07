@@ -176,6 +176,8 @@
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('bonus.manage') }}" key="t-tui-bonus">বোনাস সেটিং</a></li>
+
+                        <li><a href="{{ route('bonus.create') }}" key="t-bonus-create"> এ্যাড বোনাস</a></li>
                     </ul>
                 </li>
 

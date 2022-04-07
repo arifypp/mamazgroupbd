@@ -76,6 +76,7 @@ class DashboardController extends Controller
     public function create()
     {
         //
+        return view('Backend.settings.addbonus');
     }
 
     /**
@@ -87,6 +88,33 @@ class DashboardController extends Controller
     public function store(Request $request)
     {
         //
+
+        $request->validate([
+            'name'          =>  ['required', 'string'],
+            'defaultvalue'  =>  ['required', 'string'],
+            'bonustype'     =>  ['required', 'not_in:0'],
+        ],
+        $message = [
+            'name.required'             =>  'তথ্যটি পূরণ করুন।',
+            'defaultvalue.required'     =>  'তথ্যটি পূরণ করুন।',
+            'bonustype.not_in'          =>  'তথ্যটি পূরণ করুন।',
+        ]);
+
+
+        $newbonus = new BonusSettings;
+
+        $newbonus->name             =   $request->name;
+        $newbonus->value            =   $request->defaultvalue;
+
+        $newbonus->save();
+
+        $notification = array(
+            'message'       => 'ডাটা তৈরি সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success',
+        );
+
+        return back()->with($notification);
+
     }
 
     /**

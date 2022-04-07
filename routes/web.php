@@ -23,6 +23,12 @@ Route::group(['prefix' => '/'], function(){
     Route::post('/contact/send','App\Http\Controllers\Frontend\ContactController@ctsend')->name('contact.send');
     Route::get('/thankyou', [App\Http\Controllers\HomeController::class, 'thankyou'])->name('thankyou');
 
+    Route::get('/widthdarw', 'App\Http\Controllers\TransactionController@create')->name('send.widthdraw');
+    Route::post('/widthdarw/amount/request/{id}', 'App\Http\Controllers\TransactionController@needtoknowamount')->name('send.knowprice');
+
+    Route::post('/widthdarw/amount/success', 'App\Http\Controllers\TransactionController@store')->name('send.store');
+
+
 });
 // Sign up payment
 Route::group(['prefix' => 'paysignupcash'], function(){
@@ -230,6 +236,11 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/manage', 'App\Http\Controllers\Backend\DashboardController@bonus')->name('bonus.manage');
 
                 Route::post('/bonusSetPost', 'App\Http\Controllers\Backend\DashboardController@bonusSetPost')->name('bonus.post');
+
+                Route::get('/bonus/create', 'App\Http\Controllers\Backend\DashboardController@create')->name('bonus.create');
+
+                Route::post('/bonus/store', 'App\Http\Controllers\Backend\DashboardController@store')->name('bonus.store');
+
 
                 
             });

@@ -36,18 +36,20 @@
                      </div>
                   </div>
                   <div class="col-md-3">
-                     <div class="d-flex justify-content-center mt-7 px-7 cash-taka" data-toggle="modal" data-target="#Cashtaka">
-                        <div class="stat">
-                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/2.png') }}" alt="" class="mb-2" width="50"></span><br>
-                              @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 9)->get();
-                              @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
-                           </h3>
-                           <b>ক্যাশ বোনাস</b>
+                     <a href="{{ route('send.widthdraw') }}" class="text-dark">
+                        <div class="d-flex justify-content-center mt-7 px-7 cash-taka" data-toggle="modal" data-target="#Cashtaka">
+                           <div class="stat">
+                              <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/2.png') }}" alt="" class="mb-2" width="50"></span><br>
+                                 @php 
+                                 $user = auth()->user()->id; 
+                                 $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 9)->get();
+                                 @endphp
+                                 @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                              </h3>
+                              <b>ক্যাশ বোনাস</b>
+                           </div>
                         </div>
-                     </div>
+                     </a>
                   </div>
                   <!-- Modal -->
                   <div class="modal" id="Cashtaka" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
