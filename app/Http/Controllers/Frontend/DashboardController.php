@@ -85,6 +85,12 @@ class DashboardController extends Controller
         }
     }
 
+
+    public function history()
+    {
+        return view('Frontend.user.pages.history.manage');
+    }
+
     /**
      * Store a newly created resource in storage.
      *

@@ -148,7 +148,47 @@ class TransactionController extends Controller
         }
         else if( $request->inlineRadioOptions == 'agentPayment' )
         {
-            return "Agent work store";
+            $withdraw = new Transaction;
+
+            $withdraw->payment_id       =   rand('0', '10000000');
+            $withdraw->txn_id           =   time() . '-' . Auth::user()->id;
+            $withdraw->status           =   '0';
+            $withdraw->amount           =   $totalamount;
+            $withdraw->network_fee      =   config('bonus_settings.withdrawcharge');
+            $withdraw->wallet_id        =   $request->wallet_type;
+            $withdraw->user_id          =   $request->auth_id;
+
+            $withdraw->save();
+
+            if( empty( $user->wallets()->wallet_type_id )  )
+            {
+                $user->wallets()->create(['wallet_type_id' => $withdraw->wallet_id]);
+                // Add payment
+                $admoneydeposit = $user->wallet($userAmount->name);
+                $admoneydeposit->incrementBalance($withdraw->amount);
+                $admoneydeposit->balance;
+
+                $AgentDcrease = auth()->user()->wallet($userAmount->name);
+                $AgentDcrease->decrementBalance($withdraw->amount);
+                $AgentDcrease->balance;
+            }
+            else
+            {
+                $CashMoney = $user->wallet($userAmount->name);
+                $CashMoney->incrementBalance($withdraw->amount);
+                $CashMoney->balance;
+
+                // Decrease money 
+                $AgentDcrease = auth()->user()->wallet($userAmount->name);
+                $AgentDcrease->decrementBalance($withdraw->amount);
+                $AgentDcrease->balance;
+            }
+
+            $notification = array(
+                'message'       => 'উইথড্রো সম্পন্ন হয়েছে!!!',
+                'alert-type'    => 'success'
+            );
+            return back()->with($notification);
         }
     }
 

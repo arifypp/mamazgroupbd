@@ -4,6 +4,7 @@ namespace App\Models\Frontend;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use App\Models\User;
 use DB;
 use Auth;
 class WalletsLadger extends Model
@@ -26,5 +27,10 @@ class WalletsLadger extends Model
         $totalvisitors = $totalvisitors->where(DB::raw("(DATE_FORMAT(wallets.created_at,'%Y-%m-%d'))"), '<=' , $end_date);
 
         return $totalvisitors->sum('raw_balance');
+    }
+
+    public function username()
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }

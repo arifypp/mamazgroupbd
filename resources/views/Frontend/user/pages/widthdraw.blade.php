@@ -77,10 +77,11 @@
                         <label for="wallet_type">ওয়ালেট নিবার্চন করুন?</label>
                         <select name="wallet_type" id="wallet_type" class="form-control">
                             <option value="0">নির্বাচন করুন</option>
-                            @foreach( CoreProc\WalletPlus\Models\WalletType::orderBy('id', 'asc')->get() as $key => $walletType )
-                            @if($key > 0)
+                            @php
+                            $walletTypeID = CoreProc\WalletPlus\Models\WalletType::where('name', 'Cash Money')->get();
+                            @endphp
+                            @foreach( $walletTypeID as $key => $walletType )
                             <option value="{{ $walletType->id }}"> {{ $walletType->name }} </option>
-                            @endif
                             @endforeach
                         </select>
                         <span id="walletamountresult"></span>

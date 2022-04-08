@@ -90,6 +90,8 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/ref/user/{username}', 'App\Http\Controllers\HomeController@reflist')->name('user.reflist');
 
+            Route::get('/history/transaction', 'App\Http\Controllers\Frontend\DashboardController@history')->name('user.history');
+
             // User profile update
             Route::get('/usersettings/{username}','App\Http\Controllers\Frontend\DashboardController@usersetting')->name('user.usersetting');
             

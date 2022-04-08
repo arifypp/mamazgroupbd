@@ -31,16 +31,20 @@
                       <a href="{{ route('addmoney.create') }}"><h6><i class="fas fa-hand-holding-usd"></i>টাকা যুক্ত করুন</h6></a>
                      
                     </li>
+
+                    <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('user.history')) active @endif">
+                      <a href="{{ route('user.history') }}"><h6><i class="fas fa-wallet"></i>ট্রান্সিকশন হিসটোরি</h6></a>
+                     
+                    </li>
+
                     @php 
                     $myapplcaition = App\Models\Frontend\Application::where('auth_id', Auth::user()->id)->get();
                     @endphp
-                    @if( !empty( $myapplcaition['0']->status == 0 ) )
 
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('apply.create') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
                       <a href="{{ route('apply.create') }}"><h6><i class="fas fa-pen"></i>আবেদন করুন</h6></a>
                      
                     </li>
-                    @endif
 
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('booking.manage') || Route::currentRouteNamed('booking.edit') || Route::currentRouteNamed('booking.create') ) active @endif">
                       <a href="{{ route('booking.manage') }}"><h6><i class="fas fa-swatchbook"></i>বুকিং দিন</h6></a>
