@@ -21,6 +21,7 @@ class Transaction extends Model
         'network_fee',
         'wallet_id',
         'user_id',
+        'is_user'
     ];
 
 

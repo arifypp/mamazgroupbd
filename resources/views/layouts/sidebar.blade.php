@@ -30,6 +30,26 @@
                 <li class="menu-title" key="t-apps">ফিচারড সেটিং</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-box"></i>
+                        <span key="t-withdraw">ডিপোজিট সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('landcat.manage') }}" key="t-withdraw-pending"> ডিপোজিট রিকুয়েস্ট </a></li>
+                        <li><a href="{{ route('landcat.create') }}" key="t-total-withdraw"> ডিপোজিট লিস্ট</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-wallet"></i>
+                        <span key="t-withdraw">উইখড্র সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('withdraw.manage') }}" key="t-withdraw-pending"> উইথড্রো রিকুয়েস্ট </a></li>
+                        <li><a href="{{ route('withdraw.accept') }}" key="t-total-withdraw"> উইথড্রো লিস্ট</a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-duplicate"></i>
                         <span key="t-booking">জমি যুক্ত করুন</span>
                     </a>
@@ -92,6 +112,14 @@
                         <li><a href="{{ route('application.manage') }}" key="t-total-application">মোট আপ্রুভ আবেদনকারী</a></li>
                     </ul>
                 </li>
+
+                <li class="menu-title" key="t-apps">রিপোর্ট সেটিং</li>
+                <li>
+                    <a href="javascript: void(0);" class="waves-effect">
+                        <i class="bx bx-book"></i>
+                        <span key="t-transaction-setting">ট্রান্জিকশন লিস্ট</span>
+                    </a>
+                </li>
                 
                 <li class="menu-title" key="t-apps">প্লাটফর্ম সেটিং</li>
                 <li>
@@ -118,17 +146,16 @@
                     </ul>
                 </li>
                 <li>
-                        <a href="javascript: void(0);" class="has-arrow waves-effect">
-                            <i class="bx bx-home"></i>
-                            <span key="t-about setting">এবাউট পেইজ সেটিং</span>
-                        </a>
-                        <ul class="sub-menu" aria-expanded="true">
-                            <li><a href="{{ route('about.create') }}" key="t-about-manage">ম্যানেজ এবাউট</a>
-                                </li>
-                        </ul>
-                    </li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-home"></i>
+                        <span key="t-about setting">এবাউট পেইজ সেটিং</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="true">
+                        <li><a href="{{ route('about.create') }}" key="t-about-manage">ম্যানেজ এবাউট</a>
+                            </li>
+                    </ul>
+                </li>
 
-                <li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-home"></i>

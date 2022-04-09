@@ -40,7 +40,7 @@
                               <td>{{ $value->txn_id }}</td>
                               <td> {{ $value->wallettype->name }} </td>
                               <td>৳{{ number_format( $value->amount , 0 , '.' , ',' ) }} BDT</td>
-                              <td>{{ $value->network_fee }}</td>
+                              <td>{{ __('-') }}</td>
                               <td>{{ date('d M, Y h:i:s a', strtotime($value->created_at)) }}</td>
                            </tr>
                         @endforeach

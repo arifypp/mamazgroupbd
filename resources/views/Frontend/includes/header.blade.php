@@ -24,7 +24,7 @@
                 $user = auth()->user()->id; 
                 $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
             @endphp
-            <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড <span> &nbsp;| @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif</span></a>
+            <li><a class="getstarted scrollto" href="{{ route('user.dashboard') }}">ড্যাশবোর্ড <span> &nbsp;| {{ App\Models\User::CashMoney() }}</span></a>
           </li>
           @else
           <li><a class="getstarted scrollto" href="{{ route('userlogin') }}">সাইনইন করুন </a></li>

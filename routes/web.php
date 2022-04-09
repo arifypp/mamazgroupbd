@@ -28,7 +28,7 @@ Route::group(['prefix' => '/'], function(){
 
     Route::post('/widthdarw/amount/success', 'App\Http\Controllers\TransactionController@store')->name('send.store');
 
-
+    
 });
 // Sign up payment
 Route::group(['prefix' => 'paysignupcash'], function(){
@@ -232,6 +232,8 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/dashboard','App\Http\Controllers\Backend\DashboardController@index')->name('admin.dashboard');
 
+            Route::get('/profile/{username}','App\Http\Controllers\Backend\DashboardController@profile')->name('admin.profile');
+
             Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
 
             Route::group(['prefix' => 'bonusetting'], function() {
@@ -248,6 +250,18 @@ Route::middleware(['verified'])->group(function () {
             });
 
             Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
+
+            // withdraw request
+            Route::group(['prefix' => 'withdraw'], function() {
+
+                Route::get('/manage/pending', 'App\Http\Controllers\Backend\WithdrawController@index')->name('withdraw.manage');
+                
+                Route::post('accpet/request/{id}', 'App\Http\Controllers\Backend\WithdrawController@requestAccept')->name('withdraw.request');
+                
+                Route::get('manage/accept', 'App\Http\Controllers\Backend\WithdrawController@accept')->name('withdraw.accept');
+
+                Route::post('delete/{id}', 'App\Http\Controllers\Backend\WithdrawController@destroy')->name('withdraw.destroy');
+            });
 
             // Landcat Route For CRUD
             Route::group(['prefix' => 'landcat'], function(){

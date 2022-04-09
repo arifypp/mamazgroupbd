@@ -161,6 +161,24 @@
                             </div>
                         </div>
                     </a>
+                    @elseif(Str::snake(class_basename($notification->type)) == 'withdraw_notification')
+                    <a href="{{ route('payament.request') }}" class="text-reset notification-item" id="MarkasRead" data-id="{{ $notification->id }}" data-attr="{{ route('notify.seend', $notification->id) }}">
+                        <div class="d-flex">
+                            <div class="avatar-xs me-3">
+                                <span class="avatar-title bg-primary rounded-circle font-size-16">
+                                    <i class="mdi mdi-bell-outline"></i>
+                                </span>
+                            </div>
+                            <div class="flex-grow-1">
+                                <h6 class="mt-0 mb-1" key="t-your-order">
+                                    ৳ {{ $notification->data['amount'] }} টাকার একটি উইথড্রো রিকুয়েস্ট পাঠিয়েছেন।
+                                </h6>
+                                <div class="font-size-12 text-muted">
+                                    <p class="mb-0"><i class="mdi mdi-clock-outline"></i> <span key="t-min-ago">{{ $notification->created_at->format('M d, H:i A') }}</span></p>
+                                </div>
+                            </div>
+                        </div>
+                    </a>
                     @endif 
 
                 @empty
@@ -188,11 +206,14 @@
                 <img class="rounded-circle header-profile-user" src="{{ isset(Auth::user()->avatar) ? asset(Auth::user()->avatar) : asset('/assets/images/users/avatar-1.jpg') }}"
                     alt="Header Avatar">
                 <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
-                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i>
+                <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i><br>
+                <span class="text-danger">
+                    Balance: <strong>{{ App\Models\User::CashMoney() }}</strong> BDT</span>
+                
             </button>
             <div class="dropdown-menu dropdown-menu-end">
                 <!-- item-->
-                <a class="dropdown-item" href="contacts-profile"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">@lang('translation.Profile')</span></a>
+                <a class="dropdown-item" href="{{ route('admin.profile', Auth::user()->username) }}"><i class="bx bx-user font-size-16 align-middle me-1"></i> <span key="t-profile">@lang('translation.Profile')</span></a>
                 <a class="dropdown-item d-block" href="#" data-bs-toggle="modal" data-bs-target=".change-password"><i class="bx bx-wrench font-size-16 align-middle me-1"></i> <span key="t-settings">@lang('translation.Settings')</span></a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item text-danger" href="javascript:void();" onclick="event.preventDefault(); document.getElementById('logout-form').submit();"><i class="bx bx-power-off font-size-16 align-middle me-1 text-danger"></i> <span key="t-logout">@lang('translation.Logout')</span></a>

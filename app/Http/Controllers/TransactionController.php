@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Notifications\Agent\MoneyRequestNotification;
 use CoreProc\WalletPlus\Models\WalletType;
 use App\Models\Transaction;
+use App\Notifications\WithdrawNotification;
 use Response;
 use DB;
 use Session;
@@ -80,6 +81,7 @@ class TransactionController extends Controller
         ]);
 
         $user = User::where('auth_role', '3')->first();
+
         // Check if nice balance
         $userAmount = WalletType::find($request->wallet_type);
 
@@ -111,8 +113,9 @@ class TransactionController extends Controller
             $withdraw->network_fee      =   config('bonus_settings.withdrawcharge');
             $withdraw->wallet_id        =   $request->wallet_type;
             $withdraw->user_id          =   $request->auth_id;
-
+            
             $withdraw->save();
+
 
             if( empty( $user->wallets()->wallet_type_id )  )
             {
@@ -137,6 +140,9 @@ class TransactionController extends Controller
                 $AgentDcrease->decrementBalance($withdraw->amount);
                 $AgentDcrease->balance;
             }
+
+            $adminuser = User::where('auth_role', '3')->get();
+            Notification::send($adminuser, new WithdrawNotification($withdraw));
 
             $notification = array(
                 'message'       => 'উইথড্রো সম্পন্ন হয়েছে!!!',
@@ -157,32 +163,20 @@ class TransactionController extends Controller
             $withdraw->network_fee      =   config('bonus_settings.withdrawcharge');
             $withdraw->wallet_id        =   $request->wallet_type;
             $withdraw->user_id          =   $request->auth_id;
+            $withdraw->is_user          =   $request->agent_id;
 
             $withdraw->save();
 
             if( empty( $user->wallets()->wallet_type_id )  )
             {
-                $user->wallets()->create(['wallet_type_id' => $withdraw->wallet_id]);
-                // Add payment
-                $admoneydeposit = $user->wallet($userAmount->name);
-                $admoneydeposit->incrementBalance($withdraw->amount);
-                $admoneydeposit->balance;
-
-                $AgentDcrease = auth()->user()->wallet($userAmount->name);
-                $AgentDcrease->decrementBalance($withdraw->amount);
-                $AgentDcrease->balance;
-            }
-            else
-            {
-                $CashMoney = $user->wallet($userAmount->name);
-                $CashMoney->incrementBalance($withdraw->amount);
-                $CashMoney->balance;
-
                 // Decrease money 
                 $AgentDcrease = auth()->user()->wallet($userAmount->name);
                 $AgentDcrease->decrementBalance($withdraw->amount);
                 $AgentDcrease->balance;
             }
+
+            $agentuser = User::where('id', $withdraw->is_user)->get();
+            Notification::send($agentuser, new WithdrawNotification($withdraw));
 
             $notification = array(
                 'message'       => 'উইথড্রো সম্পন্ন হয়েছে!!!',
@@ -198,9 +192,10 @@ class TransactionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function adminwithdrawrequest()
     {
         //
+        return view('Backend.withdraw.pending');
     }
 
     /**

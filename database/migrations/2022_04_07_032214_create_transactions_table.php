@@ -24,6 +24,10 @@ class CreateTransactionsTable extends Migration
             $table->foreign('wallet_id')->references('id')->on('wallet_types')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('is_user')->nullable();
+            $table->foreign('is_user')->references('id')->on('users')->onDelete('cascade');
+
+
             $table->timestamps();
         });
     }

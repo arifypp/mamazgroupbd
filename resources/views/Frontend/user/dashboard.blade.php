@@ -51,50 +51,6 @@
                         </div>
                      </a>
                   </div>
-                  <!-- Modal -->
-                  <div class="modal" id="Cashtaka" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                           <h5 class="modal-title" id="staticBackdropLabel">ক্যাশ টাকা</h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                           </button>
-                           </div>
-                           <div class="modal-body">
-                              <center>
-                                 <h1>@if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif <sup class="text-success" style="font-size:10px;">Available Balance</sup></h1>
-                              </center>
-                              <form action="{{ route('addmoney.transfer') }}" method="post">
-                                 @csrf
-                                 <input type="hidden" name="amount" value="@if(!empty($wallet['0']) ){{$wallet['0']->raw_balance}}@else{{'0'}}@endif">
-                                 <input type="hidden" name="auth_id" value="{{ auth()->user()->id }}">
-                                 <div class="form-group">
-                                    <label for="Send To">Send To</label>
-                                    <select name="sendto" id="sendto" class="form-control">
-                                       <option value="0">Please Select Box </option>
-                                       @php $wtype = CoreProc\WalletPlus\Models\WalletType::find([7, 11, 14]); @endphp
-                                       
-                                       @foreach( $wtype  as $key => $wallettypename )
-                                       <option value="{{ $wallettypename->name }}">{{ $wallettypename->name }}</option>
-                                       @endforeach
-                                    </select>
-                                    <span class="text-danger">@error('sendto'){{ $message }} @enderror</span><br>
-                                    <div class="alert alert-danger" id="mamazPoisha" style="display:none">
-                                       <span>
-                                          মামাজ পয়সাতে ১০০ টাকা সমান ১ পয়সা, এভাবে হিসাব করে আপনার মামাজ পয়সাতে যোগ হয়।
-                                       </span>
-                                    </div>
-                                 </div>
-                           </div>
-                           <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                           <button type="submit" class="btn btn-primary">Transfer Now</button>
-                           </div>
-                        </div>
-                        </form>
-                     </div>
-                  </div>
                   <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7 myagenttaka">
                         <div class="stat">
@@ -110,51 +66,7 @@
                         </div>
                      </div>
                   </div>
-                  <!-- Modal -->
-                  <div class="modal" id="AgentTaka" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-                     <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                           <div class="modal-header">
-                           <h5 class="modal-title" id="staticBackdropLabel">এজেন্ট টাকা</h5>
-                           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                           </button>
-                           </div>
-                           <div class="modal-body">
-                              <center>
-                                 <h1>@if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif <sup class="text-success" style="font-size:10px;">Available Balance</sup></h1>
-                              </center>
-                              <form action="{{ route('addmoney.transferagentmoney') }}" method="post">
-                                 @csrf
-                                 <input type="hidden" name="amount" value="@if(!empty($wallet['0']) ){{$wallet['0']->raw_balance}}@else{{'0'}}@endif">
-                                 <input type="hidden" name="auth_id" value="{{ auth()->user()->id }}">
-                                 <div class="form-group">
-                                    <label for="Send To">Send To</label>
-                                    <select name="sendtoag" id="sendtoag" class="form-control">
-                                       <option value="0">Please Select Box </option>
-                                       @php $wtype = CoreProc\WalletPlus\Models\WalletType::find([7, 9, 14]); @endphp
-                                       
-                                       @foreach( $wtype  as $key => $wallettypename )
-                                       <option value="{{ $wallettypename->name }}">{{ $wallettypename->name }}</option>
-                                       @endforeach
-                                    </select>
-                                    <span class="text-danger">@error('sendto'){{ $message }} @enderror</span><br>
-                                    <div class="alert alert-danger" id="mamazPoishaAg" style="display:none;">
-                                       <span>
-                                          মামাজ পয়সাতে ১০০ টাকা সমান ১ পয়সা, এভাবে হিসাব করে আপনার মামাজ পয়সাতে যোগ হয়।
-                                       </span>
-                                    </div>
-                                 </div>
-                                 
-                           </div>
-                           <div class="modal-footer">
-                           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                           <button type="submit" class="btn btn-primary">Transfer Now</button>
-                           </div>
-                        </div>
-                        </form>
-                     </div>
-                  </div>
+                 
                   <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7 charitymoney">
                         <div class="stat">

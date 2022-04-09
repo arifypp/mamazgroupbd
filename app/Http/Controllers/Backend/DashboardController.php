@@ -79,6 +79,13 @@ class DashboardController extends Controller
         return view('Backend.settings.addbonus');
     }
 
+    public function profile($username)
+    {
+        $user   = User::where('username', $username)->first();
+        return view('Backend.profile', compact('user'));
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
