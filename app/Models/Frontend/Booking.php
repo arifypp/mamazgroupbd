@@ -64,4 +64,11 @@ class Booking extends Model
 
         return $booking;
     }
+    // Admin booking counting
+    public static function Adminbookcount()
+    {
+        $booking = Booking::all()->count();
+
+        return $booking;
+    }
 }

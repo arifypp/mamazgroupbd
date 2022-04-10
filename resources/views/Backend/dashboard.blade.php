@@ -40,11 +40,11 @@
 
                             <div class="row">
                                 <div class="col-6">
-                                    <h5 class="font-size-15">125</h5>
+                                    <h5 class="font-size-15">{{ App\Models\Frontend\Booking::Adminbookcount() }}</h5>
                                     <p class="text-muted mb-0">বুকিং</p>
                                 </div>
                                 <div class="col-6">
-                                    <h5 class="font-size-15">৳1245</h5>
+                                    <h5 class="font-size-15">{{ App\Models\User::CashMoney() }}</h5>
                                     <p class="text-muted mb-0">বর্তমান টাকা</p>
                                 </div>
                             </div>
@@ -62,9 +62,21 @@
                 <div class="row">
                     <div class="col-sm-6">
                         <p class="text-muted">গত মাস</p>
-                        <h3>৳34,252</h3>
-                        <p class="text-muted"><span class="text-success me-2"> 12% <i class="mdi mdi-arrow-up"></i>
-                            </span> এগিয়ে আগের মাস থেকে।</p>
+                        <h3>
+                           ৳{{ App\Models\User::RedialChart() }}
+                        </h3>
+                        <p class="text-muted"><span class="text-success me-2"> 
+                        {{ App\Models\User::RedialChart() / 100}}%
+                        <i class="mdi mdi-arrow-up"></i>
+                            </span> 
+                            @if( App\Models\User::RedialChart() / 100  <= 50 )
+                                কমিয়ে আগের মাস থেকে 
+                            @elseif( App\Models\User::RedialChart() / 100  <= 51 && App\Models\User::RedialChart() / 100 >= 100)
+                                এগিয়ে আগের মাস থেকে।
+                            @endif
+                            
+                        
+                        </p>
                     </div>
                     <div class="col-sm-6">
                         <div class="mt-4 mt-sm-0">
@@ -749,4 +761,98 @@
 
 <!-- dashboard init -->
 <script src="{{ URL::asset('/assets/js/pages/dashboard.init.js') }}"></script>
+
+<script type="text/javascript">
+var options = {
+  chart: {
+    height: 360,
+    type: "bar",
+    stacked: !0,
+    toolbar: {
+      show: !1
+    },
+    zoom: {
+      enabled: !0
+    }
+  },
+  plotOptions: {
+    bar: {
+      horizontal: !1,
+      columnWidth: "15%",
+      endingShape: "rounded"
+    }
+  },
+  dataLabels: {
+    enabled: !1
+  },
+  series: [{
+    name: "Series A",
+    data: [44, 55, 41, 67, 22, 43, 36, 52, 24, 18, 36, 48]
+  }, {
+    name: "Series B",
+    data: [13, 23, 20, 8, 13, 27, 18, 22, 10, 16, 24, 22]
+  }, {
+    name: "Series C",
+    data: [11, 17, 15, 15, 21, 14, 11, 18, 17, 12, 20, 18]
+  }],
+  xaxis: {
+    categories: ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+  },
+  colors: ["#556ee6", "#f1b44c", "#34c38f"],
+  legend: {
+    position: "bottom"
+  },
+  fill: {
+    opacity: 1
+  }
+},
+chart = new ApexCharts(document.querySelector("#stacked-column-chart"), options);
+chart.render();
+options = {
+  chart: {
+    height: 200,
+    type: "radialBar",
+    offsetY: -10
+  },
+  plotOptions: {
+    radialBar: {
+      startAngle: -135,
+      endAngle: 135,
+      dataLabels: {
+        name: {
+          fontSize: "13px",
+          color: void 0,
+          offsetY: 60
+        },
+        value: {
+          offsetY: 22,
+          fontSize: "16px",
+          color: void 0,
+          formatter: function formatter(e) {
+            return e + "%";
+          }
+        }
+      }
+    }
+  },
+  colors: ["#38a3a5"],
+  fill: {
+    type: "gradient",
+    gradient: {
+      shade: "dark",
+      shadeIntensity: .15,
+      inverseColors: !1,
+      opacityFrom: 1,
+      opacityTo: 1,
+      stops: [0, 50, 65, 91]
+    }
+  },
+  stroke: {
+    dashArray: 4
+  },
+  series: ['{{ App\Models\User::RedialChart() / 100 }}'],
+  labels: ["মাসিক ইনকাম"]
+};
+(chart = new ApexCharts(document.querySelector("#radialBar-chart"), options)).render();
+</script>
 @endsection

@@ -234,6 +234,8 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/profile/{username}','App\Http\Controllers\Backend\DashboardController@profile')->name('admin.profile');
 
+            Route::get('/reports','App\Http\Controllers\Backend\DashboardController@report')->name('admin.report');
+
             Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
 
             Route::group(['prefix' => 'bonusetting'], function() {
@@ -261,6 +263,17 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('manage/accept', 'App\Http\Controllers\Backend\WithdrawController@accept')->name('withdraw.accept');
 
                 Route::post('delete/{id}', 'App\Http\Controllers\Backend\WithdrawController@destroy')->name('withdraw.destroy');
+            });
+
+            // deposit request
+            Route::group(['prefix' => 'deposit'], function() {
+
+                Route::get('/create', 'App\Http\Controllers\Backend\DepositController@create')->name('withdraw.create');
+
+                Route::post('/store', 'App\Http\Controllers\Backend\DepositController@store')->name('withdraw.store');
+                
+                Route::get('/manage', 'App\Http\Controllers\Backend\DepositController@index')->name('deposit.manage');
+
             });
 
             // Landcat Route For CRUD

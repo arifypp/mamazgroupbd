@@ -34,8 +34,8 @@
                         <span key="t-withdraw">ডিপোজিট সেটিং</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('landcat.manage') }}" key="t-withdraw-pending"> ডিপোজিট রিকুয়েস্ট </a></li>
-                        <li><a href="{{ route('landcat.create') }}" key="t-total-withdraw"> ডিপোজিট লিস্ট</a></li>
+                        <li><a href="{{ route('withdraw.create') }}" key="t-deposit-create"> ডিপোজিট রিকুয়েস্ট </a></li>
+                        <li><a href="{{ route('deposit.manage') }}" key="t-total-withdraw"> ডিপোজিট লিস্ট</a></li>
                     </ul>
                 </li>
                 <li>
@@ -115,7 +115,7 @@
 
                 <li class="menu-title" key="t-apps">রিপোর্ট সেটিং</li>
                 <li>
-                    <a href="javascript: void(0);" class="waves-effect">
+                    <a href="{{route('admin.report')}}" class="waves-effect">
                         <i class="bx bx-book"></i>
                         <span key="t-transaction-setting">ট্রান্জিকশন লিস্ট</span>
                     </a>

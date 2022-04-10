@@ -59,7 +59,7 @@
                               <td> - </td>
                               <td> 
                                  @php 
-                                 $walletype = DB::table('wallet_types')->where('id', $ledgerdata->wallet_id)->get();
+                                 $walletype = DB::table('wallet_types')->where('id', $ledger->wallet_type_id)->get();
                                  @endphp
 
                                  @foreach( $walletype as $walletname ) 
