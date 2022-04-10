@@ -192,6 +192,21 @@ Route::middleware(['verified'])->group(function () {
 
             Route::get('/notifyseen/{id}','App\Http\Controllers\Backend\AgentDashboardController@notify')->name('agent.notify');
 
+            Route::get('/transactionlist','App\Http\Controllers\Backend\AgentDashboardController@transactionlist')->name('agent.transactionlist');
+
+            // withdraw request
+            Route::group(['prefix' => 'withdraw'], function() {
+                Route::get('/manage/pending', 'App\Http\Controllers\Backend\Agent\WithdrawController@index')->name('withdraw.agent.manage');
+                
+                Route::post('accpet/request/{id}', 'App\Http\Controllers\Backend\Agent\WithdrawController@requestAccept')->name('withdraw.agent.request');
+
+                Route::get('/request', 'App\Http\Controllers\Backend\Agent\WithdrawController@withdraw')->name('withdraw.agent.withdraw');
+
+                Route::post('/store', 'App\Http\Controllers\Backend\Agent\WithdrawController@store')->name('withdraw.agent.store');
+                
+                Route::post('delete/{id}', 'App\Http\Controllers\Backend\Agent\WithdrawController@destroy')->name('withdraw.agent.destroy');
+            });
+
             // Add money
             Route::get('/add-money', 'App\Http\Controllers\Backend\Agent\AddMoneyController@index')->name('agent.addmoney');
             Route::post('/add-money/store', 'App\Http\Controllers\Backend\Agent\AddMoneyController@store')->name('agent.store');

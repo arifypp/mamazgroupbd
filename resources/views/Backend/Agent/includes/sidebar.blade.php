@@ -19,6 +19,16 @@
                 <li class="menu-title" key="t-apps">প্রয়োজনীয় মেনু</li>
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
+                        <i class="bx bx-box"></i>
+                        <span key="t-withdraw">টাকা উইথড্রো সেটিংস</span>
+                    </a>
+                    <ul class="sub-menu" aria-expanded="false">
+                        <li><a href="{{ route('withdraw.agent.withdraw') }}" key="t-cash-withdraw"> উইথড্রো করুন </a></li>
+                        <li><a href="{{ route('withdraw.agent.manage') }}" key="t-cash-withdraw"> উইথড্রো লিস্ট </a></li>
+                    </ul>
+                </li>
+                <li>
+                    <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-wallet"></i>
                         <span key="t-booking">টাকা যুক্ত করুন</span>
                     </a>
@@ -79,6 +89,15 @@
                         <li><a href="{{ route('agent.approved.report') }}" key="t-total-reports"> এ্যাপ্রুভ রিপোর্ট </a></li>
                     </ul>
                 </li>
+
+                <li>
+                    <a href="{{ route('agent.transactionlist') }}" class="waves-effect">
+                        <i class="bx bx-book"></i>
+                        <span key="t-transactionlist">ট্রান্সিকশন লিস্ট</span>
+                    </a>
+                </li>
+
+                
 
                 <li class="menu-title" key="t-apps">অন্যান্য সেটিং</li>
 

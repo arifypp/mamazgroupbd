@@ -77,9 +77,10 @@ class AgentDashboardController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function transactionlist()
     {
         //
+        return view('Backend.Agent.transaction');
     }
 
     /**

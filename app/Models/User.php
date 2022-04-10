@@ -9,6 +9,7 @@ use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use App\Models\Frontend\Booking;
 use CoreProc\WalletPlus\Models\WalletType;
+use App\Models\Frontend\Addmoney;
 use Auth;
 use DB;
 use Carbon\Carbon;
@@ -59,6 +60,12 @@ class User extends Authenticatable implements MustVerifyEmail
     public function getReferralLinkAttribute()
     {
         return $this->referral_link = route('register', ['ref' => $this->username]);
+    }
+
+    public static function AllBookingCount()
+    {
+      $countBooking = Booking::where('bookingauthid', Auth::user()->id)->count();
+      return $countBooking;
     }
 
     public static function PromoteLevel()
@@ -397,6 +404,222 @@ class User extends Authenticatable implements MustVerifyEmail
         }
 
     }
+
+    // Non-sponsor bonus
+    public static function NonSponsorbonus()
+    {
+        $BDT = "৳";
+        $bonus = auth()->user()->wallet('Non-Sponsor Bonus');
+        if( !empty( $bonus->balance ) ){
+          return $BDT. $bonus->balance; 
+        }
+        else
+        {
+          return $BDT. 0;
+        }
+    }
+    // Land coverage bonus
+    public static function LandCoverageBonus()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Land Coverage');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Club bonus
+    public static function ClubBonus()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Club Bonus');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // generation bonus
+    public static function GenerationBonus()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Generation Bonus');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Land Reserve Money
+    public static function LandReserveCash()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Land Reserve Cash');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Gift and tour
+    public static function GiftandTour()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Gift And Tour');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Honda And Car
+    public static function HondCar()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Honda And Car');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Land Insurance	
+    public static function LandInsurance()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Land Insurance');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Turism Found	
+    public static function TurismFound()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Turism Found');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // GoldPinCreastCertificate Found	
+    public static function GoldPinCreastCertficate()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('GoldPinCreastCertificate Found');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Office Maintaince Found	
+    public static function OfficeMaintainceFound()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Office Maintaince Found');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Demarage and Backup Found
+    public static function DemarageAndBackupFound()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Demarage and Backup Found');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Mamaz Development Found
+    public static function MamazDevelopmentFound()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Mamaz Development Found');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    public static function FollowUpBonus()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('FollowUp Bonus');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Money request from agent
+    public static function MoneyRequestAgent()
+    {
+      $requestmoney = Addmoney::where('status', 0)->count();
+      return $requestmoney;
+    }
+
+    // Service Charge for agent
+    public static function MoneyrestAgent()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Money Request');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+    	
 
     /**
      * The attributes that should be hidden for arrays.

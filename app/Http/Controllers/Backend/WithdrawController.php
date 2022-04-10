@@ -136,7 +136,7 @@ class WithdrawController extends Controller
     {
         //
        $withdraw = Transaction::find($id);
-
+    if( $withdraw->status == 0 ){
        $user = User::where('id', $withdraw->user_id)->first();
 
        $userAmount = WalletType::find($withdraw->wallet_id);
@@ -144,7 +144,7 @@ class WithdrawController extends Controller
         $AgentDcrease = $user->wallet($userAmount->name);
         $AgentDcrease->incrementBalance($withdraw->amount);
         $AgentDcrease->balance;
-    
+    }
 
         $delete = Transaction::where('id', $id)->delete();
 

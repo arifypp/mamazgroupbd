@@ -24,12 +24,8 @@
                   <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
-                           @php 
-                           $user = auth()->user()->id; 
-                           $wallet = \DB::table('wallets')->whereIn('user_id', auth()->user())->get();
-                           @endphp
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/1.png') }}" alt="" class="mb-2" width="50"></span><br>
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                              {{ App\Models\User::AssetMoney() }}
                            </h3>
                            <b>অ্যাসেড বোনাস</b>
                         </div>
@@ -40,11 +36,7 @@
                         <div class="d-flex justify-content-center mt-7 px-7 cash-taka" data-toggle="modal" data-target="#Cashtaka">
                            <div class="stat">
                               <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/2.png') }}" alt="" class="mb-2" width="50"></span><br>
-                                 @php 
-                                 $user = auth()->user()->id; 
-                                 $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 9)->get();
-                                 @endphp
-                                 @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                              {{ App\Models\User::CashMoney() }}                                
                               </h3>
                               <b>ক্যাশ বোনাস</b>
                            </div>
@@ -55,12 +47,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7 myagenttaka">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/3.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 11)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
-                           
+                           {{ App\Models\User::AgentMoney() }}                               
                            </h3>
                            <b>এজেন্ট টাকা</b>
                         </div>
@@ -71,11 +58,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7 charitymoney">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/4.png') }}" alt="" class="mb-2" width="50"></span><br>
-                              @php 
-                                 $user = auth()->user()->id; 
-                                 $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 12)->get();
-                              @endphp
-                                 @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::CharityMoney() }}
                            </h3>
                            <b>চ্যারিটি দান টাকা</b>
                         </div>
@@ -105,11 +88,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/5.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 13)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                              {{ App\Models\User::VatTaxCost() }}
                            </h3>
                            <b>ভ্যাট / ট্যাক্স</b>
                         </div>
@@ -119,11 +98,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::MamazPoisa() }}
                            </h3>
                            <b>মামাজ পয়সা</b>
                         </div>
@@ -143,11 +118,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                              {{ App\Models\User::LandCoverageBonus() }}
                            </h3>
                            <b>ল্যান্ড কভারেজ বোনাস</b>
                         </div>
@@ -157,11 +128,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::NonSponsorbonus() }}
                            </h3>
                            <b>নন স্পনসর বোনাস</b>
                         </div>
@@ -171,11 +138,7 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::ClubBonus() }}
                            </h3>
                            <b>ক্লাব বোনাস</b>
                         </div>
@@ -185,11 +148,8 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::FounderShip() }}
+                           
                            </h3>
                            <b>ফাউন্ডারশিপ বোনাস</b>
                         </div>
@@ -199,39 +159,19 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::FollowUpBonus() }}
                            </h3>
                            <b>ফলোআপ বোনাস</b>
                         </div>
                      </div>
                   </div>
+                  
                   <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
-                           </h3>
-                           <b>ক্লাব বোনাস</b>
-                        </div>
-                     </div>
-                  </div>
-                  <div class="col-md-3">
-                     <div class="d-flex justify-content-center mt-7 px-7">
-                        <div class="stat">
-                           <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::MamazDevelopmentFound() }}
+                           
                            </h3>
                            <b>ডেভেলোপমেন্ট বোনাস</b>
                         </div>
@@ -241,11 +181,8 @@
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
-                           @php 
-                              $user = auth()->user()->id; 
-                              $wallet = \DB::table('wallets')->where('user_id', $user)->where('wallet_type_id', 14)->get();
-                           @endphp
-                              @if( !empty($wallet['0']) ) {{ $wallet['0']->raw_balance }}৳ @else  {{ "0৳" }} @endif
+                           {{ App\Models\User::GenerationBonus() }}
+
                            </h3>
                            <b>জেনেরেশন বোনাস</b>
                         </div>

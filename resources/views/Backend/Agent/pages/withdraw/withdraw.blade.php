@@ -1,0 +1,48 @@
+@extends('Backend.Agent.includes.main')
+
+@section('title') উইখড্র রিকুয়েস্ট  @endsection
+
+@section('css')
+    <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
+    <link href="{{ URL::asset('/assets/css/app.min.css') }}" id="app-style" rel="stylesheet" type="text/css" />
+    @endsection
+
+@section('content')
+
+    @component('components.breadcrumb')
+        @slot('li_1') উইখড্র রিকুয়েস্ট  @endslot
+        @slot('title') উইখড্র রিকুয়েস্ট  @endslot
+    @endcomponent
+
+    <div class="row">
+        <div class="col-md-6 offset-md-3 align-items-center align-self-center justify-content-center">
+            <div class="card">
+                <div class="card-body">
+                    <form action="{{ route('withdraw.agent.store') }}" method="post">
+                        @csrf
+                        <div class="form-group mb-3">
+                            <label for="Amount">টাকার পরিমাণ ?</label>
+                            <input type="number" name="amount" id="amount" class="form-control input-lg" value="{{ old('amount') }}" autocomplete="off" min="0" max="10000" step="1" required style="font-size: 40px;">
+                        </div>
+                        <div class="form-group mb-3">
+                            <label for="Amount">উইথড্রো টাইপ ?</label>
+                            <select name="wallet_type" id="wallet_type" class="form-control" required>
+                                <option value="0">নির্বাচন করুন</option>
+                                @php
+                                $walletTypeID = CoreProc\WalletPlus\Models\WalletType::where('name', 'Cash Money')->get();
+                                @endphp
+                                @foreach( $walletTypeID as $key => $walletType )
+                                <option value="{{ $walletType->id }}"> {{ $walletType->name }} </option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <div class="form-group mb-3">
+                            <button type="submit" class="btn btn-primary">উইথড্রো করুন</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+@endsection
