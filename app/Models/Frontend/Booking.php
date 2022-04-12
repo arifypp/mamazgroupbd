@@ -14,6 +14,54 @@ class Booking extends Model
     use HasFactory;
     protected $table="bookings";
 
+    protected $fillable = [
+        'bookingid',
+        'user_id',
+        'status',
+        'name',
+        'phonenumber',
+        'religion',
+        'nationality',
+        'nidnumber',
+        'dob',
+        'maritalstatus',
+        'fathername',
+        'fatherphone',
+        'mothername',
+        'motherphone',
+        'spousename',
+        'spousephonenumber',
+        'flatorhouse',
+        'divisionid'.
+        'districtid'.
+        'thanaid'.
+        'ppostoffice'.
+        'ppostcode'.
+        'permanenthouse'.
+        'permanetdivisionid'.
+        'permanentdistrictid'.
+        'permanentthanaid'.
+        'permanentpostoffice'.
+        'permanentpostcode'.
+        'nominyname'.
+        'nominyphone'.
+        'nominyaddress'.
+        'nominynid'.
+        'nominyrelatoin'.
+        'referelname'.
+        'referelphone'.
+        'referelemail'.
+        'landvalue'.
+        'landquality'.
+        'paymentSystem'.
+        'kistiDuration'.
+        'bookingcash'.
+        'total_flat_price',
+        'kistypayment',
+        'dueamount',
+        'fullamount',
+    ];
+
     /** Present Address Model **/
     // Division
     public function division()
@@ -54,13 +102,13 @@ class Booking extends Model
     // User Model
     public function user()
     {
-        return $this->belongsTo(User::class, 'bookingauthid');
+        return $this->belongsTo(User::class, 'user_id');
     }
 
     // Counting Booking number by user
     public static function bookcount()
     {
-        $booking = Booking::where('bookingauthid', Auth::user()->id )->count();
+        $booking = Booking::where('user_id', Auth::user()->id )->count();
 
         return $booking;
     }

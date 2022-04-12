@@ -95,10 +95,10 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">অ্যাসেট টাকা</p>
-                                <h4 class="mb-0">
+                                <p class="text-muted fw-medium">মূল একাউন্ট টাকা</p>
+                                <h2 class="mb-0 text-success">
                                    {{ App\Models\User::AssetMoney() }}
-                                </h4>
+                                </h2>
                             </div>
 
                             <div class="flex-shrink-0 align-self-center ">
@@ -112,28 +112,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
-                <div class="card mini-stats-wid">
-                    <div class="card-body">
-                        <div class="d-flex">
-                            <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">ক্যাশ টাকা</p>
-                                <h4 class="mb-0">
-                                    {{ App\Models\User::CashMoney() }}
-                                </h4>
-                            </div>
-
-                            <div class="flex-shrink-0 align-self-center">
-                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
-                                    <span class="avatar-title rounded-circle bg-primary">
-                                        <i class="bx bxs-landmark font-size-24"></i>
-                                    </span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        
             <div class="col-md-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">

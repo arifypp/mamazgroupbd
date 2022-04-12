@@ -349,14 +349,14 @@
                                 <div class="form-group">
                                     <select name="kistyoption" class="form-control" id="kistyoption" style="display:none;">
                                         <option value="0">নির্বাচন করুন</option>
-                                        <option value="12">১ বছর</option>
-                                        <option value="24">২ বছর</option>
-                                        <option value="36">৩ বছর</option>
-                                        <option value="48">৪ বছর</option>
-                                        <option value="60">৫ বছর</option>
-                                        <option value="72">৬ বছর</option>
-                                        <option value="84">৭ বছর</option>
-                                        <option value="96">৮ বছর</option>
+                                        <option value="1">১ বছর</option>
+                                        <option value="2">২ বছর</option>
+                                        <option value="3">৩ বছর</option>
+                                        <option value="4">৪ বছর</option>
+                                        <option value="5">৫ বছর</option>
+                                        <option value="6">৬ বছর</option>
+                                        <option value="7">৭ বছর</option>
+                                        <option value="8">৮ বছর</option>
                                     </select>
                                 </div>
                             </div>
@@ -546,7 +546,15 @@ $("#permanetdivision").on('change',function(e){
             $("#TotalPrice").html("<center><h2 class='text-danger'>"+"৳"+ mamazpoisha +" টাকা"+"</h2></center>");
 
             $('#flatprice').html("৳ "+mamazpoisha + " BDT");
+
             $('#poishaproyojon').html("৳"+poisha+" মামাজ পয়সা");
+
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'total_flat_price',
+                name: 'total_flat_price',
+                value: mamazpoisha,
+            }).appendTo('form#submitform');
     
         });
 
@@ -590,6 +598,13 @@ $("#permanetdivision").on('change',function(e){
             var monthPay = (totalprice) / (kistyoption);
 
             $('#monthkisty').text("৳ "+Math.round(monthPay)+" BDT");
+
+            $('<input>').attr({
+                type: 'hidden',
+                id: 'kistypayment',
+                name: 'kistypayment',
+                value: Math.round(monthPay),
+            }).appendTo('form#submitform');
         });
 
 

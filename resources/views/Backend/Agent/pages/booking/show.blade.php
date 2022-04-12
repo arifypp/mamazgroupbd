@@ -1,4 +1,4 @@
-@extends('layouts.master')
+@extends('Backend.Agent.includes.main')
 
 @section('title') বুকিং তথ্য @endsection
 
@@ -270,18 +270,7 @@
                         </tr>
                     </tbody>
                </table>
-               <div class="row">
-                   <div class="col-md-12 m-auto text-center mb-4 mt-3">
-                       <a href="{{ route('bbooking.new') }}" class="btn btn-danger waves-effect btn-label waves-light">
-                       <i class="bx bx-block label-icon"></i>
-                           ক্যানসেল
-                        </a>
-                       <a href="javascript:void(0)" id="approvecash" data-id="{{ $bookings->id }}" data-attr="{{ route('bbooking.status', $bookings->id) }}" class="btn btn-success waves-effect btn-label waves-light">
-                        <i class="bx bx-check label-icon"></i>
-                           অ্যপ্রুভ করুন
-                        </a>
-                   </div>
-               </div>
+               
                <hr>
                <div class="row">
                    <div class="col-md-12 text-center">

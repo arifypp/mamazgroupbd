@@ -16,7 +16,8 @@ class CreateBookingsTable extends Migration
         Schema::create('bookings', function (Blueprint $table) {
             $table->increments('id');
             $table->string('bookingid')->nullable();
-            $table->string('bookingauthid')->nullable();
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->integer('status')->default('0')->comment('0 for pending, 1 for decliend, 2 for progressing, 3 for approved');
             $table->string('name')->nullable();
             $table->string('phonenumber')->nullable();
@@ -51,17 +52,15 @@ class CreateBookingsTable extends Migration
             $table->string('referelname')->nullable();
             $table->string('referelphone')->nullable();
             $table->string('referelemail')->nullable();
-            $table->string('flatvalue')->nullable();
-            $table->string('bookingmoney')->nullable();
-            $table->string('bookingmoneymehtod')->nullable();
-            $table->string('banktransaction')->nullable();
-            $table->string('bankreferenceno')->nullable();
-            $table->string('bkashtransiction')->nullable();
-            $table->string('bkashnumber')->nullable();
-            $table->string('nagadtransiction')->nullable();
-            $table->string('nagadnumber')->nullable();
-            $table->string('rockettransiction')->nullable();
-            $table->string('rocketnumber')->nullable();
+            $table->string('landvalue')->nullable();
+            $table->string('landquality')->nullable();
+            $table->string('paymentSystem')->nullable();
+            $table->string('kistiDuration')->nullable();
+            $table->string('bookingcash')->nullable();
+            $table->string('total_flat_price')->nullable();
+            $table->string('kistypayment')->nullable();
+            $table->string('dueamount')->nullable();
+            $table->string('fullamount')->nullable();
 
             $table->timestamps();
         });

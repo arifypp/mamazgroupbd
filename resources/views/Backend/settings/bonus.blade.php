@@ -154,6 +154,106 @@
                                     </div>
                                 </div>
 
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> টার্গেট সেল বোনাস</label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="TargetSell" class="form-control" value="{{ config('bonus_settings.TargetSell') }}" placeholder="Target Sell Bonus">
+                                            <div class="input-group-text">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> গিফট এ্যান্ড ট্যুর</label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="giftandtoure" class="form-control" value="{{ config('bonus_settings.giftandtour') }}" placeholder="Gift and Tour">
+                                            <div class="input-group-text">৳</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> ৫ জেনেরেশন বোনাস</label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="5generationbonus" class="form-control" value="{{ config('bonus_settings.5generationbonus') }}" placeholder="Gift and Tour">
+                                            <div class="input-group-text">৳</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> নন টাগের্ট বোনাস</label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="nontargetbonus" class="form-control" value="{{ config('bonus_settings.nontargetbonus') }}" placeholder="Non Target">
+                                            <div class="input-group-text">৳</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> ফলোআপ বোনাস</label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="followupbonus" class="form-control" value="{{ config('bonus_settings.followupbonus') }}" placeholder="Follow up bonus">
+                                            <div class="input-group-text">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> হোন্ডা এবং কার </label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="hondaandcar" class="form-control" value="{{ config('bonus_settings.hondaandcar') }}" placeholder="Follow up bonus">
+                                            <div class="input-group-text">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> ল্যান্ড ইনসুরেন্স </label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="landinsurance" class="form-control" value="{{ config('bonus_settings.landinsurance') }}" placeholder="land insurace bonus">
+                                            <div class="input-group-text">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> ডেভেলোপমেন্ট বোনাস </label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="developmentbonus" class="form-control" value="{{ config('bonus_settings.developmentbonus') }}" placeholder="Developement bonus">
+                                            <div class="input-group-text">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> সার্ভিস চার্জ </label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="ServiceCharge" class="form-control" value="{{ config('bonus_settings.ServiceCharge') }}" placeholder="Service Charge">
+                                            <div class="input-group-text">%</div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="mb-3 row">
+                                    <label for="example-text-input" class="col-md-2 col-form-label"> গোল্ড পিন, ক্রেস্ট, সার্টিফিকেট </label>
+                                    <div class="col-md-10">
+                                        <div class="input-group">
+                                            <input type="text" name="gccf" class="form-control" value="{{ config('bonus_settings.gccf') }}" placeholder="Enter value">
+                                            <div class="input-group-text">৳</div>
+                                        </div>
+                                    </div>
+                                </div>
                                 
                                     <div class="col-md-3 mt-3 mb-3">
                                         <button type="submit" class="btn btn-primary btn-sm waves-effect waves-light">পরিবর্তন করুন</button>

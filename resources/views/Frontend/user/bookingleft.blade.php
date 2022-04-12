@@ -55,10 +55,7 @@
                       <a href="{{ route('booking.list') }}"><h6><i class="fas fa-sticky-note"></i>বুকিং লিস্ট</h6></a>
                      
                     </li>
-                    @php
-                   $application =  App\Models\Frontend\Booking::where('bookingauthid', 3 )->get();
-                    @endphp
-                  @if( !empty( auth()->user()->id == $application[0]->bookingauthid) )
+                    
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap @if( Route::currentRouteNamed('report.manage')) active @endif">
                       <a href="{{ route('report.manage') }}"><h6><i class="fas fa-book"></i>রিপোর্ট লিস্ট</h6></a>
                      
@@ -68,7 +65,6 @@
                       <a href="{{ route('report.create') }}"><h6><i class="fas fa-book"></i>রিপোর্ট পাঠান</h6></a>
                      
                     </li>
-                  @endif  
                     <li class="list-group-item d-flex justify-content-between align-items-center flex-wrap  @if( Route::currentRouteNamed('user.usersetting', Auth::user()->username)) active @endif">
                       <a href="{{ route('user.usersetting', Auth::user()->username) }}"><h6><i class="fas fa-user-cog"></i>প্রোফাইল সেটিং</h6></a>
                      

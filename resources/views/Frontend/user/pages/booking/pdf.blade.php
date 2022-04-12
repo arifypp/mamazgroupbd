@@ -1,5 +1,5 @@
 
-<div class="container-fluid">
+<div class="container-fluid p-0">
     <div class="row">
         <div class="col-md-12 text-center">
             @foreach( $site_settings as $value )
@@ -12,7 +12,7 @@
     </div>
     <hr>
     <div class="row d-flex">
-        <div class="col-md-12 booking">
+        <div class="col-md-6 booking">
           <p> 
               <span class="text-left">বুকিং রেজিস্ট্রেশন নং: <u>{{ $bookings->bookingid }}</u></span> 
               <span class="text-right float-right" style="float:right">বুকিং রেজিস্ট্রেশন নং: <u>{{ $bookings->bookingid }}</u></span>

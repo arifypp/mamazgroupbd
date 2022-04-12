@@ -43,13 +43,13 @@
                         <span key="t-booking">বুকিং ম্যানেজমেন্ট</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('bbooking.new') }}" key="t-booking-pending"> নতুন বুকিং <span class="badge rounded-pill bg-danger float-end">
+                        <li><a href="{{ route('booking.agent.new') }}" key="t-booking-pending"> নতুন বুকিং <span class="badge rounded-pill bg-danger float-end">
                         @php
                             $counts = DB::table('bookings')->where('status', 0)->count();
                             echo $counts;
                         @endphp
                         </span></a></li>
-                        <li><a href="{{ route('bbooking.manage') }}" key="t-total-booking">মোট বুকিং</a></li>
+                        <li><a href="{{ route('booking.agent.manage') }}" key="t-total-booking">মোট বুকিং</a></li>
                     </ul>
                 </li>
 

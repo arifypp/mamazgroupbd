@@ -64,7 +64,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
     public static function AllBookingCount()
     {
-      $countBooking = Booking::where('bookingauthid', Auth::user()->id)->count();
+      $countBooking = Booking::where('user_id', Auth::user()->id)->count();
       return $countBooking;
     }
 
@@ -315,7 +315,7 @@ class User extends Authenticatable implements MustVerifyEmail
 
         foreach( $booking as $value )
         {
-          $user = User::where('id', $value->bookingauthid)->get();
+          $user = User::where('id', $value->user_id)->get();
                
           $findwallelt = WalletType::where("name", "=", "Best Performance")->get();
           $walletidrequest = $findwallelt['0']->id;
@@ -611,6 +611,20 @@ class User extends Authenticatable implements MustVerifyEmail
     {
       $BDT = "৳";
       $bonus = auth()->user()->wallet('Money Request');
+      if( !empty( $bonus->balance ) ){
+        return $BDT. $bonus->balance; 
+      }
+      else
+      {
+        return $BDT. 0;
+      }
+    }
+
+    // Pending amount
+    public static function PendingAmount()
+    {
+      $BDT = "৳";
+      $bonus = auth()->user()->wallet('Pending');
       if( !empty( $bonus->balance ) ){
         return $BDT. $bonus->balance; 
       }

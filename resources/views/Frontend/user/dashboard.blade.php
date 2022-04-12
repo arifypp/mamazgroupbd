@@ -44,6 +44,16 @@
                      </a>
                   </div>
                   <div class="col-md-3">
+                     <div class="d-flex justify-content-center mt-7 px-7 cash-taka" data-toggle="modal" data-target="#Cashtaka">
+                        <div class="stat">
+                           <h3 class="mb-0 text-danger"><span><img src="{{ asset('assets/images/dashboard-icon/6.png') }}" alt="" class="mb-2" width="50"></span><br>
+                           {{ App\Models\User::PendingAmount() }}                                
+                           </h3>
+                           <b classt="text-danger" style="color:red;">পেন্ডিং টাকা</b> 
+                        </div>
+                     </div>
+                  </div>
+                  <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7 myagenttaka">
                         <div class="stat">
                            <h3 class="mb-0"><span><img src="{{ asset('assets/images/dashboard-icon/3.png') }}" alt="" class="mb-2" width="50"></span><br>
@@ -325,10 +335,10 @@
                         </div>
                         <div class="card-body">
                            <ul class="list-group list-group-flush">
-                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">বুকিং দিন</a> </li>
-                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">বুকিং লিস্ট</a> </li>
-                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">রিপোট লিস্ট</a> </li>
-                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">রিপোট দিন</a> </li>                              
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('booking.manage') }}">বুকিং দিন</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('booking.list') }}">বুকিং লিস্ট</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('report.manage') }}">রিপোট লিস্ট</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('report.create') }}">রিপোট দিন</a> </li>                              
                            </ul>
                         </div>
                      </div>
@@ -342,8 +352,8 @@
                            <ul class="list-group list-group-flush text-dark">
                               <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('user.referel', Auth::user()->id ) }}">আপনার গ্রাহককে ইনভাইট করুন</a> </li>
                               <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('user.reflist', Auth::user()->username ) }}">রেফারেল ইউজার লিস্ট</a> </li>
-                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">যোগাযোগ করুন</a> </li>
-                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="#">সার্ভিস সমূহ</a> </li>                              
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('contact') }}">যোগাযোগ করুন</a> </li>
+                              <li class="list-group-item"> <i class="fas fa-arrow-right"></i> <a href="{{ route('services') }}">সার্ভিস সমূহ</a> </li>                              
                            </ul>
                         </div>
                      </div>

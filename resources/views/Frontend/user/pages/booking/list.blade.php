@@ -26,8 +26,9 @@
                      <thead>
                         <tr>
                            <th scope="col">বুকিং নাম্বার</th>
-                           <th scope="col">বুকিং জমির পরিমান</th>
+                           <th scope="col">বুকিং জমি</th>
                            <th scope="col">বুকিং টাকা</th>
+                           <th scope="col">পেইড বুকিং টাকা</th>
                            <th scope="col">বুকিং স্টাটার্স</th>
                         </tr>
                      </thead>
@@ -35,8 +36,9 @@
                          @foreach( $bookings as $booking )
                         <tr>
                            <th scope="row">{{ $booking->bookingid }}</th>
-                           <td>{{ $booking->flatvalue }} SFT</td>
-                           <td>{{ number_format($booking->bookingmoney, 2, '.')}}৳</td>
+                           <td>{{ $booking->landvalue }} SFT</td>
+                           <td>{{ number_format($booking->bookingcash, 2, '.')}}৳</td>
+                           <td>{{ number_format($booking->dueamount, 2, '.')}}৳</td>
                            <td>
                                @if($booking->status == 2)
                                 <span class="text-danger">বাতিল হয়েছে</span>

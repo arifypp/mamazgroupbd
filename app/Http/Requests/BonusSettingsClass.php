@@ -35,7 +35,17 @@ class BonusSettingsClass extends FormRequest
             'landcoverage'      =>  'required|nullable',
             'clubbonus'         =>  'required|nullable',
             'bestperformancebonus'  =>  'required|nullable',
-            'withdrwacharge'    =>  'required|nullable',
+            'withdrwacharge'    =>  'required',
+            'TargetSell'        =>  'required|nullable',
+            'giftandtoure'      =>  'required|nullable',
+            '5generationbonus'  =>  'required|nullable',
+            'nontargetbonus'  =>  'required|nullable',
+            'followupbonus'  =>  'required|nullable',
+            'hondaandcar'  =>  'required|nullable',
+            'landinsurance'  =>  'required|nullable',
+            'developmentbonus'  =>  'required|nullable',
+            'ServiceCharge'  =>  'required|nullable',
+            'gccf'          =>  'required|nullable',
         ];
     }
 }

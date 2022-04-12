@@ -113,6 +113,20 @@
                                 <button class="btn btn-primary waves-effect waves-light" type="submit">Log
                                     In</button>
                             </div>
+                            <div class="row mt-2 text-center justify-content-center align-items-center align-self-center">
+                                <div class="col-md-4">
+                                <a href="{{ route('Agentlogin') }}" class="text-muted"><i
+                                            class="mdi mdi-power me-1"></i> Login Agent?</a>
+                                </div>
+                                <div class="col-md-4">
+                                <a href="{{ route('Adminlogin') }}" class="text-muted"><i
+                                            class="mdi mdi-power me-1"></i> Login Admin?</a>
+                                </div>
+                                <div class="col-md-4">
+                                <a href="{{ route('userlogin') }}" class="text-muted"><i
+                                            class="mdi mdi-power me-1"></i> Login User?</a>
+                                </div>
+                            </div>
 
                             <div class="mt-4 text-center">
                                 @if (Route::has('password.request'))

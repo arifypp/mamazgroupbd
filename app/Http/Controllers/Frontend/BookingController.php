@@ -6,12 +6,14 @@ use App\Http\Controllers\Controller;
 use lemonpatwari\bangladeshgeocode\Models\Division;
 use App\Models\Frontend\Booking;
 use App\Models\User;
+use CoreProc\WalletPlus\Models\WalletType;
 use App\Notifications\BookingNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
 use Response;
 use DB;
 use Session;
+use Auth;
 class BookingController extends Controller
 {
     /**
@@ -28,7 +30,7 @@ class BookingController extends Controller
 
     public function list()
     {
-        $bookings = Booking::where('bookingauthid', auth()->user()->id)->get();
+        $bookings = Booking::where('user_id', auth()->user()->id)->get();
         return view('Frontend.user.pages.booking.list', compact('bookings')); 
     }
 
@@ -127,16 +129,7 @@ class BookingController extends Controller
             'nominynid'     =>      ['required','min:8', 'numeric', 'regex:/(?:\d{17}|\d{13}|\d{10})/'],
             'nominyrelatoin' =>     ['required', 'not_in:0'],
             'flatvalue'     =>      ['required', 'not_in:0'],
-            'bookingmoney'   =>     ['required', 'numeric'],
-            'bookingmoneymehtod' => ['required', 'not_in:0'],
-            'banktransaction'   =>  ['required_if:bookingmoneymehtod,bank'],
-            'bankreferenceno'   =>  ['required_if:bookingmoneymehtod,bank'],
-            'bkashtransiction'  =>  ['required_if:bookingmoneymehtod,bkash'],
-            'bkashnumber'       =>  ['required_if:bookingmoneymehtod,bkash'],
-            'nagadtransiction'  =>  ['required_if:bookingmoneymehtod,Nagad'],
-            'nagadnumber'   =>      ['required_if:bookingmoneymehtod,Nagad'],
-            'rockettransiction' =>  ['required_if:bookingmoneymehtod,rocket'],
-            'rocketnumber'  =>      ['required_if:bookingmoneymehtod,rocket'],
+            
         ],
         $message = [
             'name.required' => 'আপনার নাম লিখুন',
@@ -179,24 +172,13 @@ class BookingController extends Controller
             'nominyrelatoin.not_in'   =>  'নমীনির সম্পর্ক নির্বাচন করুন',
             'flatvalue.required'   =>  'ফ্ল্যাট / জমির পরিমান নির্বাচন করুন',
             'flatvalue.not_in'   =>  'ফ্ল্যাট / জমির পরিমান নির্বাচন করুন',
-            'bookingmoney.required'      =>  'টাকার পরিমান লিখুন',
-            'bookingmoney.numeric'      =>  'অঙ্কে টাকার পরিমান লিখুন',
-            'bookingmoneymehtod.required'        =>  'আপনার টাকা পাঠানোর মাধ্যম নির্বাচন করুন',
-            'bookingmoneymehtod.not_in'        =>  'আপনার টাকা পাঠানোর মাধ্যম নির্বাচন করুন',
-            'banktransaction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
-            'bankreferenceno.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
-            'bkashtransiction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
-            'bkashnumber.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
-            'nagadtransiction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
-            'nagadnumber.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
-            'rockettransiction.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
-            'rocketnumber.required_if'       =>  'এই ঘরটি অবশ্যই পূরণ করুন',
+            
          ]);
 
         $booking = new Booking;
 
         $booking->bookingid         =   rand(0, 9999999);
-        $booking->bookingauthid     =   auth()->user()->id;
+        $booking->user_id           =   auth()->user()->id;
         $booking->name              =   $request->name;
         $booking->phonenumber       =   $request->phonenumber;
         $booking->religion          =   $request->religion;
@@ -230,18 +212,34 @@ class BookingController extends Controller
         $booking->referelname       =   $request->referelname;
         $booking->referelphone      =   $request->referelphone;
         $booking->referelemail      =   $request->referelemail;
-        $booking->flatvalue         =   $request->flatvalue;
-        $booking->bookingmoney      =   $request->bookingmoney;
-        $booking->bookingmoneymehtod =   $request->bookingmoneymehtod;
-        $booking->banktransaction   =   $request->banktransaction;
-        $booking->bankreferenceno   =   $request->bankreferenceno;
-        $booking->bkashtransiction  =   $request->bkashtransiction;
-        $booking->bkashnumber       =   $request->bkashnumber;
-        $booking->nagadtransiction  =   $request->nagadtransiction;
-        $booking->nagadnumber       =   $request->nagadnumber;
-        $booking->rockettransiction =   $request->rockettransiction;
-        $booking->rocketnumber      =   $request->rocketnumber;
+        $booking->landvalue         =   $request->flatvalue;
+        $booking->landquality       =   $request->landquality ;
+        $booking->paymentSystem     =   $request->inlineRadioOptions ;
+        $booking->kistiDuration     =   $request->kistyoption ;
+        $booking->bookingcash       =   '165000' ;
+        $booking->total_flat_price  =   $request->total_flat_price;
+        $booking->kistypayment      =   $request->kistypayment;
+        $booking->fullamount        =   $request->total_flat_price;
 
+        $user = User::where('id', Auth::user()->id)->first();
+
+        $userAmount = WalletType::find(14);
+
+        $Withdrawrequestwallettaka = auth()->user()->wallet($userAmount->id);
+
+
+        if( $Withdrawrequestwallettaka->balance <=  0)
+        {
+            return response()->json(['success' =>true, 'message'=> 'আপনার পর্যাপ্ত মামাজ পয়সা নেই।!!!']);
+        }
+
+        $AgentDcrease = auth()->user()->wallet('Mamaz Money');
+        $AgentDcrease->decrementBalance($Withdrawrequestwallettaka->balance);
+        $AgentDcrease->balance;
+
+        $booking->dueamount         =   '165000' - $Withdrawrequestwallettaka->balance * 100;
+
+        dd($booking); exit();
         $booking->save();
 
         $user = User::where('id', auth()->user()->referrer_id)->get();

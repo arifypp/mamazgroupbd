@@ -207,6 +207,30 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('delete/{id}', 'App\Http\Controllers\Backend\Agent\WithdrawController@destroy')->name('withdraw.agent.destroy');
             });
 
+            // booking list
+            Route::group(['prefix' => 'booking'], function() {
+                Route::get('/manage', 'App\Http\Controllers\Backend\Agent\BookingController@index')->name('booking.agent.manage');
+
+                Route::get('/new', 'App\Http\Controllers\Backend\Agent\BookingController@new')->name('booking.agent.new');
+
+                Route::post('/status/{id}', 'App\Http\Controllers\Backend\Agent\BookingController@status')->name('booking.agent.status');
+        
+                Route::get('/show/{id}', 'App\Http\Controllers\Backend\Agent\BookingController@show')->name('booking.agent.show');
+
+                Route::get('/notifyread/{id}', 'App\Http\Controllers\Backend\Agent\BookingController@notifyread')->name('booking.agent.notifyread');
+
+                Route::get('/create', 'App\Http\Controllers\Backend\Agent\BookingController@create')->name('booking.agent.create');
+        
+                Route::post('/store', 'App\Http\Controllers\Backend\Agent\BookingController@store')->name('booking.agent.store');
+        
+                Route::get('/edit/{id}', 'App\Http\Controllers\Backend\Agent\BookingController@edit')->name('booking.agent.edit');
+        
+                Route::post('/update/{id}', 'App\Http\Controllers\Backend\Agent\BookingController@update')->name('booking.Agent.update');
+           
+                Route::post('/delete/{id}', 'App\Http\Controllers\Backend\Agent\BookingController@destroy')->name('booking.Agent.destroy');
+                
+            }); 
+
             // Add money
             Route::get('/add-money', 'App\Http\Controllers\Backend\Agent\AddMoneyController@index')->name('agent.addmoney');
             Route::post('/add-money/store', 'App\Http\Controllers\Backend\Agent\AddMoneyController@store')->name('agent.store');
