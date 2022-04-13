@@ -254,6 +254,7 @@ h1, h2, h3, h4, h5, h6, .font-primary {
     box-shadow: none;
     border: 1px solid rgba(0, 0, 0, 0.1);
 }
+
 /*--------------------------------------------------------------
 # Disable aos animation delay on mobile devices
 --------------------------------------------------------------*/
@@ -261,7 +262,32 @@ h1, h2, h3, h4, h5, h6, .font-primary {
   [data-aos-delay] {
     transition-delay: 0 !important;
   }
+  .section-title1 h2, .section-title1 span {
+    font-size: 30px !important;
+  }
 
+  .about h3, .about h3 span {
+    font-size: 30px !important;
+  }
+  .section-title h3, .section-title h3 span {
+    font-size: 30px !important;
+  }
+  .section-title p {
+      font-size: 18px !important;
+  }
+
+  #clients {
+    margin-top: 80px;
+  }
+  .footer-links::after {
+    width: 0% !important;
+  }
+  .tab {
+    width: 50% !important;
+  }
+  .tabcontent {
+    width: 50% !important;
+  }
 
 }
 /*--------------------------------------------------------------
@@ -828,9 +854,7 @@ text-align: center;
 .about-section h4{
   margin-top: 10px !important ;
 }
-.section-title1 p{
-  padding: 24px !important;
-}
+
 
 .section-bg{
   padding-top: 0px !important;
@@ -1940,3 +1964,4 @@ Contact Us
   color: #fff;
   border: 2px solid #38a3a5;
 }
+
