@@ -18,9 +18,91 @@
             </div>
          </div>
          @include('Frontend/user/bookingleft')
-         <div class="col-md-9 "style="background-color: #F8FAFD; padding-top: 0px;">
+         <div class="col-md-9 "style="background-color: #F8FAFD;">
             <div class="uppderdesign">
                <div class="row">
+                  <div class="col-md-12">
+
+@php 
+   $booking = App\Models\Frontend\Booking::where('user_id', Auth::user()->id)->first();   
+@endphp
+@if( !empty( $booking ) )
+@php 
+$bookingAmount   = $booking->bookingcash;
+   $paidamount = $bookingAmount - $booking->dueamount;
+   
+   $percentageamount = $paidamount / $bookingAmount;
+@endphp
+<div class="alert alert-danger my-5" role="alert">
+   <label for="">আপনার বুকিং টাকা এখনো ডিউ রয়েছে?</label>
+<div class="progress col-md-12">
+  <div class="progress-bar bg-danger" role="progressbar" style="width: {{\Illuminate\Support\Str::limit($percentageamount, 4, '')}}%;" aria-valuenow="{{\Illuminate\Support\Str::limit($percentageamount, 4, '')}}" aria-valuemin="0" aria-valuemax="100">{{\Illuminate\Support\Str::limit($percentageamount, 4, '')}}%</div>
+</div>
+
+<a href="#" data-bs-toggle="modal" data-bs-target="#duepayment{{ $booking->id }}" class="btn btn-danger btn-sm mt-2 py-1 text-light text-right" style="float:right;">পে ডিউ পেমেন্ট</a>
+</div>
+<!-- Modal -->
+<div class="modal fade" id="duepayment{{ $booking->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="staticBackdropLabel">{{ $booking->user->name }} এর বুকিং ডিউ আছে</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <form action="" method="post">
+           @csrf
+           <div class="col-md-12">
+              <div class="alert alert-warning">
+                 <span>আপনার ডিউ রয়েছে: ৳{{ $booking->dueamount }} BDT</span>
+              </div>
+              <div class="form-group">
+                 <label for="Amount">টাকা পরিমান বসান</label>
+                 <input type="number" name="amount" id="amount" class="form-control">
+              </div>
+              <div class="row">
+              <div class="col-md-6 justify-content-center align-self-center text-center">
+                  <div class="card card-body">
+                     <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio1" value="Directly">
+                        <label class="form-check-label" for="inlineRadio1">ডিরেক্টলি</label>
+                     </div>                                
+                  </div>                     
+               </div>
+               <div class="col-md-6 justify-content-center align-self-center text-center">
+                  <div class="card card-body">
+                     <div class="form-check form-check-inline">
+                        <input class="form-check-input" type="radio" name="inlineRadioOptions" id="inlineRadio2" value="Cashbonus">
+                        <label class="form-check-label" for="inlineRadio2">ক্যাশ বোনাস</label>
+                     </div>                                
+                  </div>                     
+               </div>
+              </div>
+              <div class="form-group cashmoney" style="display:none;">
+                  <label for="wallet_type">ওয়ালেট নিবার্চন করুন?</label>
+                  <select name="wallet_type" id="wallet_type" class="form-control">
+                        <option value="0">নির্বাচন করুন</option>
+                        @php
+                        $walletTypeID = CoreProc\WalletPlus\Models\WalletType::where('name', 'Cash Money')->get();
+                        @endphp
+                        @foreach( $walletTypeID as $key => $walletType )
+                        <option value="{{ $walletType->id }}"> {{ $walletType->name }} </option>
+                        @endforeach
+                  </select>
+                  <span id="walletamountresult"></span>
+               </div>
+           </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">বন্ধ করুন</button>
+        <button type="button" class="btn btn-primary">পে করুন</button>
+      </div>
+    </div>
+  </div>
+</div>
+@endif
+                  </div>
                   <div class="col-md-3">
                      <div class="d-flex justify-content-center mt-7 px-7">
                         <div class="stat">
@@ -373,18 +455,29 @@
 @section('script')
 <script src="https://cdnjs.cloudflare.com/ajax/libs/js-cookie/2.1.0/js.cookie.js"></script>
 <script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
+</script>
+
+<script>
+   // agent users
+   $("input[type='radio']").click(function () {
+   radioVal = $(this).val();
+   if( radioVal == 'Cashbonus' )
+   {
+      $(".cashmoney").show();
+   }
+   else{
+      $(".cashmoney").hide();
+   }
+
+   });
    // A $( document ).ready() block.
    $( document ).ready(function() {
-      // Cash taka 
-      $(".cash-taka").click(function(){
-         $("#Cashtaka").scrollTop(0);
-         $('#Cashtaka').modal('show');
-      });
-      // Agent Taka 
-      $(".myagenttaka").click(function(){
-         $("#AgentTaka").scrollTop(0);
-         $('#AgentTaka').modal('show');
-      });
+      
       // Charity money 
       
       $(".charitymoney").click(function(){
@@ -487,6 +580,54 @@
                     }
                 });
         })
+    });
+
+        // Need to know price
+        $(document).ready(function() {
+        $("#wallet_type, #amount").change(function(){
+            var wallet_id = $("#wallet_type").val();
+
+            var withdrawcharge = "{{ config('bonus_settings.withdrawcharge') }}";
+
+            $.ajaxSetup({
+            headers: {
+                    "X-CSRFToken": '{{csrf_token()}}'
+                }
+            });
+
+            $.ajax({
+                    method : 'POST',
+                    url : "{{ url('/widthdarw/amount/request') }}/"+ wallet_id,
+                    data: {"_token": "{{ csrf_token() }}", "id": wallet_id},
+                    success: function(response) {
+                        var mamazpoisha = $("#amount").val();
+
+                        if( mamazpoisha == '' )
+                        {
+                            alert("টাকার পরিমান যুক্ত করুন।");
+                        }
+                        else
+                        {
+                            var chargeamount = (mamazpoisha) / 100 * withdrawcharge;
+                            var totalamount = +(mamazpoisha) + (chargeamount);
+                            if(response){
+                                $('#walletamountresult').html('<span class="text-info">আপনার বর্তমান এমাউন্ট আছে ৳'+response+'</span>');
+                            };
+
+                            $("#resultmpoisha").html("<center><h2 class='text-success'>"+"৳"+totalamount+" টাকা"+"</h2></center>"+"<div class='alert alert-success'>"+"সার্ভিস চার্জ ৳"+chargeamount +" টাকা</div>");
+                        }
+                        
+                                  
+                },
+                error:function (response){
+                    $('.text-danger').html('');
+                    $('.text-danger').delay(5000).fadeOut();
+                    $.each(response.responseJSON.error,function(field_name,error){
+                        $(document).find('[name='+field_name+']').after('<span class="text-strong text-danger">' +error+ '</span>')
+                    })
+                }
+            })
+        });
     });
 </script>
 @endsection

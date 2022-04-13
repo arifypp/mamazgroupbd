@@ -44,7 +44,7 @@
                                     <p class="text-muted mb-0">বুকিং</p>
                                 </div>
                                 <div class="col-6">
-                                    <h5 class="font-size-15">{{ App\Models\User::CashMoney() }}</h5>
+                                    <h5 class="font-size-15">{{ App\Models\User::AssetMoney() }}</h5>
                                     <p class="text-muted mb-0">বর্তমান টাকা</p>
                                 </div>
                             </div>
@@ -66,7 +66,7 @@
                            ৳{{ App\Models\User::RedialChart() }}
                         </h3>
                         <p class="text-muted"><span class="text-success me-2"> 
-                        {{ App\Models\User::RedialChart() / 100}}%
+                        {{ App\Models\User::RedialChart() / config('bonus_settings.mamazpoisha')}}%
                         <i class="mdi mdi-arrow-up"></i>
                             </span> 
                             @if( App\Models\User::RedialChart() / 100  <= 50 )
@@ -105,6 +105,29 @@
                                 <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
                                     <span class="avatar-title rounded-circle bg-primary">
                                         <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">পেন্ডিং টাকা</p>
+                                <h2 class="mb-0 text-danger">
+                                    {{ App\Models\User::PendingAmount() }}
+                                </h2>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bx-user font-size-24"></i>
                                     </span>
                                 </div>
                             </div>

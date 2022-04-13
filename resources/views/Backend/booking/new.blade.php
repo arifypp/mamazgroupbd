@@ -36,14 +36,13 @@
                         <tr>
                             <td>{{ $booking->bookingid }}</td>
                             <td>{{ $booking->name }}</td>
-                            <td>{{ $booking->flatvalue }}</td>
-                            <td>{{ $booking->bookingmoney }}</td>
+                            <td>{{ $booking->landvalue }} SFT</td>
+                            <td>৳{{ $booking->fullamount }} BDT</td>
                             <td>{{ $booking->phonenumber }}</td>
                             <td>
                                 <a href="{{ route('bbooking.show', $booking->id) }}" class="text-success"><i class="mdi mdi-18px mdi-eye"></i></a>
                                 <a href="{{ route('bbooking.edit', $booking->id) }}" class="text-info"><i class="mdi mdi-18px mdi-lead-pencil"></i></a>
                                 <a href="javascript:void(0)" onclick="deleteConfirmation('{{$booking->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
-                                <a href="#" class="text-primary"><i class="mdi mdi-18px mdi-file-pdf"></i></a>
                             </td>
                         </tr>
                         @endforeach

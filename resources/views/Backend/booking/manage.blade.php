@@ -36,8 +36,8 @@
                         <tr>
                             <td>{{ $booking->bookingid }}</td>
                             <td>{{ $booking->name }}</td>
-                            <td>{{ $booking->flatvalue }}</td>
-                            <td>{{ $booking->bookingmoney }}</td>
+                            <td>{{ $booking->landvalue }}</td>
+                            <td>{{ $booking->bookingcash }}</td>
                             <td>{{ $booking->phonenumber }}</td>
                             <td>
                                 <a href="{{ route('bbooking.show', $booking->id) }}" class="text-success"><i class="mdi mdi-18px mdi-eye"></i></a>

@@ -176,7 +176,7 @@
                     <div class="card-body">
                         <div class="d-flex">
                             <div class="flex-grow-1">
-                                <p class="text-muted fw-medium">পেন্ডি টাকা</p>
+                                <p class="text-muted fw-medium">পেন্ডিং টাকা</p>
                                 <h4 class="mb-0 text-danger">
                                     {{ App\Models\User::PendingAmount() }}
                                 </h4>

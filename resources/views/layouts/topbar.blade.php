@@ -208,7 +208,7 @@
                 <span class="d-none d-xl-inline-block ms-1" key="t-henry">{{ucfirst(Auth::user()->name)}}</span>
                 <i class="mdi mdi-chevron-down d-none d-xl-inline-block"></i><br>
                 <span class="text-danger">
-                    Balance: <strong>{{ App\Models\User::CashMoney() }}</strong> BDT</span>
+                    Balance: <strong>{{ App\Models\User::AssetMoney() }}</strong> BDT</span>
                 
             </button>
             <div class="dropdown-menu dropdown-menu-end">

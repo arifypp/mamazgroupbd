@@ -28,7 +28,9 @@
                            <th scope="col">বুকিং নাম্বার</th>
                            <th scope="col">বুকিং জমি</th>
                            <th scope="col">বুকিং টাকা</th>
+                           <th scope="col">ডিউ বুকিং টাকা</th>
                            <th scope="col">পেইড বুকিং টাকা</th>
+                           <th scope="col">টোটাল টাকা</th>
                            <th scope="col">বুকিং স্টাটার্স</th>
                         </tr>
                      </thead>
@@ -39,13 +41,15 @@
                            <td>{{ $booking->landvalue }} SFT</td>
                            <td>{{ number_format($booking->bookingcash, 2, '.')}}৳</td>
                            <td>{{ number_format($booking->dueamount, 2, '.')}}৳</td>
+                           <td>{{ number_format($booking->bookingcash - $booking->dueamount, 2, '.')}}৳</td>
+                           <td>{{ number_format($booking->fullamount, 2, '.')}}৳</td>
                            <td>
                                @if($booking->status == 2)
-                                <span class="text-danger">বাতিল হয়েছে</span>
+                                <span class="text-danger">বাতিল</span>
                                @elseif ($booking->status == 1)
-                                <span class="text-success">অ্যাপ্রুভ হয়েছে</span>
+                                <span class="text-success">অ্যাপ্রুভ</span>
                                @else 
-                               <span class="text-danger">পেনডিন হয়েছে</span>
+                               <span class="text-danger">পেনডিন</span>
                                @endif
                            </td>
                         </tr>

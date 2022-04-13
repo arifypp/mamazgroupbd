@@ -225,7 +225,7 @@ class BookingController extends Controller
 
         $userAmount = WalletType::find(14);
 
-        $Withdrawrequestwallettaka = auth()->user()->wallet($userAmount->id);
+        $Withdrawrequestwallettaka = $user->wallet($userAmount->id);
 
 
         if( $Withdrawrequestwallettaka->balance <=  0)
@@ -233,19 +233,46 @@ class BookingController extends Controller
             return response()->json(['success' =>true, 'message'=> 'আপনার পর্যাপ্ত মামাজ পয়সা নেই।!!!']);
         }
 
-        $AgentDcrease = auth()->user()->wallet('Mamaz Money');
-        $AgentDcrease->decrementBalance($Withdrawrequestwallettaka->balance);
-        $AgentDcrease->balance;
+        $booking->dueamount  =   '165000' - $Withdrawrequestwallettaka->balance * config('bonus_settings.mamazpoisha');
 
-        $booking->dueamount         =   '165000' - $Withdrawrequestwallettaka->balance * 100;
+        $adminpayment = User::where('auth_role', 3)->first();
 
-        dd($booking); exit();
+        $AdminAmnt = WalletType::find(32);
+        $bookingPay = $Withdrawrequestwallettaka->balance * config('bonus_settings.mamazpoisha');
+        $adminpendingwallet = $adminpayment->wallet($AdminAmnt->id);
+
+        if( empty( $adminpayment->wallets()->wallet_type_id )  )
+        {
+            $adminpayment->wallets()->create(['wallet_type_id' => $AdminAmnt->id]);
+            // Add payment
+            $AdminAmountIncrements = $adminpayment->wallet('Pending');
+            $AdminAmountIncrements->incrementBalance($bookingPay);
+            $AdminAmountIncrements->balance;
+
+            $UserAmountDecrements = $user->wallet('Mamaz Money');
+            $UserAmountDecrements->decrementBalance($Withdrawrequestwallettaka->balance);
+            $UserAmountDecrements->balance;
+        }
+        else
+        {
+            $AdminAmountIncrements = $adminpayment->wallet('Pending');
+            $AdminAmountIncrements->incrementBalance($bookingPay);
+            $AdminAmountIncrements->balance;
+
+            $UserAmountDecrements = $user->wallet('Mamaz Money');
+            $UserAmountDecrements->decrementBalance($Withdrawrequestwallettaka->balance);
+            $UserAmountDecrements->balance;
+        }
+
+        
+
+        
         $booking->save();
 
-        $user = User::where('id', auth()->user()->referrer_id)->get();
+        $user = User::where('id', $user->referrer_id)->get();
         Notification::send($user, new BookingNotification($booking));
 
-        $bookinguser = User::where('id', auth()->user()->id)->get();
+        $bookinguser = User::where('id', $user->id)->get();
         Notification::send($bookinguser, new BookingNotification($booking));
 
         $admin = User::where('auth_role', 3)->get();
