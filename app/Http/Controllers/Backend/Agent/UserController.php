@@ -17,8 +17,9 @@ class UserController extends Controller
     public function index()
     {
         //
+        $refuser = User::where('referrer_id', '=', Auth::user()->id )->get();
         $user = User::all();        
-        return view('Backend.Agent.pages.user.manage', compact('user'));
+        return view('Backend.Agent.pages.user.manage', compact('user', 'refuser'));
 
     }
 
@@ -27,9 +28,16 @@ class UserController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function referel($referrer_id)
     {
         //
+        $user = User::where('referrer_id', $referrer_id)->get();
+
+        if( $user )
+        {
+            return view('Backend.Agent.pages.user.referel', compact('user',));
+        }
+
     }
 
     /**

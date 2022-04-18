@@ -56,10 +56,10 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-user"></i>
-                        <span key="t-customer">কাস্টমার ম্যানেজমেন্ট</span>
+                        <span key="t-customer">অফিসার জেনিওলজি </span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
-                        <li><a href="{{ route('user.manage') }}" key="t-users-total">মোট কাস্টমার</a></li>
+                        <li><a href="{{ route('user.manage') }}" key="t-users-total">মোট অফিসার</a></li>
                     </ul>
                 </li>
 

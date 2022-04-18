@@ -120,6 +120,13 @@
                         <span key="t-transaction-setting">ট্রান্জিকশন লিস্ট</span>
                     </a>
                 </li>
+
+                <li>
+                    <a href="{{route('user.referellist')}}" class="waves-effect">
+                        <i class="bx bx-user"></i>
+                        <span key="t-officer-setting">অফিসার জেনিওলজি</span>
+                    </a>
+                </li>
                 
                 <li class="menu-title" key="t-apps">প্লাটফর্ম সেটিং</li>
                 <li>

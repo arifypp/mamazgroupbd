@@ -161,6 +161,26 @@ class DashboardController extends Controller
 
     }
 
+    public function referellist()
+    {
+        $user = User::all();
+        if( $user )
+        {
+            return view('Backend.userlist', compact('user'));
+        }
+
+    }
+
+    public function refereladmin($referrer_id)
+    {
+        $user = User::where('referrer_id', $referrer_id)->get();
+
+        if( $user )
+        {
+            return view('Backend.refuserlist', compact('user'));
+        }
+    }
+
     /**
      * Display the specified resource.
      *

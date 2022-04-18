@@ -35,9 +35,12 @@
                             @foreach( $user as $value )
                             @if( $value->referrer_id == Auth::user()->id )
                             <tr>
+                                @php 
+                                $refuser = App\Models\User::where('referrer_id', $value->id)->get();
+                                @endphp
                                 <td>{{ $i++ }}</td>
                                 <td> <img src="{{ asset($value->avatar) }}" alt="{{$value->name}}" class="img-fluid img-rounded" width="20"> </td>
-                                <td>{{ $value->name }}</td>
+                                <td> <a href="{{ route('user.referel', $refuser['0']->referrer_id) }}"> {{ $value->name }} </a> </td>
                                 <td>{{ $value->username }}</td>
                                 <td>
                                     @if( $value->auth_promote == 0 )

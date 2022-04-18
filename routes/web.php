@@ -242,6 +242,8 @@ Route::middleware(['verified'])->group(function () {
             Route::group(['prefix' => 'users'], function() {
                 Route::get('/manage', 'App\Http\Controllers\Backend\Agent\UserController@index')->name('user.manage');
 
+                Route::get('/referel/{referrer_id}', 'App\Http\Controllers\Backend\Agent\UserController@referel')->name('user.referel');
+
             });
 
             // All application under agent 
@@ -274,6 +276,9 @@ Route::middleware(['verified'])->group(function () {
             Route::get('/profile/{username}','App\Http\Controllers\Backend\DashboardController@profile')->name('admin.profile');
 
             Route::get('/reports','App\Http\Controllers\Backend\DashboardController@report')->name('admin.report');
+
+            Route::get('/referel/list', 'App\Http\Controllers\Backend\DashboardController@referellist')->name('user.referellist');
+            Route::get('/referel/{referrer_id}', 'App\Http\Controllers\Backend\DashboardController@refereladmin')->name('admin.user.referel');
 
             Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
 
