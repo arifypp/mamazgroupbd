@@ -31,12 +31,13 @@
 $bookingAmount   = $booking->bookingcash;
    $paidamount = $bookingAmount - $booking->dueamount;
    
-   $percentageamount = $paidamount / $bookingAmount;
-@endphp
+   $percentageamount = $paidamount / $bookingAmount * 100;
+
+   @endphp
 <div class="alert alert-danger my-5" role="alert">
    <label for="">আপনার বুকিং টাকা এখনো ডিউ রয়েছে?</label>
 <div class="progress col-md-12">
-  <div class="progress-bar bg-danger" role="progressbar" style="width: {{\Illuminate\Support\Str::limit($percentageamount, 4, '')}}%;" aria-valuenow="{{\Illuminate\Support\Str::limit($percentageamount, 4, '')}}" aria-valuemin="0" aria-valuemax="100">{{\Illuminate\Support\Str::limit($percentageamount, 4, '')}}%</div>
+  <div class="progress-bar bg-danger" role="progressbar" style="width: {{\Illuminate\Support\Str::limit($percentageamount, 2, '')}}%;" aria-valuenow="{{\Illuminate\Support\Str::limit($percentageamount, 2, '')}}" aria-valuemin="0" aria-valuemax="100">{{\Illuminate\Support\Str::limit($percentageamount, 4, '')}}%</div>
 </div>
 
 <a href="#" data-bs-toggle="modal" data-bs-target="#duepayment{{ $booking->id }}" class="btn btn-danger btn-sm mt-2 py-1 text-light text-right" style="float:right;">পে ডিউ পেমেন্ট</a>
@@ -50,7 +51,7 @@ $bookingAmount   = $booking->bookingcash;
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <form action="" method="post">
+        <form action="{{ route('booking.duecash', $booking->id) }}" method="post">
            @csrf
            <div class="col-md-12">
               <div class="alert alert-warning">
@@ -92,11 +93,11 @@ $bookingAmount   = $booking->bookingcash;
                   <span id="walletamountresult"></span>
                </div>
            </div>
-        </form>
-      </div>
+         </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">বন্ধ করুন</button>
-        <button type="button" class="btn btn-primary">পে করুন</button>
+        <button type="submit" class="btn btn-primary">পে করুন</button>
+        </form>
       </div>
     </div>
   </div>

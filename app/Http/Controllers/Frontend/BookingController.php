@@ -10,6 +10,7 @@ use CoreProc\WalletPlus\Models\WalletType;
 use App\Notifications\BookingNotification;
 use Illuminate\Support\Facades\Notification;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Validator;
 use Response;
 use DB;
 use Session;
@@ -310,9 +311,62 @@ class BookingController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function duecash(Request $request, $id)
     {
         //
+        $request->validate([
+            'amount'                    =>  ['required', 'integer'],
+        ]); 
+        
+        if( $request->inlineRadioOptions  == 'Directly' )
+        {
+            $bookigndueamount = Booking::find($id);
+
+            $bookigndueamount->dueamount     =   $request->input('amount');            
+            
+            $bookigndueamount->decrement('dueamount', $bookigndueamount->dueamount);
+            
+            $bookigndueamount->save();
+
+            $notification = array(
+                'message'       => 'পেমেন্ট সম্পন্ন হয়েছে!!!',
+                'alert-type'    => 'success'
+            );
+
+            return back()->with($notification);
+
+        }
+        else if( $request->inlineRadioOptions  == 'Cashbonus' )
+        {
+            $bookigndueamount = Booking::find($id);
+
+            $bookigndueamount->dueamount     =   $request->input('amount');
+
+            $user = User::where('id', Auth::user()->id)->first();
+
+
+            $Withdrawrequestwallettaka = $user->wallet('Cash Money');
+
+
+            if( $Withdrawrequestwallettaka->balance <=  0)
+            {
+                $notification = array(
+                    'message'       => 'আপনার পর্যাপ্ত ক্যাশ টাকা নেই।!!!',
+                    'alert-type'    => 'error'
+                );
+    
+                return back()->with($notification);
+
+            }
+
+            $UserAmountDecrements = $user->wallet('Cash Money');
+            $UserAmountDecrements->decrementBalance($request->amount);
+            $UserAmountDecrements->balance;
+
+            $bookigndueamount->save();           
+
+
+        }
     }
 
     /**

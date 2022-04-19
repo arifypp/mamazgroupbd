@@ -110,6 +110,9 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/create', 'App\Http\Controllers\Frontend\BookingController@create')->name('booking.create');
         
                 Route::post('/store', 'App\Http\Controllers\Frontend\BookingController@store')->name('booking.store');
+
+                Route::post('/duecash/{id}', 'App\Http\Controllers\Frontend\BookingController@duecash')->name('booking.duecash');
+
         
                 Route::get('/edit/{id}', 'App\Http\Controllers\Frontend\BookingController@edit')->name('booking.edit');
         
