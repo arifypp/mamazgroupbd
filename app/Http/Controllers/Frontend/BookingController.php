@@ -325,6 +325,21 @@ class BookingController extends Controller
             $bookigndueamount->dueamount     =   $request->input('amount');            
             
             $bookigndueamount->decrement('dueamount', $bookigndueamount->dueamount);
+
+            $adminpayment = User::where('auth_role', 3)->first();
+
+            $AdminAmnt = WalletType::find(7);
+
+            $adminpendingwallet = $adminpayment->wallet($AdminAmnt->id);
+
+            if( empty( $adminpayment->wallets()->wallet_type_id )  )
+            {
+                $adminpayment->wallets()->create(['wallet_type_id' => $AdminAmnt->id]);
+                // Add payment
+                $AdminAmountIncrements = $adminpayment->wallet('Assets Money');
+                $AdminAmountIncrements->incrementBalance($request->amount);
+                $AdminAmountIncrements->balance;
+            }
             
             $bookigndueamount->save();
 
@@ -359,9 +374,31 @@ class BookingController extends Controller
 
             }
 
-            $UserAmountDecrements = $user->wallet('Cash Money');
-            $UserAmountDecrements->decrementBalance($request->amount);
-            $UserAmountDecrements->balance;
+            $adminpayment = User::where('auth_role', 3)->first();
+
+            $AdminAmnt = WalletType::find(7);
+
+            $adminpendingwallet = $adminpayment->wallet($AdminAmnt->id);
+
+            if( empty( $adminpayment->wallets()->wallet_type_id )  )
+            {
+                $adminpayment->wallets()->create(['wallet_type_id' => $AdminAmnt->id]);
+                // Add payment
+                $AdminAmountIncrements = $adminpayment->wallet('Assets Money');
+                $AdminAmountIncrements->incrementBalance($request->amount);
+                $AdminAmountIncrements->balance;
+            }
+            else
+            {
+                $AdminAmountIncrements = $adminpayment->wallet('Assets Money');
+                $AdminAmountIncrements->incrementBalance($request->amount);
+                $AdminAmountIncrements->balance;
+
+                
+                $UserAmountDecrements = $adminpayment->wallet('Assets Money');
+                $UserAmountDecrements->decrementBalance($request->amount);
+                $UserAmountDecrements->balance;
+            }
 
             $bookigndueamount->save();           
 
