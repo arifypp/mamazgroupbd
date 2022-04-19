@@ -1,6 +1,6 @@
 @extends('layouts.master')
 
-@section('title') ডিপোজিট করুন  @endsection
+@section('title') ডিপোজিট  করুন  @endsection
 
 @section('css')
     <link href="{{ URL::asset('/assets/css/bootstrap.min.css') }}" id="bootstrap-style" rel="stylesheet" type="text/css" />
@@ -10,7 +10,7 @@
 @section('content')
 
     @component('components.breadcrumb')
-        @slot('li_1') ডিপোজিট @endslot
+        @slot('li_1') ডিপোজিট  @endslot
         @slot('title') ডিপোজিট করুন  @endslot
     @endcomponent
 

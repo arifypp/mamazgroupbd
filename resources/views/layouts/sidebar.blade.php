@@ -31,11 +31,12 @@
                 <li>
                     <a href="javascript: void(0);" class="has-arrow waves-effect">
                         <i class="bx bx-box"></i>
-                        <span key="t-withdraw">ডিপোজিট সেটিং</span>
+                        <span key="t-withdraw">ক্রেডিট / ডিপোজিট সেটিং</span>
                     </a>
                     <ul class="sub-menu" aria-expanded="false">
                         <li><a href="{{ route('withdraw.create') }}" key="t-deposit-create"> ডিপোজিট রিকুয়েস্ট </a></li>
-                        <li><a href="{{ route('deposit.manage') }}" key="t-total-withdraw"> ডিপোজিট লিস্ট</a></li>
+                        <li><a href="{{ route('withdraw.credit') }}" key="t-deposit-create"> ক্রেডিট রিকুয়েস্ট </a></li>
+                        <li><a href="{{ route('deposit.manage') }}" key="t-total-withdraw"> ক্রেডিট / ডিপোজিট লিস্ট</a></li>
                     </ul>
                 </li>
                 <li>

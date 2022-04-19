@@ -318,6 +318,10 @@ Route::middleware(['verified'])->group(function () {
                 Route::get('/create', 'App\Http\Controllers\Backend\DepositController@create')->name('withdraw.create');
 
                 Route::post('/store', 'App\Http\Controllers\Backend\DepositController@store')->name('withdraw.store');
+
+                Route::get('/credit', 'App\Http\Controllers\Backend\DepositController@credit')->name('withdraw.credit');
+
+                Route::post('/credit/store', 'App\Http\Controllers\Backend\DepositController@creditstore')->name('credit.store');
                 
                 Route::get('/manage', 'App\Http\Controllers\Backend\DepositController@index')->name('deposit.manage');
 

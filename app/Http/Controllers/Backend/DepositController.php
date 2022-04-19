@@ -121,9 +121,10 @@ class DepositController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function credit()
     {
         //
+        return view('Backend.deposit.credit');
     }
 
     /**
@@ -133,9 +134,58 @@ class DepositController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function creditstore(Request $request)
     {
         //
+        $request->validate([
+            'amount'    =>  ['required'],
+            'walletype' =>  ['required', 'not_in:0'],
+            'desc'      =>  ['required'],
+        ], $message = [
+            'amount.required'   =>  'সঠিক এমাউন্ট বসান',
+            'walletype.required'   =>  'ওয়ালেট নির্বাচন করুন',
+            'walletype.not_in'   =>  'ওয়ালেট নির্বাচন করুন',
+            'desc.required'     =>  'বিবরণ লিখুন।',
+        ]);
+
+        $deposit = new Depositor;
+
+        $deposit->txn_id        =   time();
+        $deposit->purpose       =   $request->desc;
+        $deposit->amount        =   $request->amount;
+        $deposit->wallet_id     =   $request->walletype;
+        $deposit->user_id       =   Auth::user()->id;
+
+        $deposit->save();
+
+        $user = User::where('id', Auth::user()->id)->first();
+        
+        $UserBalance = WalletType::find($deposit->wallet_id);
+               
+        if( empty( $UserBalance )  )
+        {
+            $userAmount = WalletType::find($deposit->wallet_id);
+
+            $AgentDcrease = $user->wallet($userAmount->name);
+            $AgentDcrease->incrementBalance($deposit->amount);
+            $AgentDcrease->balance;
+        }
+        else
+        {
+            // Decrease money 
+            $userAmount = WalletType::find($deposit->wallet_id);
+
+            $AgentDcrease = $user->wallet($userAmount->name);
+            $AgentDcrease->incrementBalance($deposit->amount);
+            $AgentDcrease->balance;
+        }
+
+        $notification = array(
+            'message'       => 'ডাটা তৈরি সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success',
+        );
+
+        return redirect()->route('deposit.manage')->with($notification);
     }
 
     /**
