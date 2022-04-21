@@ -8,7 +8,14 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\App;
 use Illuminate\Support\Facades\Session;
-
+use App\Models\Frontend\Addmoney;
+use Illuminate\Support\Facades\Notification;
+use App\Notifications\Agent\MoneyRequestNotification;
+use CoreProc\WalletPlus\Models\WalletType;
+use App\Models\Transaction;
+use App\Notifications\WithdrawNotification;
+use Response;
+use DB;
 class HomeController extends Controller
 {
     /**
@@ -138,6 +145,12 @@ class HomeController extends Controller
      public function thankyou()
      {
          return view('auth.thankyou');
+     }
+
+     public function invoice($id)
+     {
+        $withdrawrequest = Transaction::find($id);
+        return view('invoice', compact('withdrawrequest'));
      }
 
      public function referelink($id)

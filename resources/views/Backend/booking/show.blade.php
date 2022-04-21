@@ -257,15 +257,23 @@
                             <td class="col-4">{{ $bookings->landvalue }} SFT</td>
                         </tr>
                         <tr>
-                            <td class="col-7">বুকিং টাকার পরিমাণ -</td>
+                            <td class="col-7">বুকিং টাকা -</td>
                             <td class="col-5">{{ $bookings->total_flat_price }} BDT</td>
                         </tr>
                         <tr>
-                            <td class="col-7">কিস্তি টাকার পরিমাণ -</td>
+                            <td class="col-7">বুকিং ডিউ টাকা -</td>
+                            <td class="col-5">{{ $bookings->dueamount }} BDT</td>
+                        </tr>
+                        <tr>
+                            <td class="col-7">বুকিং পেইড টাকা -</td>
+                            <td class="col-5">{{ $bookings->bookingcash - $bookings->dueamount }} BDT</td>
+                        </tr>
+                        <tr>
+                            <td class="col-7">কিস্তি টাকা -</td>
                             <td class="col-5">{{ $bookings->kistypayment }} BDT</td>
                         </tr>
                         <tr>
-                            <td class="col-7">মোট টাকার পরিমাণ -</td>
+                            <td class="col-7">মোট টাকা -</td>
                             <td class="col-5">{{ $bookings->total_flat_price }} BDT</td>
                         </tr>
                     </tbody>

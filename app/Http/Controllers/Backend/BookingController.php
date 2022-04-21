@@ -54,6 +54,7 @@ class BookingController extends Controller
         $bookings->status = 3;
 
         $DueCash = 139000;
+
         // Collection user
         $bookinguser = User::where('id', $bookings->user_id)->first();
         $officer_red = $bookinguser->referrer_id;
@@ -99,6 +100,16 @@ class BookingController extends Controller
         // Collection payment
         $collectioncash = ($bookings->bookingcash) - ($tourandbonus+$CrestPincertificate+$agentbonusbybooking+$clubBBonus+$BestPerformance+$FundationCcashmoney+$nonsponsorbonus+$fundetionBonustaka+$LandInusrancetaka+$HondaandCarbonus+$HondaandCarbonus+$OfficeMaintainancecash+$officedemaragebonus+$targetsellbonus+$megadevelopmentbonus+$fivegeneratiobonus);
 
+        $servicechargepercentage =  config('bonus_settings.ServiceCharge');
+
+        $officerCollectioncash = $targetsellbonus+$megadevelopmentbonus+$fivegeneratiobonus;
+
+        $serviceCharge =  $officerCollectioncash / 100 * $servicechargepercentage;
+
+        $assettotalcash = ($officerCollectioncash - $serviceCharge) / 100 * config('bonus_settings.assetbonus');
+
+        $cashtotalcash = ($officerCollectioncash - $serviceCharge) / 100 * config('bonus_settings.cashbonus');
+
         
         if ( $bookings->dueamount == $DueCash) {
             
@@ -121,6 +132,7 @@ class BookingController extends Controller
                 $LandReservewalet = WalletType::find(21); //Land-reserve wallet
                 $OfficeMaintaincewallet = WalletType::find(27); //Office-Maintainance wallet
                 $demragebonus = WalletType::find(28); //Office-Demarage wallet
+                $serviceChargewallet = WalletType::find(13); //Service wallet
 
                 if( empty( $admin->wallets()->wallet_type_id )  )
                 {
@@ -138,6 +150,7 @@ class BookingController extends Controller
                     $admin->wallets()->create(['wallet_type_id' => $LandReservewalet->id]);
                     $admin->wallets()->create(['wallet_type_id' => $OfficeMaintaincewallet->id]);
                     $admin->wallets()->create(['wallet_type_id' => $demragebonus->id]);
+                    $admin->wallets()->create(['wallet_type_id' => $serviceChargewallet->id]);
                     // Tour Bonus payment
                     $tourBonus = $admin->wallet('Turism Found');
                     $tourBonus->incrementBalance($tourandbonus);
@@ -202,6 +215,11 @@ class BookingController extends Controller
                     $officedemarage = $admin->wallet('Demarage and Backup Found');
                     $officedemarage->incrementBalance($officedemaragebonus);
                     $officedemarage->balance;
+
+                    // Vat-tax by bonus
+                    $vat_tax = $admin->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
 
                     // Main cash 
                     $Maincashes = $admin->wallet('Assets Money');
@@ -235,7 +253,7 @@ class BookingController extends Controller
                     $BestPerformancecash->incrementBalance($BestPerformance);
                     $BestPerformancecash->balance;
 
-                    // Fundation bonus by book
+                    // Fundershio bonus by book
                     $FundationCash = $admin->wallet('Foundership Bonus');
                     $FundationCash->incrementBalance($FundationCcashmoney);
                     $FundationCash->balance;
@@ -270,35 +288,42 @@ class BookingController extends Controller
                     $officedemarage->incrementBalance($officedemaragebonus);
                     $officedemarage->balance;
 
-                     // Main cash 
-                     $Maincashes = $admin->wallet('Assets Money');
-                     $Maincashes->incrementBalance($collectioncash);
-                     $Maincashes->balance;
+                    // Vat-tax by bonus
+                    $vat_tax = $admin->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
+
+                    // Main cash 
+                    $Maincashes = $admin->wallet('Assets Money');
+                    $Maincashes->incrementBalance($collectioncash);
+                    $Maincashes->balance;
                 }     
             }
 
             // Sponsor bonus one
             if( !empty($officer) )
             {
-                // Collection
-                $officerCollectioncash = $targetsellbonus+$megadevelopmentbonus+$fivegeneratiobonus;
-
-                $assettotalcash = $officerCollectioncash / 100 * config('bonus_settings.assetbonus');
-                $cashtotalcash = $officerCollectioncash / 100 * config('bonus_settings.cashbonus');
                
                 // officer payment
-                $OfficerWallet = WalletType::find(32);
-                $AssedMoney = WalletType::find(7);
+                $OfficerWallet = WalletType::find(32); //pending
+                $AssedMoney = WalletType::find(7); //Assed money
+                $CashMoney = WalletType::find(9); //cash money
+                $serviceChargewallet = WalletType::find(13); //Service wallet
+                $GenerationWallet = WalletType::find(20); //generation wallet
+                $Clubwallet = WalletType::find(19); //club wallet
+                $NonSponsorBuns = WalletType::find(17); //nonsponsor bonus
+                $PerformanceBonus = WalletType::find(15); //Perfoamance bonus
 
                 if( empty( $officer->wallets()->wallet_type_id )  )
                 {
                     $officer->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
                     $officer->wallets()->create(['wallet_type_id' => $AssedMoney->id]);
-                    
-                    // Pending payment
-                    $pendingcash = $officer->wallet('Pending');
-                    $pendingcash->decrementBalance($assettotalcash+$cashtotalcash);
-                    $pendingcash->balance;
+                    $officer->wallets()->create(['wallet_type_id' => $CashMoney->id]);
+                    $officer->wallets()->create(['wallet_type_id' => $GenerationWallet->id]);
+                    $officer->wallets()->create(['wallet_type_id' => $Clubwallet->id]);
+                    $officer->wallets()->create(['wallet_type_id' => $NonSponsorBuns->id]);
+                    $officer->wallets()->create(['wallet_type_id' => $PerformanceBonus->id]);
+                    $officer->wallets()->create(['wallet_type_id' => $serviceChargewallet->id]);
 
                     //assed money
                     $assedmoney = $officer->wallet('Assets Money');
@@ -306,16 +331,38 @@ class BookingController extends Controller
                     $assedmoney->balance;
 
                     //cash money
-                    $assedmoney = $officer->wallet('Cash Money');
-                    $assedmoney->incrementBalance($cashtotalcash);
-                    $assedmoney->balance;
+                    $cashmoney = $officer->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $officer->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $officer->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonuscash = $officer->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonuscash->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonuscash->balance; 
+                    
+                    // Performance bonus by book
+                    $BestPerformancecash = $officer->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $officer->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
+                    
                 }
                 else
                 {
-                    // Pending payment
-                    $pendingcash = $officer->wallet('Pending');
-                    $pendingcash->decrementBalance($assettotalcash+$cashtotalcash);
-                    $pendingcash->balance;
 
                     //assed money
                     $assedmoney = $officer->wallet('Assets Money');
@@ -323,9 +370,34 @@ class BookingController extends Controller
                     $assedmoney->balance;
 
                     //cash money
-                    $assedmoney = $officer->wallet('Cash Money');
-                    $assedmoney->incrementBalance($cashtotalcash);
-                    $assedmoney->balance;
+                    $cashmoney = $officer->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $officer->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $officer->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonus = $officer->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonus->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonus->balance;
+
+                    // Performance bonus by book
+                    $BestPerformancecash = $officer->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $officer->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
                 }     
             }
 
@@ -333,43 +405,200 @@ class BookingController extends Controller
             if( !empty($subofficer) )
             {
                 // officer payment
-                $OfficerWallet = WalletType::find(32);
+                $OfficerWallet = WalletType::find(32); //pending
+                $AssedMoney = WalletType::find(7); //Assed money
+                $CashMoney = WalletType::find(9); //cash money
+                $serviceChargewallet = WalletType::find(13); //Service wallet
+                $GenerationWallet = WalletType::find(20); //generation wallet
+                $Clubwallet = WalletType::find(19); //club wallet
+                $NonSponsorBuns = WalletType::find(17); //nonsponsor bonus
+                $PerformanceBonus = WalletType::find(15); //Perfoamance bonus
 
-                if( empty( $officer->wallets()->wallet_type_id )  )
+                if( empty( $subofficer->wallets()->wallet_type_id )  )
                 {
                     $subofficer->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $subofficer->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
+                    $subofficer->wallets()->create(['wallet_type_id' => $AssedMoney->id]);
+                    $subofficer->wallets()->create(['wallet_type_id' => $CashMoney->id]);
+                    $subofficer->wallets()->create(['wallet_type_id' => $GenerationWallet->id]);
+                    $subofficer->wallets()->create(['wallet_type_id' => $Clubwallet->id]);
+                    $subofficer->wallets()->create(['wallet_type_id' => $NonSponsorBuns->id]);
+                    $subofficer->wallets()->create(['wallet_type_id' => $PerformanceBonus->id]);
+                    $subofficer->wallets()->create(['wallet_type_id' => $serviceChargewallet->id]);
+                    
+                   
+                    //assed money
+                    $assedmoney = $subofficer->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $subofficer->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $subofficer->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $subofficer->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonusincrement = $subofficer->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonusincrement->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonusincrement->balance; 
+                    
+                    // Performance bonus by book
+                    $BestPerformancecash = $subofficer->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $subofficer->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
+                    
                 }
                 else
                 {
-                    $developBonus = $subofficer->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
+                   
+                    //assed money
+                    $assedmoney = $subofficer->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $subofficer->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $subofficer->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $subofficer->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonus = $subofficer->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonus->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonus->balance;
+
+                    // Performance bonus by book
+                    $BestPerformancecash = $subofficer->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $subofficer->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
+                }     
             }
 
             // Sponsor bonus three
             if( !empty($sponsorthree) )
             {
                 // officer payment
-                $OfficerWallet = WalletType::find(32);
+                $OfficerWallet = WalletType::find(32); //pending
+                $AssedMoney = WalletType::find(7); //Assed money
+                $CashMoney = WalletType::find(9); //cash money
+                $serviceChargewallet = WalletType::find(13); //Service wallet
+                $GenerationWallet = WalletType::find(20); //generation wallet
+                $Clubwallet = WalletType::find(19); //club wallet
+                $NonSponsorBuns = WalletType::find(17); //nonsponsor bonus
+                $PerformanceBonus = WalletType::find(15); //Perfoamance bonus
 
                 if( empty( $sponsorthree->wallets()->wallet_type_id )  )
                 {
                     $sponsorthree->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $sponsorthree->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
+                    $sponsorthree->wallets()->create(['wallet_type_id' => $AssedMoney->id]);
+                    $sponsorthree->wallets()->create(['wallet_type_id' => $CashMoney->id]);
+                    $sponsorthree->wallets()->create(['wallet_type_id' => $GenerationWallet->id]);
+                    $sponsorthree->wallets()->create(['wallet_type_id' => $Clubwallet->id]);
+                    $sponsorthree->wallets()->create(['wallet_type_id' => $NonSponsorBuns->id]);
+                    $sponsorthree->wallets()->create(['wallet_type_id' => $PerformanceBonus->id]);
+                    $sponsorthree->wallets()->create(['wallet_type_id' => $serviceChargewallet->id]);
+                    
+                    //assed money
+                    $assedmoney = $sponsorthree->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $sponsorthree->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $sponsorthree->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $sponsorthree->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonusincremet = $sponsorthree->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonusincremet->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonusincremet->balance; 
+                    
+                    // Performance bonus by book
+                    $BestPerformancecash = $sponsorthree->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $sponsorthree->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
+                    
                 }
                 else
                 {
-                    $developBonus = $sponsorthree->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
+                    
+                    //assed money
+                    $assedmoney = $sponsorthree->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $sponsorthree->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $sponsorthree->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $sponsorthree->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonus = $sponsorthree->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonus->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonus->balance;
+
+                    // Performance bonus by book
+                    $BestPerformancecash = $sponsorthree->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $sponsorthree->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
                 }
             }
 
@@ -377,21 +606,99 @@ class BookingController extends Controller
             if( !empty($sponsorfour) )
             {
                 // officer payment
-                $OfficerWallet = WalletType::find(32);
+                $OfficerWallet = WalletType::find(32); //pending
+                $AssedMoney = WalletType::find(7); //Assed money
+                $CashMoney = WalletType::find(9); //cash money
+                $serviceChargewallet = WalletType::find(13); //Service wallet
+                $GenerationWallet = WalletType::find(20); //generation wallet
+                $Clubwallet = WalletType::find(19); //club wallet
+                $NonSponsorBuns = WalletType::find(17); //nonsponsor bonus
+                $PerformanceBonus = WalletType::find(15); //Perfoamance bonus
 
                 if( empty( $sponsorfour->wallets()->wallet_type_id )  )
                 {
                     $sponsorfour->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $sponsorfour->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
+                    $sponsorfour->wallets()->create(['wallet_type_id' => $AssedMoney->id]);
+                    $sponsorfour->wallets()->create(['wallet_type_id' => $CashMoney->id]);
+                    $sponsorfour->wallets()->create(['wallet_type_id' => $GenerationWallet->id]);
+                    $sponsorfour->wallets()->create(['wallet_type_id' => $Clubwallet->id]);
+                    $sponsorfour->wallets()->create(['wallet_type_id' => $NonSponsorBuns->id]);
+                    $sponsorfour->wallets()->create(['wallet_type_id' => $PerformanceBonus->id]);
+                    $sponsorfour->wallets()->create(['wallet_type_id' => $serviceChargewallet->id]);
+                    
+                    //assed money
+                    $assedmoney = $sponsorfour->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $sponsorfour->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $sponsorfour->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $sponsorfour->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonus = $sponsorfour->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonus->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonus->balance; 
+                    
+                    // Performance bonus by book
+                    $BestPerformancecash = $sponsorfour->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $sponsorfour->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
+                    
                 }
                 else
                 {
-                    $developBonus = $sponsorfour->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
+                    
+                    //assed money
+                    $assedmoney = $sponsorfour->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $sponsorfour->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $sponsorfour->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $sponsorfour->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonus = $sponsorfour->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonus->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonus->balance;
+
+                    // Performance bonus by book
+                    $BestPerformancecash = $sponsorfour->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $sponsorfour->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
                 }
             }
 
@@ -399,311 +706,114 @@ class BookingController extends Controller
             if( !empty($sponsorfive) )
             {
                 // officer payment
-                $OfficerWallet = WalletType::find(32);
+                $OfficerWallet = WalletType::find(32); //pending
+                $AssedMoney = WalletType::find(7); //Assed money
+                $CashMoney = WalletType::find(9); //cash money
+                $serviceChargewallet = WalletType::find(13); //Service wallet
+                $GenerationWallet = WalletType::find(20); //generation wallet
+                $Clubwallet = WalletType::find(19); //club wallet
+                $NonSponsorBuns = WalletType::find(17); //nonsponsor bonus
+                $PerformanceBonus = WalletType::find(15); //Perfoamance bonus
 
                 if( empty( $sponsorfive->wallets()->wallet_type_id )  )
                 {
                     $sponsorfive->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $sponsorfive->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
+                    $sponsorfive->wallets()->create(['wallet_type_id' => $AssedMoney->id]);
+                    $sponsorfive->wallets()->create(['wallet_type_id' => $CashMoney->id]);
+                    $sponsorfive->wallets()->create(['wallet_type_id' => $GenerationWallet->id]);
+                    $sponsorfive->wallets()->create(['wallet_type_id' => $Clubwallet->id]);
+                    $sponsorfive->wallets()->create(['wallet_type_id' => $NonSponsorBuns->id]);
+                    $sponsorfive->wallets()->create(['wallet_type_id' => $PerformanceBonus->id]);
+                    $sponsorfive->wallets()->create(['wallet_type_id' => $serviceChargewallet->id]);
+           
+
+                    //assed money
+                    $assedmoney = $sponsorfive->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $sponsorfive->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $sponsorfive->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $sponsorfive->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonus = $sponsorfive->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonus->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonus->balance; 
+                    
+                    // Performance bonus by book
+                    $BestPerformancecash = $sponsorfive->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $sponsorfive->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
+                    
                 }
                 else
                 {
-                    $developBonus = $sponsorfive->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
+                   
+                    //assed money
+                    $assedmoney = $sponsorfive->wallet('Assets Money');
+                    $assedmoney->incrementBalance($assettotalcash);
+                    $assedmoney->balance;
+
+                    //cash money
+                    $cashmoney = $sponsorfive->wallet('Cash Money');
+                    $cashmoney->incrementBalance($cashtotalcash-3000);
+                    $cashmoney->balance;
+
+                    // Generation bonus
+                    $GenerationBonuscash = $sponsorfive->wallet('Generation Bonus');
+                    $GenerationBonuscash->incrementBalance($fivegeneratiobonus);
+                    $GenerationBonuscash->balance;
+
+                    // Club bonus                    
+                    $clubbonus = $sponsorfive->wallet('Club Bonus');
+                    $clubbonus->incrementBalance($clubBBonus);
+                    $clubbonus->balance;
+
+                    // Non-spnsor bonus 
+                    $nonsponsorbonus = $sponsorfive->wallet('Non-Sponsor Bonus');
+                    $nonsponsorbonus->incrementBalance($nonsponsorbonus);
+                    $nonsponsorbonus->balance;
+
+                    // Performance bonus by book
+                    $BestPerformancecash = $sponsorfive->wallet('Best Performance');
+                    $BestPerformancecash->incrementBalance($BestPerformance);
+                    $BestPerformancecash->balance;
+
+                    // Service charge
+                    $vat_tax = $sponsorfive->wallet('Vat And Text');
+                    $vat_tax->incrementBalance($serviceCharge);
+                    $vat_tax->balance;
                 }
             }
 
         }
         else
         {
-
-            // Admin bonus
-            if( !empty($admin) )
-            {
-                // officer payment
-                $adminwallet = WalletType::find(25); //tourwallet
-                $adminCrestWallet = WalletType::find(26); //crest and pin
-                $OfficerWallet = WalletType::find(32); //Pending wallet
-                $AgentMoneyBonus = WalletType::find(11); //Agent money
-                $clubBonus = WalletType::find(19); //Club bonus
-                $PerformanceBonus = WalletType::find(15); //Perfoamance bonus
-                $FundationBonus = WalletType::find(16); //Fundation bonus
-                $NonSponsorBuns = WalletType::find(17); //nonsponsor bonus
-                $FundationWallet = WalletType::find(33); //fundation wallet
-                $LandInusrance = WalletType::find(24); //Land-Insurance wallet
-                $HondaandCar = WalletType::find(23); //Honda-Car wallet
-                $LandReservewalet = WalletType::find(21); //Land-reserve wallet
-                $OfficeMaintaincewallet = WalletType::find(27); //Office-Maintainance wallet
-                $demragebonus = WalletType::find(28); //Office-Demarage wallet
-
-                if( empty( $admin->wallets()->wallet_type_id )  )
-                {
-                    $admin->wallets()->create(['wallet_type_id' => $adminwallet->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $adminCrestWallet->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $AgentMoneyBonus->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $clubBonus->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $PerformanceBonus->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $FundationBonus->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $NonSponsorBuns->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $FundationWallet->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $LandInusrance->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $HondaandCar->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $LandReservewalet->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $OfficeMaintaincewallet->id]);
-                    $admin->wallets()->create(['wallet_type_id' => $demragebonus->id]);
-                    // Tour Bonus payment
-                    $tourBonus = $admin->wallet('Turism Found');
-                    $tourBonus->incrementBalance($tourandbonus);
-                    $tourBonus->balance;
-
-                    // Crest and pin Bonus payment
-                    $CrestAndPin = $admin->wallet('GoldPinCreastCertificate Found');
-                    $CrestAndPin->incrementBalance($CrestPincertificate);
-                    $CrestAndPin->balance;
-
-                    // Agent bonus by book
-                    $AgentBonus = $admin->wallet('Agent Money');
-                    $AgentBonus->incrementBalance($agentbonusbybooking);
-                    $AgentBonus->balance;
-
-                    // Club bonus by book
-                    $clubAndBonus = $admin->wallet('Club Bonus');
-                    $clubAndBonus->incrementBalance($clubBBonus);
-                    $clubAndBonus->balance;
-
-                    // Performance bonus by book
-                    $BestPerformancecash = $admin->wallet('Best Performance');
-                    $BestPerformancecash->incrementBalance($BestPerformance);
-                    $BestPerformancecash->balance;
-
-                    // Fundation bonus by book
-                    $FundationCash = $admin->wallet('Foundership Bonus');
-                    $FundationCash->incrementBalance($FundationCcashmoney);
-                    $FundationCash->balance;
-
-                    // Non-sponsor bonus by book
-                    $NonSponserCash = $admin->wallet('Non-Sponsor Bonus');
-                    $NonSponserCash->incrementBalance($nonsponsorbonus);
-                    $NonSponserCash->balance;
-
-                    // Fundation bonus by book
-                    $FundationCash = $admin->wallet('Fundation Bonus');
-                    $FundationCash->incrementBalance($fundetionBonustaka);
-                    $FundationCash->balance;
-
-                    // Land Insurance by book
-                    $LandInsuraceCash = $admin->wallet('Land Insurance');
-                    $LandInsuraceCash->incrementBalance($LandInusrancetaka);
-                    $LandInsuraceCash->balance;
-
-                    // Honda-car by book
-                    $Hondaandcardb = $admin->wallet('Honda And Car');
-                    $Hondaandcardb->incrementBalance($HondaandCarbonus);
-                    $Hondaandcardb->balance;
-
-                    // Land reserve by book
-                    $landReserve = $admin->wallet('Land Reserve Cash');
-                    $landReserve->incrementBalance($HondaandCarbonus);
-                    $landReserve->balance;
-
-                    // Office-Maintaince by book
-                    $officemaintaince = $admin->wallet('Office Maintaince Found');
-                    $officemaintaince->incrementBalance($OfficeMaintainancecash);
-                    $officemaintaince->balance;
-
-                    // Office-demarage by bonus
-                    $officedemarage = $admin->wallet('Demarage and Backup Found');
-                    $officedemarage->incrementBalance($officedemaragebonus);
-                    $officedemarage->balance;
-                }
-                else
-                {
-                    // Tour bonus
-                    $tourBonus = $officer->wallet('Turism Found');
-                    $tourBonus->incrementBalance($tourandbonus);
-                    $tourBonus->balance;
-
-                    // Crest and pin Bonus payment
-                    $CrestAndPin = $admin->wallet('GoldPinCreastCertificate Found');
-                    $CrestAndPin->incrementBalance($CrestPincertificate);
-                    $CrestAndPin->balance;
-
-                    // Agent bonus by book
-                    $CrestAndPin = $admin->wallet('Agent Money');
-                    $CrestAndPin->incrementBalance($agentbonusbybooking);
-                    $CrestAndPin->balance;
-
-                    // Club bonus by book
-                    $clubAndBonus = $admin->wallet('Club Bonus');
-                    $clubAndBonus->incrementBalance($clubBBonus);
-                    $clubAndBonus->balance;
-
-                    // Performance bonus by book
-                    $BestPerformancecash = $admin->wallet('Best Performance');
-                    $BestPerformancecash->incrementBalance($BestPerformance);
-                    $BestPerformancecash->balance;
-
-                    // Fundation bonus by book
-                    $FundationCash = $admin->wallet('Foundership Bonus');
-                    $FundationCash->incrementBalance($FundationCcashmoney);
-                    $FundationCash->balance;
-
-                    // Non-sponsor bonus by book
-                    $NonSponserCash = $admin->wallet('Non-Sponsor Bonus');
-                    $NonSponserCash->incrementBalance($nonsponsorbonus);
-                    $NonSponserCash->balance;
-
-                    // Fundation bonus by book
-                    $FundationCash = $admin->wallet('Fundation Bonus');
-                    $FundationCash->incrementBalance($fundetionBonustaka);
-                    $FundationCash->balance;
-
-                    // Honda-car by book
-                    $Landreservemoney = $admin->wallet('Honda And Car');
-                    $Landreservemoney->incrementBalance($landReservecash);
-                    $Landreservemoney->balance;
-
-                    // Land Insurance by book
-                    $LandInsuraceCash = $admin->wallet('Land Insurance');
-                    $LandInsuraceCash->incrementBalance($LandInusrancetaka);
-                    $LandInsuraceCash->balance;
-
-                    // Office-Maintaince by book
-                    $officemaintaince = $admin->wallet('Office Maintaince Found');
-                    $officemaintaince->incrementBalance($OfficeMaintainancecash);
-                    $officemaintaince->balance;
-
-                    // Office-demarage by bonus
-                    $officedemarage = $admin->wallet('Demarage and Backup Found');
-                    $officedemarage->incrementBalance($officedemaragebonus);
-                    $officedemarage->balance;
-                }     
-            }
-
-            // Sponsor bonus one
-            if( !empty($officer) )
-            {
-                // officer payment
-                $OfficerWallet = WalletType::find(32);
-
-                if( empty( $officer->wallets()->wallet_type_id )  )
-                {
-                    $officer->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $targebonus = $officer->wallet('Pending');
-                    $targebonus->incrementBalance($targetsellbonus+$megadevelopmentbonus+$fivegeneratiobonus);
-                    $targebonus->balance;
-                }
-                else
-                {
-                    $targebonus = $officer->wallet('Pending');
-                    $targebonus->incrementBalance($targetsellbonus+$megadevelopmentbonus+$fivegeneratiobonus);
-                    $targebonus->balance;
-                }     
-            }
-
-            // Sponsor bonus two
-            if( !empty($subofficer) )
-            {
-                // officer payment
-                $OfficerWallet = WalletType::find(32);
-
-                if( empty( $officer->wallets()->wallet_type_id )  )
-                {
-                    $subofficer->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $subofficer->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-                else
-                {
-                    $developBonus = $subofficer->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-            }
-
-            // Sponsor bonus three
-            if( !empty($sponsorthree) )
-            {
-                // officer payment
-                $OfficerWallet = WalletType::find(32);
-
-                if( empty( $sponsorthree->wallets()->wallet_type_id )  )
-                {
-                    $sponsorthree->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $sponsorthree->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-                else
-                {
-                    $developBonus = $sponsorthree->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-            }
-
-            // Sponsor bonus four
-            if( !empty($sponsorfour) )
-            {
-                // officer payment
-                $OfficerWallet = WalletType::find(32);
-
-                if( empty( $sponsorfour->wallets()->wallet_type_id )  )
-                {
-                    $sponsorfour->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $sponsorfour->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-                else
-                {
-                    $developBonus = $sponsorfour->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-            }
-
-            // Sponsor Bonus five 
-            if( !empty($sponsorfive) )
-            {
-                // officer payment
-                $OfficerWallet = WalletType::find(32);
-
-                if( empty( $sponsorfive->wallets()->wallet_type_id )  )
-                {
-                    $sponsorfive->wallets()->create(['wallet_type_id' => $OfficerWallet->id]);
-                    // Add payment
-                    $developBonus = $sponsorfive->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-                else
-                {
-                    $developBonus = $sponsorfive->wallet('Pending');
-                    $developBonus->incrementBalance($megadevelopmentbonus-3000+$fivegeneratiobonus);
-                    $developBonus->balance;
-                }
-            }
-            
-                  
             $notification = array(
-                'message'       => 'বুকিং অ্যপ্রেুাভ সম্পন্ন হয়েছে!!!',
-                'alert-type'    => 'success'
+                'message'       => 'বুকিং পেমেন্ট ডিউ রয়েছে!!!',
+                'alert-type'    => 'warning'
             );
 
             return back()->with($notification);
-
         }
-        exit();
+
         $bookings->save();
 
 
@@ -714,7 +824,12 @@ class BookingController extends Controller
         $bookinguser = User::where('id', $bookings->id)->get();
         Notification::send($bookinguser, new BookingApproveNotification($bookings));
 
-        return response()->json(['success' =>true, 'message'=> 'বুকিং অ্যপ্রেুাভ সম্পন্ন হয়েছে!!!']);
+        $notification = array(
+            'message'       => 'বুকিং এপ্রুভ করা হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
     }
     /**
      * Notification Function.

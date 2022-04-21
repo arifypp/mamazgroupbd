@@ -75,7 +75,7 @@
                             <table class="table-responsive align-middle w-100 text-nowrap overflow-hidden">
                                 <tbody>
                                     @php 
-                                        $booking = App\Models\Frontend\Booking::where('bookingauthid', $application->auth_id)->get();
+                                        $booking = App\Models\Frontend\Booking::where('user_id', $application->auth_id)->get();
                                     @endphp
                                     <tr class="d-flex mb-2">
                                         বরাবর,<br>
@@ -174,12 +174,20 @@
                <table class="table table-responsive w-100 align-middle text-nowrap overflow-hidden">
                     <tbody>
                         <tr>
-                            <td class="col-8">প্লট বা জমির পরিমান -</td>
-                            <td class="col-4">{{ $booking[0]->flatvalue }} SFT</td>
+                            <td class="col-8">User ID </td>
+                            <td class="col-4">{{ $booking[0]->user->username }}</td>
                         </tr>
                         <tr>
-                            <td class="col-7">বুকিং টাকার পরিমাণ -</td>
-                            <td class="col-5">{{ $booking[0]->bookingmoney }} BDT</td>
+                            <td class="col-7">User Email -</td>
+                            <td class="col-5">{{ $booking[0]->user->email }}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-7">User Phone -</td>
+                            <td class="col-5">{{ $booking[0]->user->phone }}</td>
+                        </tr>
+                        <tr>
+                            <td class="col-7">User Address -</td>
+                            <td class="col-5">{{ $booking[0]->user->address }}</td>
                         </tr>
                     </tbody>
                </table>

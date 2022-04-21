@@ -23,6 +23,8 @@ Route::group(['prefix' => '/'], function(){
     Route::post('/contact/send','App\Http\Controllers\Frontend\ContactController@ctsend')->name('contact.send');
     Route::get('/thankyou', [App\Http\Controllers\HomeController::class, 'thankyou'])->name('thankyou');
 
+    Route::get('/invoice/{id}', [App\Http\Controllers\HomeController::class, 'invoice'])->name('invoice.generator');
+
     Route::get('/widthdarw', 'App\Http\Controllers\TransactionController@create')->name('send.widthdraw');
     Route::post('/widthdarw/amount/request/{id}', 'App\Http\Controllers\TransactionController@needtoknowamount')->name('send.knowprice');
 

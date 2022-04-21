@@ -48,7 +48,9 @@
                             <td>
                                 <a href="javascript:void(0)" data-bs-toggle="modal" data-bs-target="#requestview{{ $value->id }}"> <i class="fa fa-eye"></i> </a>  &nbsp;
 
-                                <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="fa fa-trash"></i></a>
+                                <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="fa fa-trash"></i></a> &nbsp;
+
+                                <a href="{{ route('invoice.generator', $value->id) }}" class="text-primary"><i class="mdi mdi-16px mdi-file-pdf"></i></a>
 
                                 <div class="modal fade" id="requestview{{ $value->id }}" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" role="dialog" aria-labelledby="staticBackdropLabel" aria-hidden="true">
                                     <div class="modal-dialog modal-dialog-centered" role="document">
