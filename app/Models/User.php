@@ -357,6 +357,22 @@ class User extends Authenticatable implements MustVerifyEmail
 
     }
 
+    
+    // Admin fundation bonus
+    
+    public static function FundationBonus()
+    {
+        $BDT = "৳";
+        $Fundationbonus = auth()->user()->wallet('Fundation Bonus');
+        if( !empty( $Fundationbonus->balance ) ){
+          return $BDT. $Fundationbonus->balance; 
+        }
+        else
+        {
+          return $BDT. 0;
+        }
+    }
+
     // Admin foundership bonus
     
     public static function FounderShip()

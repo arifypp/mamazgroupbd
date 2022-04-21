@@ -181,6 +181,59 @@ class DashboardController extends Controller
         }
     }
 
+    public function fundation(Request $request)
+    {
+        $request->validate([
+            'amount'            =>   ['required'],
+            'wallet_type'       =>   ['required', 'not_in:0'],
+            'receiver_id'       =>  ['required', 'not_in:0'],
+        ]);
+
+        $amount = $request->amount;
+        $admin_id = User::where('auth_role', 3)->first();
+        $admin = User::find($admin_id->id);
+        $user = User::find($request->receiver_id);
+
+        $cashmoney = WalletType::find($request->wallet_type);
+        $fundationmoney = WalletType::find(33);
+
+        if( empty( $user->wallets()->wallet_type_id ) || empty( $admin->wallets()->wallet_type_id ) )
+        {
+            $user->wallets()->create(['wallet_type_id' => $cashmoney->id]);
+            $admin->wallets()->create(['wallet_type_id' => $fundationmoney->id]);
+
+            // User payment increment
+            $usercashincrement = $user->wallet('Cash Money');
+            $usercashincrement->incrementBalance($amount);
+            $usercashincrement->balance;
+
+            // Decrement payment
+            $admincashincrement = $admin->wallet('Fundation Bonus');
+            $admincashincrement->decrementBalance($amount);
+            $admincashincrement->balance;            
+        }
+        else
+        {
+            // User payment increment
+            $usercashincrement = $user->wallet('Cash Money');
+            $usercashincrement->incrementBalance($amount);
+            $usercashincrement->balance;
+
+            // Decrement payment
+            $admincashincrement = $admin->wallet('Fundation Bonus');
+            $admincashincrement->decrementBalance($amount);
+            $admincashincrement->balance;
+        }
+
+        $notification = array(
+            'message'       => 'পেমেন্ট সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success',
+        );
+
+        return back()->with($notification);
+        
+    }
+
     /**
      * Display the specified resource.
      *

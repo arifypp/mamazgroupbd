@@ -283,6 +283,8 @@ Route::middleware(['verified'])->group(function () {
             Route::get('/referel/list', 'App\Http\Controllers\Backend\DashboardController@referellist')->name('user.referellist');
             Route::get('/referel/{referrer_id}', 'App\Http\Controllers\Backend\DashboardController@refereladmin')->name('admin.user.referel');
 
+            Route::post('/send/fundation','App\Http\Controllers\Backend\DashboardController@fundation')->name('admin.fundation');
+
             Route::get('/notifyseen/{id}', 'App\Http\Controllers\Backend\DashboardController@notify')->name('notify.seend');
 
             Route::group(['prefix' => 'bonusetting'], function() {

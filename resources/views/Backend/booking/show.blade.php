@@ -272,14 +272,17 @@
                </table>
                <div class="row">
                    <div class="col-md-12 m-auto text-center mb-4 mt-3">
+                   <form action="{{ route('bbooking.status', $bookings->id) }}" method="post">
                        <a href="{{ route('bbooking.new') }}" class="btn btn-danger waves-effect btn-label waves-light">
                        <i class="bx bx-block label-icon"></i>
                            ক্যানসেল
                         </a>
-                       <a href="javascript:void(0)" id="approvecash" data-id="{{ $bookings->id }}" data-attr="{{ route('bbooking.status', $bookings->id) }}" class="btn btn-success waves-effect btn-label waves-light">
+                            @csrf
+                       <button type="submit" class="btn btn-success waves-effect btn-label waves-light">
                         <i class="bx bx-check label-icon"></i>
                            অ্যপ্রুভ করুন
-                        </a>
+                        </button>
+                        </form>
                    </div>
                </div>
                <hr>
@@ -292,45 +295,5 @@
             </div>
         </div>
     </div>
-
-@endsection
-
-@section('script')
-<script>
-      $(document).ready(function(){
-      $(document).on("click", '#approvecash', function(e){
-        e.preventDefault();
-          $.ajaxSetup({
-              headers: {
-                  'X-CSRF-TOKEN': $('meta[name="_token"]').attr('content')
-              }
-          });
-
-          var token = '{{ Session::token() }}';
-
-          let href = $(this).attr('data-attr');
-          let post_id = $(this).attr('data-id');
-
-        //   console.log(post_id); 
-          
-          $.ajax({    
-              type: 'POST',
-              url: href,
-              data : {id:post_id, _token: token},
-              success:function(res){
-                if(res.success){
-                        toastr.success(res.message);
-                        setTimeout(function(){location.reload();},5000);
-                  }
-              },
-              error:function (res){
-                    console.log("error");
-                }
-          });
-
-          return false;
-      })
-    });
-</script>
 
 @endsection

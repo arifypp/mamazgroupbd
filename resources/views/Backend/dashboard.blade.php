@@ -66,12 +66,12 @@
                            ৳{{ App\Models\User::RedialChart() }}
                         </h3>
                         <p class="text-muted"><span class="text-success me-2"> 
-                        {{ App\Models\User::RedialChart() / config('bonus_settings.mamazpoisha')}}%
+                        {{ App\Models\User::RedialChart() / App\Models\User::RedialChart() * config('bonus_settings.mamazpoisha')}}%
                         <i class="mdi mdi-arrow-up"></i>
                             </span> 
-                            @if( App\Models\User::RedialChart() / 100  <= 50 )
+                            @if( App\Models\User::RedialChart() /  App\Models\User::RedialChart() * 100  <= 50 )
                                 কমিয়ে আগের মাস থেকে 
-                            @elseif( App\Models\User::RedialChart() / 100  <= 51 && App\Models\User::RedialChart() / 100 >= 100)
+                            @elseif( App\Models\User::RedialChart() / App\Models\User::RedialChart() * 100  <= 51 && App\Models\User::RedialChart() / 100 >= 100)
                                 এগিয়ে আগের মাস থেকে।
                             @endif
                             
@@ -267,6 +267,88 @@
                         </div>
                     </div>
                 </div>
+            </div>
+            <div class="col-md-4">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#foundationcash">
+                <div class="card mini-stats-wid">
+                    <div class="card-body">
+                        <div class="d-flex">
+                            <div class="flex-grow-1">
+                                <p class="text-muted fw-medium">ফাউন্ডেশন বোনাস</p>
+                                <h4 class="mb-0">
+                                    {{ App\Models\User::FundationBonus() }}
+                                </h4>
+                            </div>
+
+                            <div class="flex-shrink-0 align-self-center">
+                                <div class="avatar-sm rounded-circle bg-primary mini-stat-icon">
+                                    <span class="avatar-title rounded-circle bg-primary">
+                                        <i class="bx bxs-landmark font-size-24"></i>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                </a>
+
+                <!-- Model work -->
+<div class="modal fade" id="foundationcash" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header">
+            <h5 class="modal-title" id="staticBackdropLabel">পেমেন্ড সেন্ড করুন</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+            <form action="{{ route('admin.fundation') }}" method="post">
+            @csrf
+            <div class="col-md-12">
+                <div class="alert alert-warning">
+                    <span>আপনার বর্তমান টাকা: {{ App\Models\User::FundationBonus() }}</span>
+                </div>
+                <div class="form-group mb-3">
+                    <label for="Amount">টাকা পরিমান বসান</label>
+                    <input type="number" name="amount" id="amount" class="form-control">
+                </div>
+                
+                <div class="form-group mb-3">
+                    <label for="wallet_type">রিসিভার ওয়ালেট নিবার্চন করুন?</label>
+                    <select name="wallet_type" id="wallet_type" class="form-control">
+                            <option value="0">নির্বাচন করুন</option>
+                            @php
+                            $walletTypeID = CoreProc\WalletPlus\Models\WalletType::where('name', 'Cash Money')->get();
+                            @endphp
+                            @foreach( $walletTypeID as $key => $walletType )
+                            <option value="{{ $walletType->id }}"> {{ $walletType->name }} </option>
+                            @endforeach
+                    </select>
+                    <span id="walletamountresult"></span>
+                </div>
+
+                <div class="form-group cashmoney">
+                    <label for="wallet_type">রিসিভার নির্বাচন করুন?</label>
+                    <select name="receiver_id" id="receiver_id" class="form-control">
+                            <option value="0">নির্বাচন করুন</option>
+                            @php
+                            $users = App\Models\User::where('auth_role', 0)->get();
+                            @endphp
+                            @foreach( $users as $key => $user )
+                            <option value="{{ $user->id }}"> {{ $user->name }} - {{ $user->username }} </option>
+                            @endforeach
+                    </select>
+                    <span id="walletamountresult"></span>
+                </div>
+            </div>
+            </div>
+        <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">বন্ধ করুন</button>
+            <button type="submit" class="btn btn-primary">পেমেন্ট সেন্ড করুন</button>
+            </form>
+        </div>
+        </div>
+    </div>
+    </div>
             </div>
             <div class="col-md-4">
                 <div class="card mini-stats-wid">
@@ -577,7 +659,7 @@
                     </div>
                 </div>
             </div>
-            <div class="col-md-4">
+            <!-- <div class="col-md-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
                         <div class="d-flex">
@@ -599,7 +681,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div> -->
             <div class="col-md-4">
                 <div class="card mini-stats-wid">
                     <div class="card-body">
@@ -725,9 +807,16 @@ options = {
   stroke: {
     dashArray: 4
   },
-  series: ['{{ App\Models\User::RedialChart() / 100 }}'],
+  series: ['{{ App\Models\User::RedialChart() / App\Models\User::RedialChart() * 100 }}'],
   labels: ["মাসিক ইনকাম"]
 };
 (chart = new ApexCharts(document.querySelector("#radialBar-charts"), options)).render();
+</script>
+<script>
+    @if(count($errors) > 0)
+        @foreach($errors->all() as $error)
+            toastr.error("{{ $error }}");
+        @endforeach
+    @endif
 </script>
 @endsection
