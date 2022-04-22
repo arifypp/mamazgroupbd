@@ -172,6 +172,37 @@ class AboutController extends Controller
     public function update(Request $request, $id)
     {
         //
+        
+        $aboutcontent =  AboutContent::find($id);
+        $aboutcontent->title        =   $request->name;
+        $aboutcontent->desc         =   $request->description;
+        $aboutcontent->layout       =   $request->layout;
+
+        
+        if(!is_null($request->image)){
+            $aboutimg = $request->file('image');
+            if( !is_null($aboutimg) ){
+                // Delete Existing Image
+                if( File::exists('assets/images/aboutpage/' . $aboutcontent->image) ) {
+                    File::delete('assets/images/aboutpage/' . $aboutcontent->image);
+                }
+                
+                $img = rand() . '.' . $aboutimg->getClientOriginalExtension();
+                $location = public_path('assets/images/aboutpage/' . $img);
+
+                Image::make($aboutimg)->save($location);
+                $aboutcontent->image = $img;
+            }
+        }
+
+        $aboutcontent->save();
+
+        $notification = array(
+            'message'       => 'ডাটা সেভ সম্পন্ন হয়েছে!!!',
+            'alert-type'    => 'success'
+        );
+
+        return back()->with($notification);
     }
 
     /**

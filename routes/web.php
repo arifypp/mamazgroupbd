@@ -617,6 +617,7 @@ Route::middleware(['verified'])->group(function () {
                 Route::post('/update/pagetitle/{id}', 'App\Http\Controllers\Frontend\AboutController@updatepagetitle')->name('about.updatepagetitle');
 
                 Route::post('/store', 'App\Http\Controllers\Frontend\AboutController@store')->name('about.store');
+                Route::post('/update/{id}', 'App\Http\Controllers\Frontend\AboutController@update')->name('about.update');
 
                 Route::post('/delete/{id}', 'App\Http\Controllers\Frontend\AboutController@destroy')->name('about.destroy');
             });

@@ -53,7 +53,7 @@ class BookingController extends Controller
         $bookings = Booking::find($id);
         $bookings->status = 3;
 
-        $DueCash = 139000;
+        $DueCash = 0;
 
         // Collection user
         $bookinguser = User::where('id', $bookings->user_id)->first();

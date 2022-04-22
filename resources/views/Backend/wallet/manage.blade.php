@@ -39,7 +39,6 @@
                             <th>ক্র.নং</th>
                             <th>ওয়ালেট আইডি</th>
                             <th>ওয়ালেট নাম</th>
-                            <th>অ্যাকশন</th>
                         </tr>
                     </thead>
 
@@ -51,9 +50,7 @@
                             <td>{{ $i++ }}</td>
                             <td>{{ $value->id }}</td>
                             <td>{{ $value->name }}</td>
-                            <td>
-                                <a href="javascript:void(0)" onclick="deleteConfirmation('{{$value->id}}')" class="text-danger"><i class="mdi mdi-18px mdi-trash-can-outline"></i></a>
-                            </td>
+                            
                         </tr>
                         @endforeach
                         
